@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAMIFICACIÓN: DE 0 A 100</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600;700&display=swap');
+
+    /* ============================================================ RESET ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #060a10;
+      --bg-card:    #0b1120;
+      --bg-card2:   #0f1828;
+      --bg-sidebar: #080e1a;
+      --border:     #1a2840;
+      --border-hi:  #254570;
+      --gold:       #c9a84c;
+      --gold-l:     #e8c96a;
+      --gold-d:     #6a4e1a;
+      --cyan:       #4dd9e8;
+      --cyan-d:     #164f5a;
+      --purple:     #8b5cf6;
+      --purple-d:   #3a2468;
+      --red:        #e05252;
+      --green:      #4ade80;
+      --orb:        #a78bfa;
+      --orb-glow:   rgba(167,139,250,.35);
+      --txt:        #e8eaf2;
+      --txt-m:      #7a8fac;
+      --txt-d:      #2e3d52;
+      --ff-d: 'Cinzel','Palatino Linotype',serif;
+      --ff-b: 'Raleway','Segoe UI',sans-serif;
+      --ff-m: 'Courier New',monospace;
+      --r:    10px;
+      --rl:   16px;
+      --sh:   0 6px 40px rgba(0,0,0,.7);
+      --sg:   0 0 28px rgba(201,168,76,.2);
+      --tr:   all .25s ease;
+      --sw:   220px;
+      --th:   60px;
+    }
+
+    html, body { height:100%; width:100%; font-size:14px; background:radial-gradient(circle at top, #0d1526 0%, #05080d 55%, #020406 100%); color:var(--txt); font-family:var(--ff-b); overflow:hidden; }
+    body { display:flex; align-items:center; justify-content:center; padding:10px; }
+    .view { width:min(96vw, calc(96vh * 16 / 9)); height:min(96vh, calc(96vw * 9 / 16)); margin:auto; border-radius:24px; border:1px solid rgba(201,168,76,.15); box-shadow:0 20px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.02) inset, 0 0 40px rgba(201,168,76,.08); background:linear-gradient(180deg, rgba(7,11,18,.88) 0%, rgba(4,7,12,.94) 100%); position:relative; overflow:hidden; backdrop-filter:blur(10px); }
+    .view::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 50% 0%, rgba(201,168,76,.045), transparent 35%), radial-gradient(circle at 100% 100%, rgba(77,217,232,.04), transparent 25%); }
+    .view.hidden { display:none !important; }
+
+    /* ============================================================ ANIMATIONS ============================================================ */
+    @keyframes fadeDown  { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeUp    { from{opacity:0;transform:translateY(16px)}  to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn    { from{opacity:0} to{opacity:1} }
+    @keyframes float     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes shimmer   { 0%{background-position:200% center} 100%{background-position:-200% center} }
+    @keyframes orbStillGlow { 0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(167,139,250,.38))}
+                           50% {transform:scale(1.025);filter:drop-shadow(0 0 46px rgba(167,139,250,.72))} }
+    @keyframes ringBreathe { 0%,100%{transform:scale(1);opacity:.42} 50%{transform:scale(1.035);opacity:.82} }
+    @keyframes mistFlow   { 0%,100%{transform:translateX(0) scale(1)} 50%{transform:translateX(2.6%) scale(1.035)} }
+    @keyframes skyTwinkle { 0%,100%{opacity:.36} 50%{opacity:.82} }
+    @keyframes emberDrift { 0%{transform:translateY(8px);opacity:0} 20%{opacity:.4} 100%{transform:translateY(-18px);opacity:0} }
+    @keyframes ringPulse { 0%,100%{box-shadow:0 0 0 0 var(--orb-glow)} 70%{box-shadow:0 0 0 18px transparent} }
+    @keyframes nodeGlow  { 0%,100%{box-shadow:0 0 5px currentColor} 50%{box-shadow:0 0 16px currentColor,0 0 32px currentColor} }
+    @keyframes toastIn   { from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes toastOut  { to{opacity:0;transform:translateX(28px)} }
+    @keyframes scanline  { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+    @keyframes sparkle   { 0%{opacity:0;transform:scale(0) rotate(0deg)} 50%{opacity:1;transform:scale(1) rotate(180deg)} 100%{opacity:0;transform:scale(0) rotate(360deg)} }
+    @keyframes levelUp   { 0%{transform:scale(1)} 30%{transform:scale(1.2)} 60%{transform:scale(.95)} 100%{transform:scale(1)} }
+    @keyframes barGrow   { from{width:0} }
+
+    /* ============================================================ VIEWS ============================================================ */
+    .view { z-index:1; }
+
+    /* ============================================================ BG CANVAS ============================================================ */
+    #bg-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+    /* ============================================================ WELCOME ============================================================ */
+    #view-welcome {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      padding:2rem 2.2rem; position:relative; overflow:auto;
+    }
+    #view-welcome::before {
+      content:''; position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(201,168,76,.04) 0%, transparent 40%, transparent 60%, rgba(77,217,232,.03) 100%),
+        repeating-linear-gradient(0deg,  transparent, transparent 60px, rgba(201,168,76,.02) 60px, rgba(201,168,76,.02) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(77,217,232,.012) 80px, rgba(77,217,232,.012) 81px);
+      pointer-events:none;
+    }
+    #view-welcome::after {
+      content:''; position:absolute; left:0; right:0; top:0; height:3px;
+      background:linear-gradient(to right, transparent 0%, rgba(201,168,76,.5) 50%, transparent 100%);
+      animation:scanline 9s linear infinite; pointer-events:none;
+    }
+    .welcome-stars, .welcome-stars::before, .welcome-stars::after {
+      position:absolute; inset:0; pointer-events:none; content:'';
+      background-repeat:repeat;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.88) 0 1px, transparent 1.8px),
+        radial-gradient(circle at 72% 12%, rgba(201,168,76,.65) 0 1.2px, transparent 2px),
+        radial-gradient(circle at 40% 34%, rgba(167,139,250,.55) 0 1px, transparent 1.9px),
+        radial-gradient(circle at 84% 44%, rgba(77,217,232,.55) 0 1px, transparent 1.8px),
+        radial-gradient(circle at 28% 58%, rgba(255,255,255,.42) 0 1.2px, transparent 2px);
+      background-size: 360px 220px, 520px 260px, 420px 240px, 480px 260px, 560px 280px;
+      opacity:.44;
+      animation:skyTwinkle 7s ease-in-out infinite;
+    }
+    .welcome-stars::before { opacity:.28; filter:blur(.5px); transform:scale(1.08); animation-duration:10s; }
+    .welcome-stars::after  { opacity:.16; filter:blur(1.2px); transform:scale(1.14); animation-duration:13s; }
+    .welcome-veil {
+      position:absolute; inset:auto -10% -2% -10%; height:48%; pointer-events:none;
+      background:
+        radial-gradient(circle at 25% 55%, rgba(77,217,232,.10), transparent 24%),
+        radial-gradient(circle at 55% 40%, rgba(167,139,250,.12), transparent 22%),
+        radial-gradient(circle at 76% 60%, rgba(201,168,76,.09), transparent 28%);
+      filter:blur(24px); opacity:.8; animation:mistFlow 13s ease-in-out infinite;
+    }
+    .mountain-sigil {
+      position:absolute; left:50%; bottom:19%; transform:translateX(-50%);
+      width:188px; height:188px; border-radius:50%; pointer-events:none;
+      border:1px solid rgba(201,168,76,.08); opacity:.42;
+      box-shadow:0 0 60px rgba(201,168,76,.04), inset 0 0 30px rgba(167,139,250,.05);
+      background:
+        radial-gradient(circle at center, rgba(201,168,76,.06), transparent 62%),
+        conic-gradient(from 180deg, transparent 0 12%, rgba(201,168,76,.14) 12% 14%, transparent 14% 36%, rgba(77,217,232,.10) 36% 38%, transparent 38% 62%, rgba(201,168,76,.14) 62% 64%, transparent 64% 100%);
+      animation:ringBreathe 7s ease-in-out infinite;
+    }
+    .mountain-sigil::before, .mountain-sigil::after {
+      content:''; position:absolute; left:50%; transform:translateX(-50%); pointer-events:none;
+    }
+    .mountain-sigil::before {
+      bottom:22px; width:86px; height:110px;
+      clip-path:polygon(50% 0, 100% 100%, 74% 76%, 57% 96%, 41% 79%, 0 100%);
+      background:linear-gradient(180deg, rgba(201,168,76,.18), rgba(201,168,76,.02));
+      filter:drop-shadow(0 0 10px rgba(201,168,76,.08));
+    }
+    .mountain-sigil::after {
+      top:26px; width:94px; height:46px; border-top:2px solid rgba(201,168,76,.16); border-radius:999px 999px 0 0;
+      box-shadow:0 -8px 0 -6px rgba(77,217,232,.08);
+      opacity:.75;
+    }
+    .welcome-embers { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+    .welcome-embers span {
+      position:absolute; bottom:18%; width:4px; height:4px; border-radius:50%; opacity:0;
+      background:radial-gradient(circle, rgba(201,168,76,.9) 0%, rgba(201,168,76,.2) 60%, transparent 100%);
+      animation:emberDrift linear infinite;
+    }
+    #view-welcome .mountain-svg { position:absolute; inset:auto 0 0 0; width:100%; height:36%; opacity:.55; pointer-events:none; filter:drop-shadow(0 -10px 25px rgba(0,0,0,.35)); }
+    .welcome-inner { max-width:780px; width:100%; text-align:center; display:flex; flex-direction:column; align-items:center; gap:0; }
+
+    /* Orbe */
+    .orb-container { width:100px; height:100px; margin-bottom:1.6rem; position:relative; animation:orbStillGlow 4.8s ease-in-out infinite; }
+    .orb-ring { position:absolute; inset:0; border-radius:50%; border:1.5px solid rgba(167,139,250,.4); animation:ringPulse 2.5s ease-out infinite, ringBreathe 6s ease-in-out infinite; }
+    .orb-ring:nth-child(2) { inset:-11px; animation-delay:.8s; opacity:.5; }
+    .orb-ring:nth-child(3) { inset:-22px; animation-delay:1.6s; opacity:.25; }
+    .orb-svg { width:100px; height:100px; position:relative; z-index:1; }
+
+    .welcome-eyebrow { font-family:var(--ff-d); font-size:.68rem; letter-spacing:.5em; color:var(--cyan); text-transform:uppercase; margin-bottom:.9rem; animation:fadeDown .7s ease both; }
+    .welcome-title {
+      font-family:var(--ff-d); font-size:clamp(2rem,5.5vw,4rem); font-weight:900; letter-spacing:.1em; line-height:1.08;
+      background:linear-gradient(135deg, var(--gold-l) 0%, var(--gold) 45%, #f0c040 70%, var(--gold-l) 100%);
+      background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      animation:fadeDown .8s .1s ease both, shimmer 5s linear infinite; margin-bottom:.55rem;
+    }
+    .welcome-tagline { font-family:var(--ff-d); font-size:clamp(.78rem,1.8vw,.95rem); letter-spacing:.28em; color:var(--cyan); animation:fadeDown .8s .2s ease both; margin-bottom:1.6rem; }
+    .welcome-divider { display:flex; align-items:center; gap:1rem; width:300px; margin:0 auto 1.6rem; animation:fadeIn .8s .3s ease both; }
+    .welcome-divider::before,.welcome-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right, transparent, var(--gold-d)); }
+    .welcome-divider::after { transform:scaleX(-1); }
+    .welcome-divider-glyph { color:var(--gold); font-size:.75rem; flex-shrink:0; }
+
+    .welcome-lore {
+      background:rgba(255,255,255,.022); border:1px solid rgba(201,168,76,.14); border-radius:var(--rl);
+      padding:1.5rem 1.9rem; max-width:640px; width:100%; margin-bottom:1.8rem;
+      animation:fadeUp .8s .4s ease both; position:relative; overflow:hidden;
+    }
+    .welcome-lore::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right, transparent, var(--gold-d), transparent); }
+    .welcome-lore-title { font-family:var(--ff-d); font-size:.68rem; letter-spacing:.25em; color:var(--gold); text-transform:uppercase; margin-bottom:.75rem; }
+    .welcome-lore p { color:var(--txt-m); line-height:1.9; font-size:.86rem; margin-bottom:.55rem; }
+    .welcome-lore p:last-child { margin-bottom:0; }
+    .welcome-lore em { color:var(--gold-l); font-style:normal; }
+    .welcome-lore strong { color:var(--cyan); font-weight:600; }
+    .welcome-btn-wrap { animation:fadeUp .8s .55s ease both; }
+
+    /* ============================================================ BUTTONS ============================================================ */
+    .btn {
+      display:inline-flex; align-items:center; gap:.5rem; border:none; cursor:pointer;
+      font-family:var(--ff-d); font-size:.78rem; letter-spacing:.14em; font-weight:600;
+      border-radius:var(--r); transition:var(--tr); padding:.68rem 1.7rem;
+      position:relative; overflow:hidden;
+    }
+    .btn::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 100%); opacity:0; transition:opacity .2s; }
+    .btn:hover::after { opacity:1; }
+    .btn-primary { background:linear-gradient(135deg,#9a6a18 0%,var(--gold) 50%,#d9b040 100%); color:#120800; box-shadow:0 0 22px rgba(201,168,76,.4),0 4px 14px rgba(0,0,0,.5); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 38px rgba(201,168,76,.65),0 8px 22px rgba(0,0,0,.5); }
+    .btn-xl { font-size:.92rem; padding:.95rem 2.8rem; letter-spacing:.2em; border-radius:var(--rl); }
+    .btn-secondary { background:transparent; color:var(--cyan); border:1px solid var(--cyan-d); }
+    .btn-secondary:hover { background:rgba(77,217,232,.08); border-color:var(--cyan); }
+    .btn-ghost { background:rgba(255,255,255,.04); color:var(--txt-m); border:1px solid var(--border); }
+    .btn-ghost:hover { background:rgba(255,255,255,.08); color:var(--txt); }
+    .btn-danger { background:transparent; color:var(--red); border:1px solid rgba(224,82,82,.3); font-family:var(--ff-b); font-size:.74rem; letter-spacing:.04em; }
+    .btn-danger:hover { background:rgba(224,82,82,.08); border-color:var(--red); }
+    .btn:disabled { opacity:.35; cursor:not-allowed; transform:none !important; }
+
+    /* ============================================================ CREATE ============================================================ */
+    #view-create { width:100%; height:100%; padding:2rem 1.5rem; display:flex; flex-direction:column; align-items:center; position:relative; overflow:auto; }
+    #view-create::before { content:''; position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse 70% 50% at 50% 20%, rgba(139,92,246,.11) 0%, transparent 70%), radial-gradient(circle at 85% 20%, rgba(201,168,76,.08), transparent 26%); }
+    .create-header { text-align:center; margin-bottom:2rem; animation:fadeDown .7s ease both; }
+    .create-header h2 { font-family:var(--ff-d); font-size:clamp(1.3rem,4vw,2rem); font-weight:700; letter-spacing:.15em; color:var(--gold); }
+    .create-header p { color:var(--txt-m); margin-top:.4rem; font-size:.86rem; }
+    .create-lore-banner {
+      max-width:700px; width:100%; background:rgba(167,139,250,.06); border:1px solid rgba(167,139,250,.2);
+      border-radius:var(--rl); padding:1.1rem 1.5rem; margin-bottom:1.8rem;
+      font-size:.82rem; color:var(--txt-m); line-height:1.8; animation:fadeDown .7s .1s ease both;
+    }
+    .create-lore-banner em { color:var(--orb); font-style:normal; }
+    .create-form { width:100%; max-width:760px; display:flex; flex-direction:column; gap:1.6rem; }
+    .form-block { animation:fadeUp .6s ease both; }
+    .form-block:nth-child(2){animation-delay:.1s} .form-block:nth-child(3){animation-delay:.2s}
+    .form-label { display:block; font-family:var(--ff-d); font-size:.68rem; letter-spacing:.22em; color:var(--txt-m); text-transform:uppercase; margin-bottom:.65rem; }
+    .form-input { width:100%; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r); padding:.82rem 1.1rem; color:var(--txt); font-family:var(--ff-b); font-size:.95rem; transition:var(--tr); outline:none; }
+    .form-input:focus { border-color:var(--gold-d); box-shadow:0 0 0 3px rgba(201,168,76,.1); }
+    .class-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(185px,1fr)); gap:.9rem; }
+    .class-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--rl); padding:1.2rem 1rem; cursor:pointer; transition:var(--tr); position:relative; overflow:hidden; }
+    .class-card::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%, rgba(201,168,76,.07) 0%, transparent 70%); opacity:0; transition:opacity .3s; }
+    .class-card:hover::before { opacity:1; }
+    .class-card:hover { border-color:var(--gold-d); transform:translateY(-3px); box-shadow:var(--sg),var(--sh); }
+    .class-card.selected { border-color:var(--gold); background:linear-gradient(160deg,#160f00 0%,var(--bg-card) 100%); box-shadow:0 0 26px rgba(201,168,76,.25),var(--sh); }
+    .class-card.selected::before { opacity:1; }
+    .class-card {
+      --class-accent: var(--gold);
+      --class-accent-soft: rgba(201,168,76,.18);
+      --class-accent-glow: rgba(201,168,76,.24);
+    }
+    .class-card:hover { border-color:var(--class-accent); box-shadow:0 0 22px var(--class-accent-glow), var(--sh); }
+    .class-card.selected {
+      border-color:var(--class-accent);
+      background:linear-gradient(160deg, var(--class-accent-soft) 0%, rgba(11,17,32,.96) 38%, var(--bg-card) 100%);
+      box-shadow:0 0 26px var(--class-accent-glow), var(--sh);
+    }
+    .class-icon {
+      width:52px; height:52px; border-radius:50%;
+      margin-bottom:.7rem; display:flex; align-items:center; justify-content:center;
+      font-size:1.55rem; color:var(--class-accent);
+      border:1px solid var(--class-accent);
+      background:radial-gradient(circle at 35% 35%, var(--class-accent-soft) 0%, rgba(10,16,28,.9) 72%);
+      box-shadow:0 0 18px var(--class-accent-glow), inset 0 0 18px rgba(255,255,255,.03);
+    }
+    .class-name { font-family:var(--ff-d); font-size:.88rem; font-weight:700; letter-spacing:.1em; color:var(--class-accent); margin-bottom:.3rem; }
+    .class-desc { font-size:.74rem; color:var(--txt-m); line-height:1.6; margin-bottom:.4rem; }
+    .class-lore { font-size:.68rem; color:var(--class-accent); font-style:italic; line-height:1.5; margin-bottom:.4rem; }
+    .class-bonus { display:inline-block; background:var(--class-accent-soft); border:1px solid var(--class-accent); border-radius:999px; padding:.16rem .58rem; font-size:.66rem; color:#eef2ff; letter-spacing:.06em; }
+    .create-error { background:rgba(224,82,82,.08); border:1px solid rgba(224,82,82,.3); border-radius:var(--r); padding:.65rem 1rem; color:var(--red); font-size:.8rem; display:none; }
+    .create-error.visible { display:block; }
+    .create-submit { text-align:center; }
+
+    /* ============================================================ PANEL LAYOUT ============================================================ */
+    #view-panel { width:100%; height:100%; display:flex; flex-direction:column; }
+    #view-panel::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 15% 10%, rgba(201,168,76,.05), transparent 20%), radial-gradient(circle at 90% 85%, rgba(77,217,232,.05), transparent 20%); }
+
+    /* TOPBAR */
+    .topbar {
+      height:var(--th); flex-shrink:0;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 1.3rem; background:linear-gradient(180deg, rgba(7,11,18,.96), rgba(7,11,18,.9));
+      border-bottom:1px solid var(--border); backdrop-filter:blur(12px);
+      position:sticky; top:0; z-index:100;
+    }
+    .topbar-left { display:flex; align-items:center; gap:.9rem; }
+    .topbar-logo { font-family:var(--ff-d); font-size:.85rem; font-weight:700; letter-spacing:.18em; color:var(--gold); }
+    .topbar-sep { width:1px; height:26px; background:var(--border); }
+    .topbar-level { width:34px; height:34px; border-radius:50%; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--ff-d); font-weight:900; font-size:.9rem; color:var(--gold); background:rgba(201,168,76,.08); box-shadow:0 0 12px rgba(201,168,76,.3); transition:var(--tr); }
+    .topbar-level.level-up { animation:levelUp .5s ease; }
+    .topbar-name { font-weight:600; font-size:.86rem; color:var(--txt); }
+    .topbar-class { font-size:.68rem; color:var(--txt-m); letter-spacing:.1em; }
+    .topbar-xp-wrap { display:flex; flex-direction:column; gap:2px; min-width:90px; }
+    .topbar-xp-label { font-size:.62rem; color:var(--txt-d); }
+    .topbar-xp-bar { height:4px; border-radius:9999px; background:rgba(255,255,255,.06); overflow:hidden; }
+    .topbar-xp-fill { height:100%; border-radius:9999px; background:linear-gradient(to right,var(--gold-d),var(--gold)); transition:width .6s cubic-bezier(.4,0,.2,1); }
+    .topbar-points { background:rgba(139,92,246,.15); border:1px solid rgba(139,92,246,.35); border-radius:9999px; padding:.22rem .75rem; font-size:.76rem; font-weight:700; color:var(--purple); display:flex; align-items:center; gap:.3rem; }
+    .topbar-right { display:flex; align-items:center; gap:.7rem; }
+
+    /* BODY */
+    .panel-body { flex:1; display:flex; overflow:hidden; min-height:0; }
+
+    /* SIDEBAR */
+    .sidebar { width:var(--sw); flex-shrink:0; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:1rem 0; overflow-y:auto; }
+    .sidebar-section-title { font-size:.58rem; letter-spacing:.25em; text-transform:uppercase; color:var(--txt-d); padding:.35rem 1.1rem .3rem; margin-top:.3rem; }
+    .sidebar-item { display:flex; align-items:center; gap:.7rem; padding:.6rem 1.1rem; cursor:pointer; transition:var(--tr); border-left:2px solid transparent; font-size:.8rem; color:var(--txt-m); user-select:none; }
+    .sidebar-item:hover { color:var(--txt); background:rgba(255,255,255,.025); }
+    .sidebar-item.active { color:var(--gold); border-left-color:var(--gold); background:rgba(201,168,76,.055); }
+    .sidebar-icon { font-size:.95rem; flex-shrink:0; width:19px; text-align:center; }
+    .sidebar-badge { margin-left:auto; background:rgba(201,168,76,.14); border:1px solid var(--gold-d); border-radius:9999px; padding:.04rem .42rem; font-size:.62rem; color:var(--gold); }
+    .sidebar-badge.purple { background:rgba(139,92,246,.14); border-color:var(--purple-d); color:var(--purple); }
+    .sidebar-footer { margin-top:auto; padding:.9rem 1.1rem; border-top:1px solid var(--border); }
+
+    /* CONTENT AREA */
+    .content-area { flex:1; overflow:hidden; padding:1rem 1.1rem 1.1rem; display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:1rem; min-height:0; height:100%; align-items:stretch; }
+    .main-stage { min-width:0; min-height:0; height:100%; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; padding-right:.2rem; display:flex; flex-direction:column; gap:1.1rem; }
+    .status-rail { min-width:0; min-height:0; height:100%; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; display:flex; flex-direction:column; gap:.9rem; }
+    .rail-card { background:linear-gradient(180deg, rgba(11,17,32,.96), rgba(9,14,24,.96)); border:1px solid var(--border); border-radius:var(--rl); padding:1rem; position:relative; overflow:hidden; }
+    .rail-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at top, rgba(201,168,76,.08), transparent 45%); pointer-events:none; }
+    .rail-title { font-family:var(--ff-d); font-size:.62rem; letter-spacing:.24em; color:var(--txt-m); text-transform:uppercase; margin-bottom:.75rem; position:relative; z-index:1; }
+    .orb-sanctum { position:relative; padding:1rem .9rem 1rem 1rem; min-height:220px; max-height:min(42vh, 360px); overflow-y:auto; scrollbar-gutter:stable; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:.7rem; text-align:center; }
+    .orb-core { width:94px; height:94px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.7rem; color:#fff; background:radial-gradient(circle at 35% 35%, #efe8ff 0%, #8b5cf6 32%, #35205e 66%, #0b1020 100%); box-shadow:0 0 30px rgba(167,139,250,.42), inset 0 0 18px rgba(255,255,255,.08); animation:orbStillGlow 5.6s ease-in-out infinite; position:relative; }
+    .orb-core::after { content:''; position:absolute; inset:-16px; border-radius:50%; border:1px solid rgba(167,139,250,.24); animation:ringBreathe 6s ease-in-out infinite; }
+    .orb-meter { width:100%; height:8px; border-radius:999px; background:rgba(255,255,255,.05); overflow:hidden; }
+    .orb-meter-fill { height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, #5d3a9b, #b18aff, #f0dc89); transition:width .7s ease; }
+    .orb-copy { font-size:.72rem; color:var(--txt-m); line-height:1.75; position:relative; z-index:1; }
+    .rail-identity { display:flex; align-items:center; gap:.8rem; position:relative; z-index:1; }
+    .rail-avatar { width:54px; height:54px; border-radius:50%; border:2px solid var(--avatar-accent,var(--gold)); display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--avatar-accent,var(--gold)); background:radial-gradient(circle at 35% 35%, var(--avatar-soft,rgba(201,168,76,.28)), rgba(10,16,28,.9) 70%); box-shadow:0 0 18px var(--avatar-glow,rgba(201,168,76,.24)); }
+    .rail-name { font-family:var(--ff-d); color:var(--gold-l); font-size:1.08rem; }
+    .rail-class { font-size:.64rem; letter-spacing:.18em; color:var(--cyan); text-transform:uppercase; margin-top:.18rem; }
+    .rail-statline { display:grid; grid-template-columns:1fr auto; gap:.45rem; padding:.35rem 0; border-bottom:1px solid rgba(255,255,255,.03); position:relative; z-index:1; }
+    .rail-statline:last-child { border-bottom:none; }
+    .rail-statline span:first-child { color:var(--txt-m); font-size:.72rem; }
+    .rail-statline span:last-child { color:var(--txt); font-weight:700; font-size:.8rem; }
+    .rail-skill-list { display:flex; flex-direction:column; gap:.45rem; position:relative; z-index:1; }
+    .rail-skill { display:grid; grid-template-columns:76px 1fr 20px; gap:.45rem; align-items:center; }
+    .rail-skill-name { font-size:.68rem; color:var(--txt-m); }
+    .rail-skill-track { height:6px; background:rgba(255,255,255,.05); border-radius:999px; overflow:hidden; }
+    .rail-skill-fill { height:100%; border-radius:999px; }
+    .rail-skill-val { font-size:.7rem; font-weight:700; text-align:right; }
+    .rail-phrase { font-size:.72rem; color:var(--txt-m); line-height:1.7; font-style:italic; position:relative; z-index:1; }
+    .rail-badges { display:flex; gap:.35rem; flex-wrap:wrap; }
+    .rail-badge { font-size:.62rem; padding:.12rem .48rem; border-radius:999px; border:1px solid rgba(255,255,255,.08); color:var(--txt-m); background:rgba(255,255,255,.03); }
+    .tab-pane { display:none; }
+    .tab-pane.active { display:flex; flex-direction:column; gap:1.1rem; animation:fadeIn .28s ease both; }
+    .section-hero { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem 1.15rem; background:linear-gradient(135deg, rgba(201,168,76,.10), rgba(77,217,232,.05) 55%, rgba(167,139,250,.08)); border:1px solid rgba(201,168,76,.12); border-radius:var(--rl); overflow:hidden; position:relative; box-shadow:0 10px 34px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.02); }
+    .section-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at right, rgba(167,139,250,.1), transparent 32%); pointer-events:none; }
+    .section-hero-eyebrow { font-family:var(--ff-d); font-size:.6rem; letter-spacing:.24em; color:var(--cyan); text-transform:uppercase; margin-bottom:.35rem; }
+    .section-hero-title { font-family:var(--ff-d); font-size:1rem; letter-spacing:.08em; color:var(--gold-l); margin-bottom:.25rem; }
+    .section-hero-copy { font-size:.75rem; line-height:1.7; color:var(--txt-m); max-width:720px; }
+    .section-hero-orb { width:56px; height:56px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:#fff; background:radial-gradient(circle at 35% 35%, #d7cbff 0%, #8b5cf6 45%, #27105a 100%); box-shadow:0 0 24px rgba(167,139,250,.45); animation:orbStillGlow 4.8s ease-in-out infinite; }
+
+    /* ============================================================ CARDS ============================================================ */
+    .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--rl); padding:1.2rem; position:relative; overflow:hidden; transition:var(--tr); }
+    .card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right, transparent, rgba(201,168,76,.3), transparent); }
+    .card:hover { border-color:var(--border-hi); }
+    .card-title { font-family:var(--ff-d); font-size:.66rem; letter-spacing:.22em; color:var(--txt-m); text-transform:uppercase; margin-bottom:.9rem; display:flex; align-items:center; gap:.45rem; }
+    .card-title .dot { width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+
+    /* ============================================================ PERFIL ============================================================ */
+    .profile-grid { display:grid; grid-template-columns:1fr 310px; gap:1.1rem; }
+    @media(max-width:900px){.profile-grid{grid-template-columns:1fr}}
+
+    .player-hero { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1rem; }
+    .player-avatar { width:58px; height:58px; border-radius:50%; flex-shrink:0; border:2px solid var(--avatar-accent,var(--gold)); color:var(--avatar-accent,var(--gold)); background:radial-gradient(circle at 35% 35%, var(--avatar-soft,rgba(201,168,76,.3)) 0%, rgba(10,16,28,.8) 70%); display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 0 18px var(--avatar-glow,rgba(201,168,76,.22)); }
+    .player-name { font-family:var(--ff-d); font-size:1.3rem; font-weight:700; color:var(--gold-l); letter-spacing:.05em; }
+    .player-class-tag { font-size:.7rem; letter-spacing:.18em; color:var(--cyan); text-transform:uppercase; margin-top:.12rem; }
+    .stat-row { display:flex; justify-content:space-between; align-items:center; padding:.35rem 0; border-bottom:1px solid rgba(255,255,255,.03); }
+    .stat-row:last-child { border-bottom:none; }
+    .stat-label { font-size:.74rem; color:var(--txt-m); }
+    .stat-value { font-weight:700; font-size:.88rem; color:var(--txt); }
+    .stat-value.gold { color:var(--gold); }
+    .xp-bar-wrap { margin:.8rem 0 .25rem; }
+    .xp-bar-label { display:flex; justify-content:space-between; font-size:.68rem; color:var(--txt-m); margin-bottom:.28rem; }
+    .xp-bar-bg { height:6px; border-radius:9999px; background:rgba(255,255,255,.05); overflow:hidden; }
+    .xp-bar-fill { height:100%; border-radius:9999px; background:linear-gradient(to right,var(--gold-d),var(--gold)); transition:width .6s cubic-bezier(.4,0,.2,1); }
+    .player-phrase { background:rgba(201,168,76,.06); border-left:2px solid var(--gold-d); padding:.6rem .85rem; margin-top:.85rem; font-size:.76rem; color:var(--txt-m); line-height:1.7; border-radius:0 var(--r) var(--r) 0; font-style:italic; }
+    .quest-note { margin-top:.9rem; background:rgba(77,217,232,.055); border:1px solid rgba(77,217,232,.14); border-radius:var(--r); padding:.72rem .82rem; }
+    .quest-note-title { font-family:var(--ff-d); font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:var(--cyan); margin-bottom:.25rem; }
+    .quest-note-copy { font-size:.74rem; line-height:1.65; color:var(--txt-m); }
+    .skill-bars { display:flex; flex-direction:column; gap:.5rem; margin-top:.9rem; }
+    .skill-bar-row { display:flex; align-items:center; gap:.65rem; }
+    .skill-bar-name { font-size:.7rem; color:var(--txt-m); width:70px; flex-shrink:0; }
+    .skill-bar-track { flex:1; height:5px; border-radius:9999px; background:rgba(255,255,255,.05); overflow:hidden; }
+    .skill-bar-fill { height:100%; border-radius:9999px; transition:width .5s cubic-bezier(.4,0,.2,1); animation:barGrow .6s ease both; }
+    .skill-bar-val { font-size:.7rem; font-weight:700; width:18px; text-align:right; flex-shrink:0; }
+
+    /* ============================================================ RADAR ============================================================ */
+    .radar-card { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .radar-legend { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.55rem .7rem; width:100%; margin-top:.85rem; }
+    .legend-item { display:flex; align-items:flex-start; gap:.45rem; font-size:.67rem; color:var(--txt-m); background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); border-radius:12px; padding:.48rem .58rem; }
+    .legend-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:.2rem; box-shadow:0 0 10px currentColor; }
+    .legend-copy { display:flex; flex-direction:column; gap:.14rem; }
+    .legend-name { color:var(--txt); font-size:.69rem; font-weight:700; letter-spacing:.04em; }
+    .legend-desc { color:var(--txt-m); line-height:1.5; }
+
+    /* ============================================================ DESARROLLO ============================================================ */
+    .develop-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+    @media(max-width:700px){.develop-grid{grid-template-columns:1fr}}
+    .assign-row { display:flex; align-items:center; gap:.65rem; padding:.55rem 0; border-bottom:1px solid rgba(255,255,255,.035); }
+    .assign-row:last-child { border-bottom:none; }
+    .skill-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .assign-name { flex:1; font-size:.82rem; font-weight:500; color:var(--txt); }
+    .assign-current { font-size:.74rem; color:var(--txt-m); min-width:17px; text-align:center; }
+    .assign-preview { font-size:.74rem; min-width:17px; text-align:center; color:var(--cyan); font-weight:700; }
+    .assign-preview.same { color:var(--txt-d); }
+    .assign-btn { width:24px; height:24px; border-radius:6px; border:none; cursor:pointer; background:rgba(255,255,255,.06); color:var(--txt); font-size:.9rem; transition:var(--tr); display:flex; align-items:center; justify-content:center; }
+    .assign-btn:hover { background:rgba(201,168,76,.2); color:var(--gold); }
+    .assign-btn:disabled { opacity:.22; cursor:not-allowed; }
+    .assign-footer { margin-top:.9rem; display:flex; gap:.65rem; flex-wrap:wrap; }
+    .pending-info { font-size:.72rem; color:var(--txt-d); margin-top:.45rem; }
+    .pending-info .pts { color:var(--cyan); font-weight:700; }
+    .pending-info .avail { color:var(--gold); font-weight:700; }
+
+    /* ============================================================ MISSIONS ============================================================ */
+    .module-block { margin-bottom:1.3rem; padding:1rem; border:1px solid rgba(201,168,76,.08); border-radius:var(--rl); background:linear-gradient(180deg, rgba(255,255,255,.015), rgba(255,255,255,.01)); box-shadow:inset 0 1px 0 rgba(255,255,255,.02); }
+    .module-block:last-child { margin-bottom:0; }
+    .module-title { font-family:var(--ff-d); font-size:.8rem; letter-spacing:.16em; color:var(--gold-l); margin-bottom:.8rem; display:flex; align-items:center; gap:.65rem; }
+    .module-progress-mini { font-size:.64rem; color:var(--txt-d); background:rgba(255,255,255,.04); padding:.08rem .45rem; border-radius:9999px; }
+    .missions-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); gap:.65rem; }
+    .mission-item { background:rgba(255,255,255,.022); border:1px solid rgba(255,255,255,.055); border-radius:var(--r); padding:.75rem .85rem; transition:var(--tr); position:relative; }
+    .mission-item:hover { border-color:var(--border-hi); }
+    .mission-item.completed { border-color:rgba(74,222,128,.2); background:rgba(74,222,128,.038); }
+    .mission-type-badge { font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; margin-bottom:.28rem; }
+    .mission-type-badge.main { color:var(--gold); }
+    .mission-type-badge.secondary { color:var(--cyan); }
+    .mission-name { font-size:.78rem; color:var(--txt); font-weight:500; line-height:1.4; }
+    .mission-status { position:absolute; top:.55rem; right:.65rem; font-size:.72rem; }
+    .mission-status.done { color:var(--green); }
+    .mission-status.pending { color:var(--txt-d); }
+    .mission-rewards { margin-top:.4rem; display:flex; gap:.35rem; flex-wrap:wrap; }
+    .reward-tag { font-size:.6rem; padding:.07rem .38rem; border-radius:9999px; border:1px solid; }
+    .reward-tag.xp  { color:var(--cyan); border-color:var(--cyan-d); }
+    .reward-tag.pts { color:var(--gold); border-color:var(--gold-d); }
+
+    /* ============================================================ CODES ============================================================ */
+    .code-input-wrap { display:flex; gap:.55rem; margin-bottom:.75rem; }
+    .code-input { flex:1; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:var(--r); padding:.72rem .95rem; color:var(--txt); font-family:var(--ff-m); font-size:1.2rem; letter-spacing:.25em; text-transform:uppercase; outline:none; transition:var(--tr); }
+    .code-input:focus { border-color:var(--gold-d); box-shadow:0 0 0 3px rgba(201,168,76,.1); }
+    .code-result { padding:.72rem .95rem; border-radius:var(--r); font-size:.8rem; line-height:1.5; display:none; }
+    .code-result.success { display:block; background:rgba(74,222,128,.055); border:1px solid rgba(74,222,128,.28); color:var(--green); }
+    .code-result.error   { display:block; background:rgba(224,82,82,.055);  border:1px solid rgba(224,82,82,.28);  color:var(--red); }
+    .code-result.warn    { display:block; background:rgba(201,168,76,.055); border:1px solid rgba(201,168,76,.28); color:var(--gold); }
+
+    /* ============================================================ TREE ============================================================ */
+    .tree-branches { display:flex; flex-direction:column; gap:1.2rem; }
+    .tree-branch { display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; }
+    .branch-label { font-size:.74rem; font-weight:600; letter-spacing:.07em; width:80px; flex-shrink:0; }
+    .branch-nodes { display:flex; gap:.65rem; align-items:center; }
+    .tree-node { width:54px; height:54px; border-radius:50%; border:2px solid; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1px; font-size:.6rem; text-align:center; font-weight:700; letter-spacing:.04em; }
+    .tree-node.locked   { border-color:var(--border); color:var(--txt-d); background:rgba(255,255,255,.012); cursor:default; }
+    .tree-node.available { animation:nodeGlow 2s ease-in-out infinite; cursor:pointer; }
+    .tree-node.unlocked { cursor:default; }
+    .node-req { font-size:.5rem; color:var(--txt-d); }
+    .branch-connector { width:16px; height:2px; flex-shrink:0; background:linear-gradient(to right,var(--border),transparent); }
+
+    /* ============================================================ ACHIEVEMENTS ============================================================ */
+    .achievements-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.65rem; }
+    .achievement-item { background:rgba(255,255,255,.022); border:1px solid rgba(255,255,255,.048); border-radius:var(--r); padding:.75rem .85rem; transition:var(--tr); position:relative; overflow:hidden; }
+    .achievement-item.unlocked { border-color:rgba(201,168,76,.26); background:rgba(201,168,76,.048); }
+    .achievement-item.locked { opacity:.48; filter:grayscale(.4); }
+    .ach-icon { font-size:1.3rem; margin-bottom:.22rem; display:block; }
+    .ach-name { font-size:.74rem; font-weight:600; color:var(--txt); margin-bottom:.12rem; }
+    .ach-desc { font-size:.65rem; color:var(--txt-m); line-height:1.4; }
+    .ach-badge { position:absolute; top:.38rem; right:.48rem; font-size:.6rem; color:var(--gold); }
+
+    /* ============================================================ INVENTORY ============================================================ */
+    .inv-section { margin-bottom:.9rem; }
+    .inv-section:last-child { margin-bottom:0; }
+    .inv-section-title { font-size:.64rem; letter-spacing:.15em; text-transform:uppercase; color:var(--txt-d); margin-bottom:.45rem; display:flex; align-items:center; gap:.35rem; }
+    .inv-section-title::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.04); }
+    .inv-tags { display:flex; flex-wrap:wrap; gap:.3rem; }
+    .inv-tag { background:rgba(255,255,255,.038); border:1px solid rgba(255,255,255,.065); border-radius:9999px; padding:.16rem .55rem; font-size:.68rem; color:var(--txt-m); font-family:var(--ff-m); }
+    .inv-tag.code { color:var(--cyan); border-color:var(--cyan-d); }
+    .inv-tag.node { color:var(--purple); border-color:var(--purple-d); }
+    .inv-tag.ach  { color:var(--gold); border-color:var(--gold-d); font-family:var(--ff-b); }
+    .inv-empty { font-size:.74rem; color:var(--txt-d); font-style:italic; }
+
+    /* ============================================================ TOAST ============================================================ */
+    #toast-container { position:fixed; bottom:1.4rem; right:1.4rem; z-index:9999; display:flex; flex-direction:column-reverse; gap:.5rem; pointer-events:none; }
+    .toast { background:var(--bg-card2); border:1px solid var(--border); border-radius:var(--r); padding:.82rem 1rem; min-width:240px; max-width:310px; box-shadow:var(--sh); animation:toastIn .32s ease both; pointer-events:all; display:flex; align-items:flex-start; gap:.6rem; }
+    .toast.out { animation:toastOut .28s ease forwards; }
+    .toast-icon { font-size:1.1rem; flex-shrink:0; }
+    .toast-title { font-size:.78rem; font-weight:700; color:var(--txt); margin-bottom:.08rem; }
+    .toast-msg { font-size:.7rem; color:var(--txt-m); line-height:1.4; }
+    .toast.success { border-color:rgba(74,222,128,.28); } .toast.success .toast-title { color:var(--green); }
+    .toast.error   { border-color:rgba(224,82,82,.28); }  .toast.error .toast-title   { color:var(--red); }
+    .toast.warn    { border-color:rgba(201,168,76,.28); } .toast.warn .toast-title    { color:var(--gold); }
+    .toast.level   { border-color:rgba(139,92,246,.5); box-shadow:0 0 26px rgba(139,92,246,.28),var(--sh); } .toast.level .toast-title { color:var(--purple); font-size:.9rem; }
+
+    /* ============================================================ MODAL ============================================================ */
+    #modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:8888; align-items:center; justify-content:center; }
+    #modal-overlay.open { display:flex; }
+    .modal-box { background:var(--bg-card2); border:1px solid rgba(224,82,82,.3); border-radius:var(--rl); padding:1.8rem; max-width:390px; width:90%; text-align:center; animation:fadeDown .28s ease both; }
+    .modal-title { font-family:var(--ff-d); font-size:1.05rem; color:var(--red); margin-bottom:.6rem; letter-spacing:.1em; }
+    .modal-msg { font-size:.83rem; color:var(--txt-m); line-height:1.7; margin-bottom:1.4rem; }
+    .modal-actions { display:flex; gap:.7rem; justify-content:center; }
+
+    /* ============================================================ SPARKLE ============================================================ */
+    .sparkle { position:fixed; pointer-events:none; z-index:9990; animation:sparkle .7s ease forwards; }
+
+    /* ============================================================ SCROLLBAR ============================================================ */
+    ::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:var(--border); border-radius:9999px; } ::-webkit-scrollbar-thumb:hover { background:var(--border-hi); }
+
+    /* ============================================================ RESPONSIVE ============================================================ */
+    @media(max-width:1180px){
+      :root { --sw:190px; }
+      .content-area { grid-template-columns:minmax(0,1fr) 276px; gap:.85rem; padding:.9rem; }
+      .rail-card { padding:.92rem; }
+    }
+    @media(max-width:980px){
+      :root { --sw:84px; }
+      .sidebar-section-title { display:none; }
+      .sidebar-item { justify-content:center; padding:.72rem .35rem; position:relative; }
+      .sidebar-item span:not(.sidebar-icon):not(.sidebar-badge) { display:none; }
+      .sidebar-icon { width:auto; font-size:1rem; }
+      .sidebar-badge { position:absolute; right:8px; top:6px; margin-left:0; }
+      .content-area { grid-template-columns:minmax(0,1fr) 252px; gap:.78rem; }
+    }
+    @media(max-width:760px){
+      body { padding:0; }
+      .view { width:100vw; height:100vh; border-radius:0; border:none; }
+      .content-area { padding:.72rem; grid-template-columns:1fr; gap:.72rem; }
+      .status-rail { order:-1; max-height:34vh; }
+      .main-stage { max-height:calc(100vh - var(--th) - 36vh - 2.1rem); }
+      .section-hero { align-items:flex-start; }
+      .profile-grid,.develop-grid { grid-template-columns:1fr; }
+      .orb-sanctum { max-height:30vh; }
+    }
+    @media(max-width:640px){
+      .sidebar { display:none; }
+      .topbar { padding:0 .75rem; }
+      .topbar-sep,.topbar-xp-wrap { display:none; }
+      .status-rail { max-height:38vh; }
+      .main-stage { max-height:none; overflow:visible; }
+      #view-panel { padding-bottom:56px; }
+    }
+    @media(max-height:820px){
+      .content-area { padding:.78rem; gap:.78rem; }
+      .orb-sanctum { max-height:280px; }
+    }
+    .mobile-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--bg-sidebar); border-top:1px solid var(--border); z-index:200; padding:.35rem 0; justify-content:space-around; }
+    @media(max-width:640px){ .mobile-nav { display:flex; } }
+    .mobile-nav-item { display:flex; flex-direction:column; align-items:center; gap:1px; font-size:.52rem; color:var(--txt-d); cursor:pointer; padding:.28rem .4rem; transition:var(--tr); border-radius:7px; }
+    .mobile-nav-item.active { color:var(--gold); }
+    .mobile-nav-item span:first-child { font-size:1rem; }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div id="toast-container"></div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">⚠ REINICIO TOTAL</div>
+    <p class="modal-msg">Esta acción borrará todo tu progreso.<br><strong>No puede deshacerse.</strong></p>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="modal-confirm">Sí, reiniciar todo</button>
+      <button class="btn btn-ghost"  id="modal-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ BIENVENIDA ============================================================ -->
+<div id="view-welcome" class="view">
+  <div class="welcome-stars" aria-hidden="true"></div>
+  <div class="welcome-veil" aria-hidden="true"></div>
+  <div class="welcome-embers" aria-hidden="true"><span style="left:14%;animation-duration:8s;animation-delay:.4s"></span><span style="left:23%;animation-duration:10s;animation-delay:1.8s"></span><span style="left:36%;animation-duration:9s;animation-delay:2.5s"></span><span style="left:49%;animation-duration:11s;animation-delay:1.2s"></span><span style="left:63%;animation-duration:9.5s;animation-delay:3.1s"></span><span style="left:76%;animation-duration:8.7s;animation-delay:2s"></span><span style="left:87%;animation-duration:10.5s;animation-delay:.9s"></span></div>
+  <div class="mountain-sigil" aria-hidden="true"></div>
+  <svg class="mountain-svg" viewBox="0 0 1600 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(77,217,232,.10)"/>
+        <stop offset="100%" stop-color="rgba(4,7,12,.95)"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,320 L0,240 L180,180 L260,220 L420,110 L560,210 L760,70 L940,200 L1120,95 L1260,205 L1410,130 L1600,220 L1600,320 Z" fill="rgba(10,16,28,.86)"/>
+    <path d="M0,320 L0,280 L140,250 L290,170 L470,255 L660,150 L860,260 L1020,160 L1180,255 L1330,195 L1510,250 L1600,220 L1600,320 Z" fill="rgba(6,10,18,.95)"/>
+  </svg>
+  <div class="welcome-inner">
+    <div class="orb-container">
+      <div class="orb-ring"></div><div class="orb-ring"></div><div class="orb-ring"></div>
+      <svg class="orb-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="og" cx="38%" cy="35%" r="60%">
+            <stop offset="0%"   stop-color="#d4c0ff"/>
+            <stop offset="45%"  stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#2a0a5e"/>
+          </radialGradient>
+          <radialGradient id="og2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#a78bfa" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="b4"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <circle cx="50" cy="50" r="48" fill="url(#og2)" filter="url(#b4)"/>
+        <circle cx="50" cy="50" r="38" fill="url(#og)"/>
+        <ellipse cx="39" cy="35" rx="12" ry="7" fill="rgba(255,255,255,.24)" transform="rotate(-25 39 35)"/>
+        <circle cx="33" cy="29" r="2.5" fill="rgba(255,255,255,.6)"/>
+        <circle cx="46" cy="24" r="1.3" fill="rgba(255,255,255,.4)"/>
+        <text x="50" y="57" text-anchor="middle" font-size="20" fill="rgba(255,255,255,.85)" font-family="serif">✦</text>
+      </svg>
+    </div>
+
+    <p class="welcome-eyebrow">✦ el despertar del orbe ✦</p>
+    <h1 class="welcome-title">GAMIFICACIÓN<br>DE 0 A 100</h1>
+    <p class="welcome-tagline">Cruza lo tradicional. Reúne el Orbe. Despierta lo lúdico.</p>
+
+    <div class="welcome-divider"><span class="welcome-divider-glyph">◆</span></div>
+
+    <div class="welcome-lore">
+      <div class="welcome-lore-title">✦ Crónica del viajero y la Montaña del Tigre</div>
+      <p>Existe un mundo cubierto por <em>lo tradicional</em>: clases que funcionan, sí, pero que a veces avanzan sin asombro, sin pulso y sin huella. No es un territorio roto. Solo es un territorio que <em>aún no ha descubierto todo lo que podría llegar a ser</em>.</p>
+      <p>Cuentan los viajeros más antiguos que en algún lugar entre la <em>montaña sagrada del Tigre</em> y los valles de la imaginación, hay un <strong>Orbe</strong>: una esfera de luz pura que contiene el conocimiento de todo lo que la experiencia puede ser cuando se diseña con intención, juego y propósito.</p>
+      <p>El Orbe fue escondido hace generaciones, cuando los que aprendían eran contados como vasijas vacías en lugar de fuegos vivos. Quien lo encuentre y lo coloque en la cima de la montaña <em>hará nacer nuevamente lo lúdico</em> en el mundo. Ese viajero eres tú: alguien que sabe que enseñar puede seguir siendo serio, pero también mucho más vivo, memorable y humano.</p>
+    </div>
+
+    <div class="welcome-btn-wrap">
+      <button class="btn btn-primary btn-xl" id="btn-start">⚔ COMENZAR LA TRAVESÍA</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ CREACIÓN ============================================================ -->
+<div id="view-create" class="view hidden">
+  <div class="create-header">
+    <h2>✦ FORJA AL VIAJERO</h2>
+    <p>Antes de ascender hacia la Montaña Sagrada del Tigre, debes elegir la mirada con la que transformarás el mundo.</p>
+  </div>
+
+  <div class="create-lore-banner">
+    El Orbe no se entrega a quien no tiene nombre. Los guardianes de la montaña reconocen a los viajeros por su <em>esencia</em>, no por sus credenciales. Elige la senda que ya llevas dentro.
+  </div>
+
+  <div class="create-form">
+    <div class="form-block">
+      <label class="form-label" for="input-name">✦ Nombre o alias del aventurero</label>
+      <input class="form-input" id="input-name" type="text" placeholder="¿Cómo te llamarán en esta travesía?" maxlength="32" autocomplete="off"/>
+    </div>
+    <div class="form-block">
+      <label class="form-label">✦ Elige tu clase</label>
+      <div class="class-grid" id="class-grid"></div>
+    </div>
+    <div class="create-error" id="create-error"></div>
+    <div class="create-submit form-block">
+      <button class="btn btn-primary" id="btn-create" style="font-size:.86rem;padding:.82rem 2.3rem;letter-spacing:.14em">⚔ FORJAR DESTINO</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PANEL ============================================================ -->
+<div id="view-panel" class="view hidden">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">⚔ GAMIFICACIÓN: DE 0 A 100</span>
+      <div class="topbar-sep"></div>
+      <div style="display:flex;align-items:center;gap:.65rem">
+        <div class="topbar-level" id="tb-level">1</div>
+        <div>
+          <div class="topbar-name"  id="tb-name">—</div>
+          <div class="topbar-class" id="tb-class">—</div>
+        </div>
+      </div>
+      <div class="topbar-sep"></div>
+      <div class="topbar-xp-wrap">
+        <div class="topbar-xp-label" id="tb-xp-label">0 / 60 XP</div>
+        <div class="topbar-xp-bar"><div class="topbar-xp-fill" id="tb-xp-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-points"><span>◆</span><span id="tb-points">0 pts</span></div>
+      <button class="btn btn-danger" id="btn-reset-panel" style="padding:.38rem .85rem">⟳ Reiniciar</button>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="sidebar-section-title">Aventurero</div>
+      <div class="sidebar-item active" data-tab="perfil"><span class="sidebar-icon">👤</span><span>Perfil</span></div>
+
+      <div class="sidebar-section-title">Progresión</div>
+      <div class="sidebar-item" data-tab="desarrollo"><span class="sidebar-icon">📈</span><span>Desarrollo</span><span class="sidebar-badge purple" id="sb-pts">0</span></div>
+      <div class="sidebar-item" data-tab="arbol"><span class="sidebar-icon">🌳</span><span>Árbol</span></div>
+
+      <div class="sidebar-section-title">Misiones</div>
+      <div class="sidebar-item" data-tab="misiones"><span class="sidebar-icon">⚔</span><span>Misiones</span><span class="sidebar-badge" id="sb-miss">0</span></div>
+      <div class="sidebar-item" data-tab="codigos"><span class="sidebar-icon">🔑</span><span>Códigos</span></div>
+
+      <div class="sidebar-section-title">Colección</div>
+      <div class="sidebar-item" data-tab="logros"><span class="sidebar-icon">🏆</span><span>Logros</span><span class="sidebar-badge" id="sb-ach">0</span></div>
+      <div class="sidebar-item" data-tab="inventario"><span class="sidebar-icon">🎒</span><span>Inventario</span></div>
+
+      <div class="sidebar-footer">
+        <div style="font-size:.63rem;color:var(--txt-d);line-height:1.6;font-style:italic">"El viaje hacia lo lúdico no tiene atajos, solo senderos bien diseñados."</div>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+      <div class="main-stage">
+
+      <!-- TAB PERFIL -->
+      <div class="tab-pane active" id="tab-perfil">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Crónica del viajero</div>
+            <div class="section-hero-title">La montaña observa cada decisión</div>
+            <div class="section-hero-copy">Vienes de un mundo donde lo tradicional domina las aulas. No es un reino oscuro ni perdido: simplemente aún no conoce todo lo que puede llegar a ser cuando el diseño, el juego y el propósito se encuentran. Cada misión completada te acerca a la montaña sagrada.</div>
+          </div>
+          <div class="section-hero-orb">✦</div>
+        </div>
+        <div class="profile-grid">
+          <div class="card">
+            <div class="card-title"><span class="dot"></span>Perfil del aventurero</div>
+            <div class="player-hero">
+              <div class="player-avatar" id="profile-avatar">⚔</div>
+              <div>
+                <div class="player-name" id="profile-name">—</div>
+                <div class="player-class-tag" id="profile-class">—</div>
+              </div>
+            </div>
+            <div class="xp-bar-wrap">
+              <div class="xp-bar-label"><span>Experiencia</span><span id="profile-xp-label">0 / 60 XP</span></div>
+              <div class="xp-bar-bg"><div class="xp-bar-fill" id="profile-xp-bar" style="width:0%"></div></div>
+            </div>
+            <div class="stat-row"><span class="stat-label">Nivel actual</span><span class="stat-value gold" id="profile-level-stat">1</span></div>
+            <div class="stat-row"><span class="stat-label">XP total</span><span class="stat-value" id="profile-xp-total">0</span></div>
+            <div class="stat-row"><span class="stat-label">Fragmentos reunidos</span><span class="stat-value" id="profile-missions">0</span></div>
+            <div class="stat-row"><span class="stat-label">Nodos desbloqueados</span><span class="stat-value" id="profile-nodes">0</span></div>
+            <div class="stat-row"><span class="stat-label">Logros obtenidos</span><span class="stat-value" id="profile-achs">0</span></div>
+            <div style="margin-top:.9rem">
+              <div class="card-title" style="margin-bottom:.5rem"><span class="dot"></span>Habilidades actuales</div>
+              <div class="skill-bars" id="skill-bars-profile"></div>
+            </div>
+            <div class="player-phrase" id="player-phrase">Aguarda tu primera misión, aventurero.</div>
+            <div class="quest-note">
+              <div class="quest-note-title">Próximo umbral</div>
+              <div class="quest-note-copy" id="quest-note-copy">Encuentra un nuevo fragmento del Orbe activando un código de misión.</div>
+            </div>
+          </div>
+          <div class="card radar-card">
+            <div class="card-title"><span class="dot"></span>Radar de habilidades</div>
+            <canvas id="radarCanvas" width="420" height="320"></canvas>
+            <div class="radar-legend" id="radar-legend"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB DESARROLLO -->
+      <div class="tab-pane" id="tab-desarrollo">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Forja del personaje</div>
+            <div class="section-hero-title">Distribuye tu poder con intención</div>
+            <div class="section-hero-copy">No basta con reunir fragmentos. Debes decidir qué rasgo de tu perfil se afilará para que, al llegar a la cima, el Orbe responda a tu verdadera forma de enseñar.</div>
+          </div>
+          <div class="section-hero-orb">◆</div>
+        </div>
+        <div class="develop-grid">
+          <div class="card">
+            <div class="card-title"><span class="dot"></span>Asignar puntos de desarrollo</div>
+            <div id="assign-rows"></div>
+            <div class="pending-info">Asignados: <span class="pts" id="assign-pending-count">0</span> / Disponibles: <span class="avail" id="assign-available-display">0</span></div>
+            <div class="assign-footer">
+              <button class="btn btn-primary" id="btn-confirm-dev" style="font-size:.74rem;padding:.55rem 1rem">✦ Confirmar desarrollo</button>
+              <button class="btn btn-ghost" id="btn-cancel-assign" style="font-size:.74rem;padding:.55rem .75rem">Limpiar</button>
+            </div>
+          </div>
+          <div class="card radar-card">
+            <div class="card-title"><span class="dot"></span>Vista previa</div>
+            <canvas id="radarCanvasDev" width="420" height="320"></canvas>
+            <div style="font-size:.66rem;color:var(--txt-d);text-align:center;margin-top:.4rem">El radar usa solo color. Consulta la simbología bajo el radar principal.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB MISIONES -->
+      <div class="tab-pane" id="tab-misiones">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Mapa de avance</div>
+            <div class="section-hero-title">Cada región del viaje guarda un fragmento</div>
+            <div class="section-hero-copy">Los módulos esconden claves, retos y fragmentos que te acercan a la cima. Las misiones principales pesan más, pero las secundarias iluminan rutas ocultas.</div>
+          </div>
+          <div class="section-hero-orb">⚔</div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Módulos y misiones</div>
+          <div id="missions-container"></div>
+        </div>
+      </div>
+
+      <!-- TAB CÓDIGOS -->
+      <div class="tab-pane" id="tab-codigos">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Activación arcana</div>
+            <div class="section-hero-title">Cada código despierta un fragmento</div>
+            <div class="section-hero-copy">Las claves que encuentres en el camino no son accesorios: son mecanismos antiguos capaces de abrir las grietas del Orbe y fortalecer tu build.</div>
+          </div>
+          <div class="section-hero-orb">🔑</div>
+        </div>
+        <div class="card" style="max-width:560px">
+          <div class="card-title"><span class="dot"></span>Validar código de misión</div>
+          <div class="code-input-wrap">
+            <input class="code-input" id="code-input" type="text" maxlength="6" placeholder="XXX000" autocomplete="off" spellcheck="false"/>
+            <button class="btn btn-secondary" id="btn-validate-code" style="font-size:.74rem;padding:.55rem .85rem;letter-spacing:.08em">ACTIVAR</button>
+          </div>
+          <div id="code-result" class="code-result"></div>
+          <div style="margin-top:.9rem;padding:.75rem .95rem;background:rgba(255,255,255,.022);border-radius:var(--r);font-size:.72rem;color:var(--txt-d);line-height:1.8">
+            Formato: <span style="color:var(--cyan);font-family:var(--ff-m)">XXX000</span> (3 letras + 3 números)<br>
+            Los códigos se entregan al completar cada actividad del curso.
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB ÁRBOL -->
+      <div class="tab-pane" id="tab-arbol">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Ramas del destino</div>
+            <div class="section-hero-title">Las runas despiertan cuando maduras</div>
+            <div class="section-hero-copy">Cuando una habilidad madura, la montaña te reconoce. Entonces una rama del árbol despierta y permite activar un nuevo nodo.</div>
+          </div>
+          <div class="section-hero-orb">🌳</div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Árbol de habilidades</div>
+          <div class="tree-branches" id="tree-container"></div>
+          <div style="font-size:.68rem;color:var(--txt-d);margin-top:.9rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.04)">
+            Haz clic en un nodo <span style="color:var(--cyan)">disponible ◆</span> para activarlo. El número indica el nivel requerido de esa habilidad.
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB LOGROS -->
+      <div class="tab-pane" id="tab-logros">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Registro del viaje</div>
+            <div class="section-hero-title">Tus reliquias ya están quedando en el mapa</div>
+            <div class="section-hero-copy">Cada logro es una prueba de que el mundo tradicional ya no te contiene por completo: estás construyendo otra forma de recorrerlo.</div>
+          </div>
+          <div class="section-hero-orb">🏆</div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Logros del aventurero</div>
+          <div class="achievements-grid" id="achievements-container"></div>
+        </div>
+      </div>
+
+      <!-- TAB INVENTARIO -->
+      <div class="tab-pane" id="tab-inventario">
+        <div class="section-hero">
+          <div>
+            <div class="section-hero-eyebrow">Bitácora del viajero</div>
+            <div class="section-hero-title">Toda luz reunida deja registro</div>
+            <div class="section-hero-copy">Aquí quedan reunidos los códigos, nodos y logros que has conseguido. Es la evidencia de tu ascenso hacia la cima del Tigre.</div>
+          </div>
+          <div class="section-hero-orb">🎒</div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Inventario del aventurero</div>
+          <div id="inventory-container"></div>
+        </div>
+      </div>
+
+      </div><!-- /main-stage -->
+      <aside class="status-rail">
+        <div class="rail-card orb-sanctum">
+          <div class="rail-title">Estado del Orbe</div>
+          <div class="orb-core" id="rail-orb-core">✦</div>
+          <div class="orb-meter"><div class="orb-meter-fill" id="orb-meter-fill"></div></div>
+          <div class="orb-copy" id="orb-copy">El Orbe apenas comienza a responder. Cada misión abre grietas de luz en su superficie.</div>
+        </div>
+        <div class="rail-card">
+          <div class="rail-title">Viajero activo</div>
+          <div class="rail-identity">
+            <div class="rail-avatar" id="rail-avatar">⚔</div>
+            <div><div class="rail-name" id="rail-name">—</div><div class="rail-class" id="rail-class">—</div></div>
+          </div>
+          <div class="rail-statline"><span>Nivel</span><span id="rail-level">1</span></div>
+          <div class="rail-statline"><span>XP total</span><span id="rail-xp">0</span></div>
+          <div class="rail-statline"><span>Puntos libres</span><span id="rail-points">0</span></div>
+          <div class="rail-statline"><span>Misiones activadas</span><span id="rail-missions">0</span></div>
+          <div class="rail-statline"><span>Nodos despiertos</span><span id="rail-nodes">0</span></div>
+          <div class="rail-statline"><span>Logros</span><span id="rail-achs">0</span></div>
+        </div>
+        <div class="rail-card">
+          <div class="rail-title">Afinidad del viajero</div>
+          <div class="rail-skill-list" id="rail-skills"></div>
+          <div class="rail-phrase" id="rail-phrase">Tu viaje apenas comienza.</div>
+        </div>
+        <div class="rail-card">
+          <div class="rail-title">Sellos del ascenso</div>
+          <div class="rail-badges"><span class="rail-badge">4 módulos</span><span class="rail-badge">3 rutas de contenido</span><span class="rail-badge">1 ascenso final</span></div>
+        </div>
+      </aside>
+    </div><!-- /content-area -->
+  </div><!-- /panel-body -->
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-item active" data-tab="perfil"><span>👤</span><span>Perfil</span></div>
+    <div class="mobile-nav-item" data-tab="desarrollo"><span>📈</span><span>Puntos</span></div>
+    <div class="mobile-nav-item" data-tab="misiones"><span>⚔</span><span>Misiones</span></div>
+    <div class="mobile-nav-item" data-tab="codigos"><span>🔑</span><span>Código</span></div>
+    <div class="mobile-nav-item" data-tab="logros"><span>🏆</span><span>Logros</span></div>
+  </nav>
+
+</div><!-- /view-panel -->
+
+<script>
+/* ============================================================ CONFIG ============================================================ */
+const SAVE_KEY = 'g0100_v7';
+
+const SKILLS_CFG = [
+  { key:'narrativa',   label:'Narrativa',    color:'#c9a84c', classId:'Narrador',   desc:'Da sentido, ambientación y relato al viaje.' },
+  { key:'diseno',      label:'Diseño',       color:'#4dd9e8', classId:'Arquitecto', desc:'Ordena sistemas, secuencias y estructuras.' },
+  { key:'creatividad', label:'Creatividad',  color:'#8b5cf6', classId:'Alquimista', desc:'Transforma ideas en experiencias nuevas.' },
+  { key:'motivacion',  label:'Motivación',   color:'#4ade80', classId:'Guardián',   desc:'Enciende energía, vínculo y permanencia.' },
+  { key:'estrategia',  label:'Estrategia',   color:'#e05252', classId:'Estratega',  desc:'Calcula rutas, decisiones y equilibrio.' },
+];
+
+const CLASS_ICONS = { Narrador:'📖', Arquitecto:'🏛', Alquimista:'⚗', Estratega:'♟', Guardián:'🛡' };
+
+function hexToRgba(hex, alpha){
+  const h = (hex||'#c9a84c').replace('#','');
+  const full = h.length===3 ? h.split('').map(ch=>ch+ch).join('') : h;
+  const n = parseInt(full, 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+function getClassMeta(className){
+  const cls = CLASSES_CFG.find(c=>c.id===className);
+  const skill = SKILLS_CFG.find(s=>s.key===cls?.skill) || SKILLS_CFG[0];
+  return {
+    icon: cls?.icon || '⚔',
+    color: skill.color,
+    soft: hexToRgba(skill.color, .18),
+    glow: hexToRgba(skill.color, .28),
+  };
+}
+
+const CLASSES_CFG = [
+  { id:'Narrador',   icon:'📖', skill:'narrativa',   bonus:'+1 Narrativa',
+    desc:'Especialista en ambientación, relato, inmersión y sentido del viaje. Su poder nace de la historia.',
+    lore:'"Los Narradores encontraron el Orbe en una biblioteca olvidada, entre libros que nadie leía."' },
+  { id:'Arquitecto', icon:'🏛', skill:'diseno',       bonus:'+1 Diseño',
+    desc:'Especialista en estructura, organización, secuencia y diseño de experiencias. Ve el sistema en el caos.',
+    lore:'"Los Arquitectos trazaron el primer mapa hacia la montaña del Tigre."' },
+  { id:'Alquimista', icon:'⚗',  skill:'creatividad',  bonus:'+1 Creatividad',
+    desc:'Especialista en creatividad, adaptación, mezcla de recursos e innovación. Transforma lo ordinario.',
+    lore:'"Los Alquimistas crearon el Orbe mezclando conocimiento con juego e intención."' },
+  { id:'Estratega',  icon:'♟',  skill:'estrategia',  bonus:'+1 Estrategia',
+    desc:'Especialista en toma de decisiones, equilibrio, rutas y lógica de progresión. Cada movimiento tiene propósito.',
+    lore:'"Los Estrategas calcularon el momento exacto para colocar el Orbe en la cima."' },
+  { id:'Guardián',   icon:'🛡',  skill:'motivacion',  bonus:'+1 Motivación',
+    desc:'Especialista en motivación, acompañamiento, clima y conexión. Enciende el fuego en quienes le rodean.',
+    lore:'"Los Guardianes protegieron el camino para que todos pudieran llegar."' },
+];
+
+/* ============================================================ NIVELES ============================================================ */
+const LEVEL_TABLE = [
+  {level:1,xp:0},{level:2,xp:60},{level:3,xp:140},{level:4,xp:240},{level:5,xp:360},{level:6,xp:500}
+];
+
+/* ============================================================ MÓDULOS — más puntos ============================================================ */
+const MODULES_CFG = [
+  {id:1, name:'Módulo 1: Primer Despertar', missions:[
+    {id:'AXR314',type:'main',      name:'La llamada del viajero',  pts:5,xp:60},
+    {id:'LUM582',type:'secondary', name:'Ecos del camino olvidado',   pts:2,xp:25},
+    {id:'VYR207',type:'secondary', name:'La primera bifurcación',     pts:2,xp:25},
+  ]},
+  {id:2, name:'Módulo 2: Senderos del Sistema', missions:[
+    {id:'NEX451',type:'main',      name:'El pulso de los sistemas', pts:5,xp:60},
+    {id:'ORB126',type:'secondary', name:'Fragmentos del Orbe',        pts:2,xp:25},
+    {id:'KRN693',type:'secondary', name:'Guardianes del equilibrio',  pts:2,xp:25},
+  ]},
+  {id:3, name:'Módulo 3: Forja de la Experiencia', missions:[
+    {id:'ZEN248',type:'main',      name:'El mapa de lo posible',      pts:5,xp:60},
+    {id:'ELD570',type:'secondary', name:'Ruinas de lo convencional',  pts:2,xp:25},
+    {id:'MIR831',type:'secondary', name:'El espejo del jugador',      pts:2,xp:25},
+  ]},
+  {id:4, name:'Módulo 4: Ascenso Final', missions:[
+    {id:'ARC419',type:'main',      name:'Ascenso a la montaña sagrada',pts:5,xp:60},
+    {id:'NEB264',type:'secondary', name:'Niebla antes del umbral',    pts:2,xp:25},
+    {id:'CYR905',type:'secondary', name:'El nacimiento de lo lúdico',  pts:2,xp:25},
+  ]},
+];
+const CODE_MAP = {};
+MODULES_CFG.forEach(mod => mod.missions.forEach(m => { CODE_MAP[m.id] = {...m, moduleId:mod.id}; }));
+
+/* ============================================================ ÁRBOL ============================================================ */
+const TREE_CFG = SKILLS_CFG.map(s => ({
+  skill:s.key, label:s.label, color:s.color,
+  nodes:[{n:1,req:3,name:`${s.label} I`},{n:2,req:5,name:`${s.label} II`},{n:3,req:8,name:`${s.label} III`}]
+}));
+
+/* ============================================================ LOGROS ============================================================ */
+const ACH_CFG = [
+  {id:'primer_paso',      icon:'🌟',name:'Primer paso',        desc:'Personaje creado. La travesía comienza.'},
+  {id:'codigo_activado',  icon:'🔑',name:'Código activado',    desc:'Primer código correcto ingresado.'},
+  {id:'mision_central',   icon:'⚔', name:'Misión central',     desc:'Primera misión principal completada.'},
+  {id:'explorador',       icon:'🗺', name:'Explorador lateral', desc:'Primera misión secundaria completada.'},
+  {id:'primer_dev',       icon:'📈',name:'Primer desarrollo',  desc:'Primera asignación de puntos confirmada.'},
+  {id:'nodo_despierto',   icon:'💡',name:'Nodo despierto',     desc:'Primer nodo del árbol desbloqueado.'},
+  {id:'especialista',     icon:'🏆',name:'Especialista',       desc:'Una habilidad llegó a nivel 5.'},
+  {id:'equilibrado',      icon:'⚖', name:'Perfil equilibrado', desc:'Todas las habilidades en 3 o más.'},
+  {id:'ruta_completa',    icon:'✅',name:'Ruta completa',      desc:'Las 3 misiones de un módulo completadas.'},
+  {id:'constructor_epico',icon:'👑',name:'Constructor épico',  desc:'Alcanzado el nivel 5.'},
+];
+
+/* ============================================================ FRASES ============================================================ */
+const PHRASES = {
+  narrativa:   '"Tu arte es construir mundos donde otros quieran perderse. El relato es tu brújula hacia la cima."',
+  diseno:      '"Ves sistemas donde otros ven caos. La estructura que imaginas guía a quienes vendrán."',
+  creatividad: '"Transformas lo ordinario en algo nunca visto. El Orbe brilla más fuerte en tus manos."',
+  motivacion:  '"Enciendes la chispa en quienes te rodean. Tu energía es el combustible que mueve montañas."',
+  estrategia:  '"Calculas cada paso. Donde otros ven bifurcaciones, tú ya conoces la ruta hacia el Tigre."',
+  default:     '"El Orbe espera. Cada código completado te acerca a la montaña sagrada del Tigre."',
+};
+
+/* ============================================================ PLAYER STATE ============================================================ */
+let player = null;
+let currentTab = 'perfil';
+
+function createDefaultPlayer(name, cls) {
+  const skills = {narrativa:1,diseno:1,creatividad:1,motivacion:1,estrategia:1};
+  const c = CLASSES_CFG.find(x=>x.id===cls);
+  if (c) skills[c.skill]++;
+  return { name, class:cls, skills,
+    pendingSkills:{narrativa:0,diseno:0,creatividad:0,motivacion:0,estrategia:0},
+    points:0, xp:0, level:1,
+    codesUsed:[], completedMissions:[], unlockedNodes:[], achievements:['primer_paso'],
+  };
+}
+
+/* ============================================================ SAVE/LOAD ============================================================ */
+const save = () => localStorage.setItem(SAVE_KEY, JSON.stringify(player));
+const load = () => { try{ const r=localStorage.getItem(SAVE_KEY); return r?JSON.parse(r):null; }catch{return null;} };
+const resetAll = () => { localStorage.removeItem(SAVE_KEY); player=null; location.reload(); };
+
+/* ============================================================ LEVEL CALC ============================================================ */
+function calcLevel(xp) {
+  let l=1;
+  for(let i=LEVEL_TABLE.length-1;i>=0;i--) { if(xp>=LEVEL_TABLE[i].xp){l=LEVEL_TABLE[i].level;break;} }
+  return l;
+}
+function xpNext(lv){ const n=LEVEL_TABLE.find(l=>l.level===lv+1); return n?n.xp:null; }
+function xpPct(xp,lv){
+  const cur=LEVEL_TABLE.find(l=>l.level===lv); const nxt=xpNext(lv);
+  if(!nxt) return 100;
+  return Math.min(100,Math.round(((xp-(cur?cur.xp:0))/(nxt-(cur?cur.xp:0)))*100));
+}
+function dominant(skills){
+  let best=null,bv=-1;
+  SKILLS_CFG.forEach(s=>{ if(skills[s.key]>bv){bv=skills[s.key];best=s.key;} });
+  return (SKILLS_CFG.filter(s=>skills[s.key]===bv).length>1||bv<=1)?'default':best;
+}
+
+/* ============================================================ ACHIEVEMENTS ============================================================ */
+function checkAch(){
+  if(!player) return;
+  const ul = id => {
+    if(!player.achievements.includes(id)){
+      player.achievements.push(id);
+      const c=ACH_CFG.find(a=>a.id===id);
+      if(c){ toast('warn',`🏆 Logro: ${c.name}`,c.desc); spawnSparkles(); }
+    }
+  };
+  if(player.codesUsed.length>=1) ul('codigo_activado');
+  if(player.completedMissions.some(c=>CODE_MAP[c]?.type==='main'))      ul('mision_central');
+  if(player.completedMissions.some(c=>CODE_MAP[c]?.type==='secondary')) ul('explorador');
+  if(player.unlockedNodes.length>=1) ul('nodo_despierto');
+  if(SKILLS_CFG.some(s=>player.skills[s.key]>=5))  ul('especialista');
+  if(SKILLS_CFG.every(s=>player.skills[s.key]>=3)) ul('equilibrado');
+  MODULES_CFG.forEach(mod=>{ if(mod.missions.every(m=>player.completedMissions.includes(m.id))) ul('ruta_completa'); });
+  if(player.level>=5) ul('constructor_epico');
+}
+
+/* ============================================================ TOAST ============================================================ */
+function toast(type, title, msg, dur=4000){
+  const c=document.getElementById('toast-container');
+  const icons={success:'✅',error:'❌',warn:'⚠',level:'⬆'};
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.innerHTML=`<div class="toast-icon">${icons[type]||'•'}</div><div><div class="toast-title">${title}</div>${msg?`<div class="toast-msg">${msg}</div>`:''}</div>`;
+  c.appendChild(el);
+  setTimeout(()=>{ el.classList.add('out'); el.addEventListener('animationend',()=>el.remove(),{once:true}); },dur);
+}
+
+/* ============================================================ SPARKLES ============================================================ */
+function spawnSparkles(){
+  for(let i=0;i<9;i++) setTimeout(()=>{
+    const el=document.createElement('div'); el.className='sparkle';
+    el.style.cssText=`left:${15+Math.random()*70}vw;top:${15+Math.random()*70}vh;color:var(--gold);font-size:${9+Math.random()*13}px`;
+    el.textContent=['✦','★','◆','✧'][Math.floor(Math.random()*4)];
+    document.body.appendChild(el);
+    el.addEventListener('animationend',()=>el.remove(),{once:true});
+  },i*55);
+}
+
+/* ============================================================ BG CANVAS ============================================================ */
+function initBG(){
+  const cv=document.getElementById('bg-canvas');
+  const ctx=cv.getContext('2d');
+  let W,H;
+  const resize=()=>{ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; };
+  resize(); window.addEventListener('resize',resize);
+  const pts=Array.from({length:80},()=>({
+    x:Math.random()*3000,y:Math.random()*3000,r:Math.random()*1.1+.3,
+    sp:Math.random()*.12+.04, op:Math.random()*.55+.1,
+    tw:Math.random()*Math.PI*2,
+    col:['#c9a84c','#4dd9e8','#8b5cf6','#ffffff'][Math.floor(Math.random()*4)]
+  }));
+  let t=0;
+  const nebulae=[
+    {x:.15,y:.2,r:.3,col:'rgba(12,30,58,.75)'},{x:.75,y:.7,r:.26,col:'rgba(18,9,42,.65)'},{x:.5,y:.45,r:.38,col:'rgba(8,18,30,.55)'}
+  ];
+  const draw=()=>{
+    ctx.clearRect(0,0,W,H);
+    nebulae.forEach(n=>{
+      const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r*Math.max(W,H));
+      g.addColorStop(0,n.col); g.addColorStop(1,'transparent');
+      ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r*Math.max(W,H),0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+    });
+    pts.forEach(p=>{
+      p.tw+=.018;
+      const a=p.op*(.6+.4*Math.sin(p.tw));
+      ctx.beginPath();
+      ctx.arc(((p.x+t*p.sp)%W+W)%W,((p.y+t*p.sp*.28)%H+H)%H,p.r,0,Math.PI*2);
+      ctx.globalAlpha=a;
+      ctx.fillStyle=p.col;
+      ctx.fill();
+      ctx.globalAlpha=1;
+    });
+    for(let i=0;i<2;i++){
+      const y=((t*.25+i*(H/2))%H+H)%H;
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y);
+      ctx.strokeStyle=`rgba(201,168,76,${.01+.007*Math.sin(t*.009+i)})`;
+      ctx.lineWidth=1; ctx.stroke();
+    }
+    t++; requestAnimationFrame(draw);
+  };
+  draw();
+}
+
+/* ============================================================ VIEWS ============================================================ */
+const showView = id => { document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden')); document.getElementById(id)?.classList.remove('hidden'); };
+
+/* ============================================================ TABS ============================================================ */
+function switchTab(id){
+  currentTab=id;
+  document.querySelectorAll('.sidebar-item[data-tab],.mobile-nav-item[data-tab]').forEach(el=>el.classList.toggle('active',el.dataset.tab===id));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('active',p.id===`tab-${id}`));
+  if(id==='desarrollo'){ renderAssignRows(); renderRadarCanvas(null,'radarCanvasDev'); }
+  if(id==='misiones') renderMissions();
+  if(id==='arbol') renderTree();
+  if(id==='logros') renderAch();
+  if(id==='inventario') renderInv();
+}
+
+/* ============================================================ RENDER ALL ============================================================ */
+function renderPanel(){
+  if(!player) return;
+  renderTopbar(); renderProfile(); renderRail();
+  renderRadarCanvas(null,'radarCanvas');
+  renderSidebarBadges();
+  switchTab(currentTab);
+}
+
+/* ============================================================ TOPBAR ============================================================ */
+function renderTopbar(){
+  const p=player;
+  document.getElementById('tb-name').textContent  = p.name;
+  document.getElementById('tb-class').textContent = p.class.toUpperCase();
+  document.getElementById('tb-level').textContent = p.level;
+  document.getElementById('tb-points').textContent= `${p.points} pts`;
+  const nx=xpNext(p.level);
+  document.getElementById('tb-xp-label').textContent= nx?`${p.xp}/${nx} XP`:`${p.xp} — Máx`;
+  document.getElementById('tb-xp-fill').style.width= xpPct(p.xp,p.level)+'%';
+}
+
+/* ============================================================ SIDEBAR BADGES ============================================================ */
+function renderSidebarBadges(){
+  document.getElementById('sb-pts').textContent  = player.points;
+  document.getElementById('sb-miss').textContent = player.completedMissions.length;
+  document.getElementById('sb-ach').textContent  = player.achievements.length;
+}
+
+/* ============================================================ RAIL ============================================================ */
+function renderRail(){
+  const p=player;
+  const totalMissions = MODULES_CFG.flatMap(m=>m.missions).length;
+  const completed = p.completedMissions.length;
+  const orbPct = Math.round((completed/totalMissions)*100);
+  const railMeta = getClassMeta(p.class);
+  const railAvatar = document.getElementById('rail-avatar');
+  railAvatar.textContent = railMeta.icon;
+  railAvatar.style.setProperty('--avatar-accent', railMeta.color);
+  railAvatar.style.setProperty('--avatar-soft', railMeta.soft);
+  railAvatar.style.setProperty('--avatar-glow', railMeta.glow);
+  document.getElementById('rail-name').textContent = p.name;
+  const railClass = document.getElementById('rail-class');
+  railClass.textContent = p.class.toUpperCase();
+  railClass.style.color = railMeta.color;
+  document.getElementById('rail-level').textContent = p.level;
+  document.getElementById('rail-xp').textContent = p.xp;
+  document.getElementById('rail-points').textContent = p.points;
+  document.getElementById('rail-missions').textContent = completed;
+  document.getElementById('rail-nodes').textContent = p.unlockedNodes.length;
+  document.getElementById('rail-achs').textContent = p.achievements.length;
+  document.getElementById('orb-meter-fill').style.width = orbPct + '%';
+  const orbCopy = document.getElementById('orb-copy');
+  if(completed===0) orbCopy.textContent = 'El Orbe apenas comienza a responder. Cada misión abre grietas de luz en su superficie.';
+  else if(completed<6) orbCopy.textContent = 'La luz del Orbe ya pulsa en tu inventario. La montaña del Tigre empieza a reconocerte.';
+  else if(completed<12) orbCopy.textContent = 'El Orbe ha reunido suficiente energía para alterar el paisaje de lo tradicional.';
+  else orbCopy.textContent = 'El Orbe está completo. Solo queda elevarlo hasta la cima y dejar que lo lúdico nazca de nuevo.';
+  document.getElementById('rail-phrase').textContent = PHRASES[dominant(p.skills)]||PHRASES.default;
+  const rs=document.getElementById('rail-skills'); rs.innerHTML='';
+  SKILLS_CFG.forEach(s=>{
+    const v=p.skills[s.key];
+    const row=document.createElement('div');
+    row.className='rail-skill';
+    row.innerHTML = `<span class="rail-skill-name">${s.label}</span><div class="rail-skill-track"><div class="rail-skill-fill" style="width:${(v/10)*100}%;background:${s.color}"></div></div><span class="rail-skill-val" style="color:${s.color}">${v}</span>`;
+    rs.appendChild(row);
+  });
+}
+
+/* ============================================================ PROFILE ============================================================ */
+function renderProfile(){
+  const p=player;
+  const profileMeta = getClassMeta(p.class);
+  const profileAvatar = document.getElementById('profile-avatar');
+  profileAvatar.textContent = profileMeta.icon;
+  profileAvatar.style.setProperty('--avatar-accent', profileMeta.color);
+  profileAvatar.style.setProperty('--avatar-soft', profileMeta.soft);
+  profileAvatar.style.setProperty('--avatar-glow', profileMeta.glow);
+  document.getElementById('profile-name').textContent     = p.name;
+  const profileClass = document.getElementById('profile-class');
+  profileClass.textContent = p.class.toUpperCase();
+  profileClass.style.color = profileMeta.color;
+  document.getElementById('profile-level-stat').textContent= p.level;
+  document.getElementById('profile-xp-total').textContent = p.xp;
+  document.getElementById('profile-missions').textContent = p.completedMissions.length;
+  document.getElementById('profile-nodes').textContent    = p.unlockedNodes.length;
+  document.getElementById('profile-achs').textContent     = p.achievements.length;
+  const nx=xpNext(p.level);
+  document.getElementById('profile-xp-label').textContent= nx?`${p.xp} / ${nx} XP`:`${p.xp} — Nivel máximo`;
+  document.getElementById('profile-xp-bar').style.width  = xpPct(p.xp,p.level)+'%';
+  document.getElementById('player-phrase').textContent   = PHRASES[dominant(p.skills)]||PHRASES.default;
+  const remainingMissions = MODULES_CFG.flatMap(m=>m.missions).filter(m=>!p.completedMissions.includes(m.id)).length;
+  const qEl = document.getElementById('quest-note-copy');
+  if (qEl) {
+    if (remainingMissions === 0) qEl.textContent = 'Has reunido todos los fragmentos conocidos. El Orbe late con fuerza ante la cima del Tigre.';
+    else if (p.codesUsed.length === 0) qEl.textContent = 'Encuentra un primer fragmento del Orbe activando un código de misión.';
+    else qEl.textContent = `Aún quedan ${remainingMissions} misiones por iluminar. Cada código nuevo empuja tu avance hacia la montaña sagrada.`;
+  }
+  // Barras
+  const barsEl=document.getElementById('skill-bars-profile'); barsEl.innerHTML='';
+  SKILLS_CFG.forEach(s=>{
+    const v=p.skills[s.key]; const row=document.createElement('div'); row.className='skill-bar-row';
+    row.innerHTML=`<span class="skill-bar-name">${s.label}</span>
+      <div class="skill-bar-track"><div class="skill-bar-fill" style="width:${(v/10)*100}%;background:${s.color}"></div></div>
+      <span class="skill-bar-val" style="color:${s.color}">${v}</span>`;
+    barsEl.appendChild(row);
+  });
+}
+
+/* ============================================================ RADAR ============================================================ */
+function renderRadarCanvas(previewSkills, canvasId){
+  if(!canvasId) canvasId='radarCanvas';
+  const canvas=document.getElementById(canvasId);
+  if(!canvas||!player) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2+6;
+  const R=Math.min(W,H)/2-56;
+  const N=SKILLS_CFG.length;
+  const skills=previewSkills||player.skills;
+  const MAX=10;
+  ctx.clearRect(0,0,W,H);
+
+  const aura=ctx.createRadialGradient(cx,cy,10,cx,cy,R+70);
+  aura.addColorStop(0,'rgba(201,168,76,.07)');
+  aura.addColorStop(.55,'rgba(139,92,246,.05)');
+  aura.addColorStop(1,'rgba(201,168,76,0)');
+  ctx.beginPath();
+  ctx.arc(cx,cy,R+48,0,Math.PI*2);
+  ctx.fillStyle=aura;
+  ctx.fill();
+
+  for(let ring=1; ring<=5; ring++){
+    const r=(R/5)*ring;
+    ctx.beginPath();
+    for(let i=0;i<N;i++){
+      const a=(Math.PI*2/N)*i-Math.PI/2;
+      const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle=ring===5?'rgba(255,255,255,.14)':'rgba(255,255,255,.05)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+
+  SKILLS_CFG.forEach((s,i)=>{
+    const a=(Math.PI*2/N)*i-Math.PI/2;
+    const ex=cx+R*Math.cos(a), ey=cy+R*Math.sin(a);
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey);
+    ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=1; ctx.stroke();
+
+    ctx.beginPath(); ctx.arc(ex,ey,7,0,Math.PI*2);
+    ctx.fillStyle=s.color+'22'; ctx.fill();
+    ctx.beginPath(); ctx.arc(ex,ey,4.2,0,Math.PI*2);
+    ctx.fillStyle=s.color; ctx.fill();
+    ctx.beginPath(); ctx.arc(ex,ey,10,0,Math.PI*2);
+    ctx.strokeStyle=s.color+'44'; ctx.lineWidth=1; ctx.stroke();
+  });
+
+  ctx.beginPath();
+  SKILLS_CFG.forEach((s,i)=>{
+    const a=(Math.PI*2/N)*i-Math.PI/2;
+    const r=R*(Math.min(skills[s.key],MAX)/MAX);
+    const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.closePath();
+  const fill=ctx.createLinearGradient(cx-R,cy-R,cx+R,cy+R);
+  fill.addColorStop(0,'rgba(201,168,76,.20)');
+  fill.addColorStop(.5,'rgba(77,217,232,.12)');
+  fill.addColorStop(1,'rgba(139,92,246,.18)');
+  ctx.fillStyle=fill;
+  ctx.strokeStyle='rgba(233,212,124,.92)';
+  ctx.lineWidth=2.6;
+  ctx.fill();
+  ctx.stroke();
+
+  SKILLS_CFG.forEach((s,i)=>{
+    const a=(Math.PI*2/N)*i-Math.PI/2;
+    const r=R*(Math.min(skills[s.key],MAX)/MAX);
+    const px=cx+r*Math.cos(a), py=cy+r*Math.sin(a);
+    ctx.beginPath(); ctx.arc(px,py,5.2,0,Math.PI*2); ctx.fillStyle=s.color; ctx.fill();
+    ctx.beginPath(); ctx.arc(px,py,10.6,0,Math.PI*2); ctx.strokeStyle=s.color+'55'; ctx.lineWidth=1.2; ctx.stroke();
+  });
+
+  ctx.beginPath();
+  ctx.arc(cx,cy,18,0,Math.PI*2);
+  ctx.fillStyle='rgba(6,10,16,.92)';
+  ctx.fill();
+  ctx.strokeStyle='rgba(201,168,76,.22)';
+  ctx.stroke();
+  ctx.fillStyle='rgba(232,201,106,.9)';
+  ctx.font='700 18px Cinzel,serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText('✦', cx, cy+1);
+
+  const leg=document.getElementById('radar-legend');
+  if(leg){
+    leg.innerHTML='';
+    SKILLS_CFG.forEach(s=>{
+      const el=document.createElement('div');
+      el.className='legend-item';
+      el.innerHTML=`<span class="legend-dot" style="background:${s.color};color:${s.color}"></span><div class="legend-copy"><span class="legend-name">${s.label}</span><span class="legend-desc">${s.desc}</span></div>`;
+      leg.appendChild(el);
+    });
+  }
+}
+
+/* ============================================================ ASSIGN ROWS ============================================================ */
+function renderAssignRows(){
+  const c=document.getElementById('assign-rows'); if(!c||!player) return; c.innerHTML='';
+  SKILLS_CFG.forEach(s=>{
+    const cur=player.skills[s.key],pend=player.pendingSkills[s.key],prev=cur+pend;
+    const row=document.createElement('div'); row.className='assign-row';
+    row.innerHTML=`<span class="skill-dot" style="background:${s.color}"></span>
+      <span class="assign-name">${s.label}</span>
+      <span class="assign-current">${cur}</span>
+      <span style="color:var(--txt-d);font-size:.68rem">→</span>
+      <span class="assign-preview ${pend===0?'same':''}">${prev}</span>
+      <button class="assign-btn" data-skill="${s.key}">+</button>`;
+    c.appendChild(row);
+  });
+  const tp=Object.values(player.pendingSkills).reduce((a,b)=>a+b,0);
+  document.getElementById('assign-pending-count').textContent=tp;
+  document.getElementById('assign-available-display').textContent=player.points;
+  c.querySelectorAll('.assign-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const sk=btn.dataset.skill;
+      const tp2=Object.values(player.pendingSkills).reduce((a,b)=>a+b,0);
+      if(tp2>=player.points){toast('error','Sin puntos','No tienes más puntos disponibles.');return;}
+      if(player.skills[sk]+player.pendingSkills[sk]>=10){toast('warn','Límite','El máximo es 10.');return;}
+      player.pendingSkills[sk]++;
+      renderAssignRows();
+      const prev={};SKILLS_CFG.forEach(s=>{prev[s.key]=player.skills[s.key]+player.pendingSkills[s.key];});
+      renderRadarCanvas(prev,'radarCanvasDev');
+    });
+  });
+}
+
+/* ============================================================ MISSIONS ============================================================ */
+function renderMissions(){
+  const c=document.getElementById('missions-container'); if(!c||!player) return; c.innerHTML='';
+  MODULES_CFG.forEach(mod=>{
+    const done=mod.missions.filter(m=>player.completedMissions.includes(m.id)).length;
+    const b=document.createElement('div'); b.className='module-block';
+    b.innerHTML=`<div class="module-title">✦ ${mod.name}<span class="module-progress-mini">${done}/3</span></div><div class="missions-grid" id="mg-${mod.id}"></div>`;
+    c.appendChild(b);
+    const grid=b.querySelector(`#mg-${mod.id}`);
+    mod.missions.forEach(m=>{
+      const done2=player.completedMissions.includes(m.id);
+      const el=document.createElement('div'); el.className=`mission-item${done2?' completed':''}`;
+      el.innerHTML=`<div class="mission-type-badge ${m.type==='main'?'main':'secondary'}">${m.type==='main'?'⚔ Principal':'◆ Secundaria'}</div>
+        <div class="mission-name">${m.name}</div>
+        <div class="mission-status ${done2?'done':'pending'}">${done2?'✓':'○'}</div>
+        <div class="mission-rewards"><span class="reward-tag xp">+${m.xp} XP</span><span class="reward-tag pts">+${m.pts} pts</span></div>`;
+      grid.appendChild(el);
+    });
+  });
+}
+
+/* ============================================================ TREE ============================================================ */
+function renderTree(){
+  const c=document.getElementById('tree-container'); if(!c||!player) return; c.innerHTML='';
+  TREE_CFG.forEach(branch=>{
+    const bEl=document.createElement('div'); bEl.className='tree-branch';
+    bEl.innerHTML=`<span class="branch-label" style="color:${branch.color}">${branch.label}</span>`;
+    const nWrap=document.createElement('div'); nWrap.className='branch-nodes';
+    branch.nodes.forEach((node,idx)=>{
+      const nid=`${branch.skill}_${node.n}`;
+      const val=player.skills[branch.skill];
+      const isU=player.unlockedNodes.includes(nid);
+      const isA=!isU&&val>=node.req;
+      const isL=!isU&&!isA;
+      const nEl=document.createElement('div');
+      nEl.className=`tree-node ${isL?'locked':isU?'unlocked':'available'}`;
+      nEl.style.borderColor=isL?'var(--border)':branch.color;
+      nEl.style.color=isL?'var(--txt-d)':branch.color;
+      if(isU){nEl.style.background=branch.color; nEl.style.color='#0a0600';}
+      nEl.innerHTML=`<span>${isU?'★':isA?'◆':'✕'}</span><span class="node-req">${node.req}</span>`;
+      nEl.title=`${node.name} — Req: ${branch.label} ${node.req}`;
+      if(isA) nEl.addEventListener('click',()=>{ player.unlockedNodes.push(nid); checkAch(); save(); renderPanel(); toast('success','🌟 Nodo activado',`${node.name} desbloqueado.`); spawnSparkles(); });
+      nWrap.appendChild(nEl);
+      if(idx<branch.nodes.length-1){ const conn=document.createElement('div'); conn.className='branch-connector'; conn.style.background=`linear-gradient(to right,${branch.color}40,transparent)`; nWrap.appendChild(conn); }
+    });
+    bEl.appendChild(nWrap); c.appendChild(bEl);
+  });
+}
+
+/* ============================================================ ACHIEVEMENTS ============================================================ */
+function renderAch(){
+  const c=document.getElementById('achievements-container'); if(!c||!player) return; c.innerHTML='';
+  ACH_CFG.forEach(a=>{
+    const u=player.achievements.includes(a.id);
+    const el=document.createElement('div'); el.className=`achievement-item ${u?'unlocked':'locked'}`;
+    el.innerHTML=`${u?'<span class="ach-badge">✓</span>':''}<span class="ach-icon">${a.icon}</span><div class="ach-name">${a.name}</div><div class="ach-desc">${u?a.desc:'???'}</div>`;
+    c.appendChild(el);
+  });
+}
+
+/* ============================================================ INVENTORY ============================================================ */
+function renderInv(){
+  const c=document.getElementById('inventory-container'); if(!c||!player) return; c.innerHTML='';
+  const sec=(title,items,cls,empty)=>{
+    const el=document.createElement('div'); el.className='inv-section';
+    el.innerHTML=`<div class="inv-section-title">${title}</div><div class="inv-tags"></div>`;
+    const w=el.querySelector('.inv-tags');
+    if(!items.length) w.innerHTML=`<span class="inv-empty">${empty}</span>`;
+    else items.forEach(t=>{ const s=document.createElement('span'); s.className=`inv-tag ${cls}`; s.textContent=t; w.appendChild(s); });
+    c.appendChild(el);
+  };
+  sec('Códigos registrados',player.codesUsed,'code','Ninguno aún');
+  sec('Nodos desbloqueados',player.unlockedNodes.map(n=>n.replace('_',' ').toUpperCase()),'node','Ninguno aún');
+  sec('Logros obtenidos',ACH_CFG.filter(a=>player.achievements.includes(a.id)).map(a=>a.icon+' '+a.name),'ach','Ninguno aún');
+}
+
+/* ============================================================ VALIDATE CODE ============================================================ */
+function validateCode(raw){
+  const code=raw.toUpperCase().trim();
+  const res=document.getElementById('code-result');
+  if(!/^[A-Z]{3}\d{3}$/.test(code)){ res.className='code-result error'; res.textContent=`❌ Formato inválido. Usa 3 letras + 3 números.`; return; }
+  const md=CODE_MAP[code];
+  if(!md){ res.className='code-result error'; res.textContent=`❌ El código "${code}" no existe en el registro.`; return; }
+  if(player.codesUsed.includes(code)){ res.className='code-result warn'; res.textContent=`⚠ El código "${code}" ya fue registrado.`; return; }
+  const oldLv=player.level;
+  player.codesUsed.push(code); player.completedMissions.push(code);
+  player.points+=md.pts; player.xp+=md.xp; player.level=calcLevel(player.xp);
+  checkAch(); save();
+  res.className='code-result success'; res.textContent=`✅ Fragmento activado. +${md.pts} puntos de desarrollo y +${md.xp} XP`;
+  toast('success','✅ Código activado',`${md.name}. +${md.pts} pts, +${md.xp} XP`); spawnSparkles();
+  if(player.level>oldLv){
+    toast('level',`⬆ ¡Nivel ${player.level}!`,'Nuevos horizontes aguardan. El Orbe brilla más.',5500);
+    const lEl=document.getElementById('tb-level'); if(lEl){lEl.classList.remove('level-up');void lEl.offsetWidth;lEl.classList.add('level-up');}
+  }
+  document.getElementById('code-input').value='';
+  renderPanel();
+}
+
+/* ============================================================ CONFIRM DEV ============================================================ */
+function confirmDev(){
+  const total=Object.values(player.pendingSkills).reduce((a,b)=>a+b,0);
+  if(!total){toast('warn','Sin cambios','No has asignado puntos aún.');return;}
+  if(total>player.points){toast('error','Error','No tienes suficientes puntos.');return;}
+  SKILLS_CFG.forEach(s=>{ player.skills[s.key]+=player.pendingSkills[s.key]; player.pendingSkills[s.key]=0; });
+  player.points-=total;
+  if(!player.achievements.includes('primer_dev')){ player.achievements.push('primer_dev'); toast('warn','🏆 Logro','Primer desarrollo confirmado.'); }
+  checkAch(); save();
+  toast('success','📈 Desarrollo confirmado',`${total} punto${total!==1?'s':''} asignado${total!==1?'s':''}.`); spawnSparkles();
+  renderPanel();
+}
+
+/* ============================================================ CLASS GRID ============================================================ */
+let selectedClass=null;
+function renderClassGrid(){
+  const g=document.getElementById('class-grid'); g.innerHTML='';
+  CLASSES_CFG.forEach(cls=>{
+    const meta=getClassMeta(cls.id);
+    const el=document.createElement('div'); el.className=`class-card${selectedClass===cls.id?' selected':''}`;
+    el.style.setProperty('--class-accent', meta.color);
+    el.style.setProperty('--class-accent-soft', meta.soft);
+    el.style.setProperty('--class-accent-glow', meta.glow);
+    el.innerHTML=`<span class="class-icon">${cls.icon}</span>
+      <div class="class-name">${cls.id}</div>
+      <div class="class-desc">${cls.desc}</div>
+      <div class="class-lore">${cls.lore}</div>
+      <span class="class-bonus">${cls.bonus}</span>`;
+    el.addEventListener('click',()=>{ selectedClass=cls.id; renderClassGrid(); });
+    g.appendChild(el);
+  });
+}
+
+/* ============================================================ INIT ============================================================ */
+function init(){
+  initBG();
+  player=load();
+  if(player){
+    if(!player.pendingSkills) player.pendingSkills={narrativa:0,diseno:0,creatividad:0,motivacion:0,estrategia:0};
+    currentTab='perfil'; showView('view-panel'); renderPanel();
+  } else { showView('view-welcome'); }
+
+  document.getElementById('btn-start').addEventListener('click',()=>{ selectedClass=null; renderClassGrid(); showView('view-create'); });
+
+  document.getElementById('btn-create').addEventListener('click',()=>{
+    const name=document.getElementById('input-name').value.trim();
+    const err=document.getElementById('create-error');
+    if(!name){err.textContent='Debes ingresar un nombre.'; err.classList.add('visible'); return;}
+    if(!selectedClass){err.textContent='Debes elegir una clase.'; err.classList.add('visible'); return;}
+    err.classList.remove('visible');
+    player=createDefaultPlayer(name,selectedClass); save();
+    currentTab='perfil'; showView('view-panel'); renderPanel();
+    toast('success','🌟 ¡Personaje creado!',`Bienvenido, ${player.name}. Tu travesía hacia la montaña del Tigre comienza ahora.`,5500); spawnSparkles();
+  });
+
+  document.querySelectorAll('.sidebar-item[data-tab],.mobile-nav-item[data-tab]').forEach(el=>{
+    el.addEventListener('click',()=>switchTab(el.dataset.tab));
+  });
+
+  document.getElementById('btn-validate-code').addEventListener('click',()=>{ if(player) validateCode(document.getElementById('code-input').value); });
+  document.getElementById('code-input').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('btn-validate-code').click(); });
+  document.getElementById('btn-confirm-dev').addEventListener('click',()=>{ if(player) confirmDev(); });
+  document.getElementById('btn-cancel-assign').addEventListener('click',()=>{
+    if(!player) return;
+    SKILLS_CFG.forEach(s=>{player.pendingSkills[s.key]=0;});
+    renderAssignRows(); renderRadarCanvas(null,'radarCanvasDev');
+    toast('warn','Limpiar','Preasignación cancelada.');
+  });
+  document.getElementById('btn-reset-panel').addEventListener('click',()=>document.getElementById('modal-overlay').classList.add('open'));
+  document.getElementById('modal-confirm').addEventListener('click',resetAll);
+  document.getElementById('modal-cancel').addEventListener('click',()=>document.getElementById('modal-overlay').classList.remove('open'));
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
