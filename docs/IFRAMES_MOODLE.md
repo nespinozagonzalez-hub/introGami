@@ -1,6 +1,6 @@
 # Enlaces e iframes para Moodle · GamiAula
 
-La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar el remaster el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
+La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar la versión 2.0.3 el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
 
 Copia cada bloque en la vista HTML del editor de Moodle. La altura de 900 px evita un marco demasiado pequeño; puede ajustarse según el espacio de tu aula. El enlace que acompaña cada iframe permite abrir el curso en una pestaña independiente.
 

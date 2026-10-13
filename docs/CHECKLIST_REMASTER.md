@@ -52,12 +52,12 @@ El objetivo vigente es actualizar **introGami**, conservando su dirección princ
 
 ## 5. Publicación 2.0.3
 
-- [ ] Guardar la versión en main con una actualización que preserve los cambios ajenos.
-- [ ] Comprobar la publicación en https://nespinozagonzalez-hub.github.io/introGami/.
-- [ ] Comprobar los cuatro módulos y las seis imágenes publicadas.
-- [ ] Verificar que el enlace principal carga la nueva versión.
+- [x] Guardar la versión en main con una actualización que preserve los cambios ajenos.
+- [x] Comprobar la publicación en https://nespinozagonzalez-hub.github.io/introGami/.
+- [x] Comprobar los cuatro módulos y las seis imágenes publicadas.
+- [x] Verificar que el enlace principal carga la nueva versión.
 
-GitHub Pages completó correctamente la publicación del commit b5982208ecf650f17c5e46fc2ffc4f046f095210. La portada se inspeccionó en la web pública; los módulos, imágenes, estilos y scripts seleccionados devolvieron HTTP 200 y coincidieron con los archivos probados. Evidencia: PUBLICACION_VERIFICADA.json.
+GitHub Pages completó correctamente la publicación del commit 3c17c546d8761a9926c2ac3e07335347d052c6b4. La portada se inspeccionó en la web pública; los módulos, imágenes, estilos y scripts seleccionados devolvieron HTTP 200 y coincidieron con los archivos probados. Evidencia: PUBLICACION_VERIFICADA.json.
 
 ## Pendientes externos que no deben confundirse con tareas terminadas
 

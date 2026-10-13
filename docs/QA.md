@@ -38,9 +38,9 @@ Los códigos y la victoria se validan localmente; no constituyen autenticación 
 - Imágenes de guías, tarjetas de territorios y sprites de combate inspeccionadas en escritorio y móvil.
 - Iconos vectoriales para las estaciones, sin depender de fuentes emoji.
 
-## Publicación anterior comprobada (2.0.2)
+## Publicación comprobada (2.0.3)
 
-GitHub Pages publicó correctamente el commit b5982208ecf650f17c5e46fc2ffc4f046f095210. La portada respondió HTTP 200, mostró la versión 2.0.2 y se inspeccionó visualmente en la web pública. Los cuatro módulos, las seis ilustraciones y los tres archivos compartidos seleccionados respondieron HTTP 200; sus bytes coincidieron con la copia probada mediante comparación SHA-256. El manifiesto público también indicó la versión 2.0.2. Evidencia: PUBLICACION_VERIFICADA.json.
+GitHub Pages publicó correctamente el commit 3c17c546d8761a9926c2ac3e07335347d052c6b4. La portada, los cuatro módulos, el manifiesto y los archivos de navegación respondieron HTTP 200; sus bytes coincidieron con la copia probada mediante comparación SHA-256. El manifiesto público indicó la versión 2.0.3. La portada del módulo 1 se inspeccionó visualmente en la web pública. El ajuste final de encuadre mantiene visible el rostro de los guías. Evidencia: PUBLICACION_VERIFICADA.json.
 
 ## Mejoras de los cuatro módulos (2.0.3)
 
@@ -53,4 +53,4 @@ GitHub Pages publicó correctamente el commit b5982208ecf650f17c5e46fc2ffc4f046f
 - Etiquetas para palabras y asociaciones; estación actual identificada para tecnologías de asistencia.
 - Bienvenida ilustrada del RPG y cierre final visible solo tras vencer a los cuatro guardianes.
 
-La batería de 18 grupos incluye el nuevo recorrido, copia manual, enlaces entre módulos y cierre del RPG. Las entradas finales se revisan en seis anchos; los cambios finales de texto y posición del botón de inicio no cambian las actividades.
+La batería de 18 grupos incluye el nuevo recorrido, copia manual, enlaces entre módulos y cierre del RPG. Las 24 entradas finales se comprobaron en seis anchos; los cambios finales de texto y posición del botón de inicio no cambian las actividades.

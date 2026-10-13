@@ -5,11 +5,11 @@
   "repository": "nespinozagonzalez-hub/introGami",
   "source_branch": "main",
   "entry": "index.html",
-  "phase": "validated-awaiting-module-publication",
+  "phase": "published-verified",
   "updated_at": "2026-10-13",
   "main_updated": true,
   "github_pages_live": true,
-  "published_app_commit": "b5982208ecf650f17c5e46fc2ffc4f046f095210",
+  "published_app_commit": "3c17c546d8761a9926c2ac3e07335347d052c6b4",
   "publication_evidence": "PUBLICACION_VERIFICADA.json",
   "google_sheets_connected": false,
   "primary_url": "https://nespinozagonzalez-hub.github.io/introGami/",
@@ -40,10 +40,9 @@
     "final_module_entries_checked": 24
   },
   "pending": [
-    "Publicar y verificar las mejoras de módulos de la versión 2.0.3",
     "Registro y escrituras autenticadas con Sheets desde el origen publicado",
     "Permisos de recursos desde una cuenta estudiante",
     "Moodle real, Safari y Firefox"
   ],
-  "live_version": "2.0.2"
+  "live_version": "2.0.3"
 }

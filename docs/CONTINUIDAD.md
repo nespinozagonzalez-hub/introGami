@@ -8,8 +8,8 @@ El 13 de octubre de 2026 el usuario decidió **actualizar el repositorio introGa
 - Base de main revisada antes de esta actualización: d8935a9c8b79fdc6c95f042121c4437768078247.
 - Destino vigente: raíz de introGami, rama main.
 - Entrada principal: https://nespinozagonzalez-hub.github.io/introGami/.
-- Nueva versión preparada: 2.0.3, con seis ilustraciones nuevas, mapa navegable, retratos seleccionables y continuación de partida.
-- Commit de la versión anterior publicada (2.0.2): b5982208ecf650f17c5e46fc2ffc4f046f095210. GitHub Pages completó el despliegue; portada, módulos e ilustraciones se comprobaron en la web pública.
+- Versión publicada: 2.0.3, con seis ilustraciones nuevas, mapa navegable, retratos seleccionables y continuación de partida.
+- Commit de la aplicación publicada (2.0.3): 3c17c546d8761a9926c2ac3e07335347d052c6b4. GitHub Pages completó el despliegue; portada, módulos e ilustraciones se comprobaron en la web pública.
 
 Los archivos históricos adicionales del repositorio se conservan. El historial de Git permite recuperar la entrada anterior. El iframe que apunta a la entrada principal de introGami conserva su dirección; las páginas nuevas de módulos se encuentran dentro de este mismo repositorio.
 

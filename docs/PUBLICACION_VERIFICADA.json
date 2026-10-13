@@ -1,108 +1,131 @@
 {
   "verified_on": "2026-10-13",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "url": "https://nespinozagonzalez-hub.github.io/introGami/",
-  "application_commit": "b5982208ecf650f17c5e46fc2ffc4f046f095210",
+  "application_commit": "3c17c546d8761a9926c2ac3e07335347d052c6b4",
   "deployment": {
     "workflow": "pages build and deployment",
-    "run_id": 38461076038,
+    "run_id": 38464232077,
     "conclusion": "success",
-    "url": "https://github.com/nespinozagonzalez-hub/introGami/actions/runs/38461076038"
+    "url": "https://github.com/nespinozagonzalez-hub/introGami/actions/runs/38464232077"
   },
   "comparison": "SHA-256 of public bytes versus locally tested files",
-  "public_portal_visual_check": true,
+  "public_module_1_visual_check": true,
   "checks": [
     {
-      "path": "modulos/1/",
-      "status": 200,
-      "bytes": 39275,
-      "matches_local": true
-    },
-    {
-      "path": "modulos/2/",
-      "status": 200,
-      "bytes": 38920,
-      "matches_local": true
-    },
-    {
-      "path": "modulos/3/",
-      "status": 200,
-      "bytes": 40879,
-      "matches_local": true
-    },
-    {
-      "path": "modulos/4/",
-      "status": 200,
-      "bytes": 180377,
-      "matches_local": true
-    },
-    {
-      "path": "shared/core.js",
-      "status": 200,
-      "bytes": 26833,
-      "matches_local": true
-    },
-    {
-      "path": "shared/icons.js",
-      "status": 200,
-      "bytes": 2042,
-      "matches_local": true
-    },
-    {
-      "path": "shared/visual-upgrade.css",
-      "status": 200,
-      "bytes": 7605,
-      "matches_local": true
-    },
-    {
-      "path": "assets/illustrations/academy-landscape.webp",
-      "status": 200,
-      "bytes": 248774,
-      "matches_local": true
-    },
-    {
-      "path": "assets/illustrations/kael.webp",
-      "status": 200,
-      "bytes": 228086,
-      "matches_local": true
-    },
-    {
-      "path": "assets/illustrations/lira.webp",
-      "status": 200,
-      "bytes": 232968,
-      "matches_local": true
-    },
-    {
-      "path": "assets/illustrations/nexo.webp",
-      "status": 200,
-      "bytes": 210812,
-      "matches_local": true
-    },
-    {
-      "path": "assets/illustrations/orion.webp",
-      "status": 200,
-      "bytes": 292070,
-      "matches_local": true
-    },
-    {
-      "path": "assets/illustrations/valen.webp",
-      "status": 200,
-      "bytes": 203914,
-      "matches_local": true
-    },
-    {
       "path": "/",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/",
       "status": 200,
       "bytes": 9797,
+      "sha256": "b161d22224d6a3c8cf1ac2e84d5534383a1ffbf02ecd30f98589b059f22ba305",
       "matches_local": true
     },
     {
       "path": "data/release.json",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/data/release.json",
       "status": 200,
-      "bytes": 231,
+      "bytes": 302,
+      "sha256": "5f2f2e6a5e83ab9b50e6ab069b5d0bc8fb1541d01c9f7c7d6e3bc74f47376354",
+      "matches_local": true
+    },
+    {
+      "path": "modulos/1/",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/1/",
+      "status": 200,
+      "bytes": 39443,
+      "sha256": "a0f518820dc5455fd14cbe4e8c6eabd6858386df07c47061f1f633de7123516f",
+      "matches_local": true
+    },
+    {
+      "path": "modulos/2/",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/2/",
+      "status": 200,
+      "bytes": 39088,
+      "sha256": "2685221dc4d49d7b476d272719ac2a5263ba68d8288a165dcb8ae351589fb52a",
+      "matches_local": true
+    },
+    {
+      "path": "modulos/3/",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/3/",
+      "status": 200,
+      "bytes": 41047,
+      "sha256": "b778ac39dbf86cbbe3861616e62b8184c2a76b9bc4a91149b531f8e5061cee2d",
+      "matches_local": true
+    },
+    {
+      "path": "modulos/4/",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/4/",
+      "status": 200,
+      "bytes": 180548,
+      "sha256": "9a0cd6592bc6d5051af95142ea0dc4a4e1b1b4f6cbbbe97a1d26ee72f0718f86",
+      "matches_local": true
+    },
+    {
+      "path": "shared/module-journey.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-journey.js",
+      "status": 200,
+      "bytes": 9275,
+      "sha256": "5adf43cd8ee6e0c2abfb0283c59b98b35f4ca4d743e6c04c9ccb9e72b561b430",
+      "matches_local": true
+    },
+    {
+      "path": "shared/module-journey.css",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-journey.css",
+      "status": 200,
+      "bytes": 6049,
+      "sha256": "d34f0c2eb32affbca8a9622902b96b0c9d934d0c13136429a8cf9c75a8a09096",
+      "matches_local": true
+    },
+    {
+      "path": "shared/core.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/core.js",
+      "status": 200,
+      "bytes": 26956,
+      "sha256": "a71e082fcadf5410757c2a27fadc5f3964dedcca86529190edae77a3dbbb8a4a",
       "matches_local": true
     }
   ],
+  "unchanged_illustrations": {
+    "verified_at_version": "2.0.2",
+    "checks": [
+      {
+        "path": "assets/illustrations/academy-landscape.webp",
+        "status": 200,
+        "bytes": 248774,
+        "matches_local": true
+      },
+      {
+        "path": "assets/illustrations/kael.webp",
+        "status": 200,
+        "bytes": 228086,
+        "matches_local": true
+      },
+      {
+        "path": "assets/illustrations/lira.webp",
+        "status": 200,
+        "bytes": 232968,
+        "matches_local": true
+      },
+      {
+        "path": "assets/illustrations/nexo.webp",
+        "status": 200,
+        "bytes": 210812,
+        "matches_local": true
+      },
+      {
+        "path": "assets/illustrations/orion.webp",
+        "status": 200,
+        "bytes": 292070,
+        "matches_local": true
+      },
+      {
+        "path": "assets/illustrations/valen.webp",
+        "status": 200,
+        "bytes": 203914,
+        "matches_local": true
+      }
+    ]
+  },
   "limits": [
     "Actual Moodle embedding not verified",
     "Safari and Firefox not verified",
