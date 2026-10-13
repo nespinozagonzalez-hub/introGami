@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GamiAula 2.0 · Diagnóstico de Apps Script</title>
+<style>
+:root{font-family:system-ui,Arial,sans-serif;color-scheme:dark;background:#091421;color:#edf4ff}
+*{box-sizing:border-box}body{margin:0;padding:32px 18px;background:radial-gradient(circle at 50% 0,#24405d,#091421 64%)}
+main{max-width:810px;margin:auto}h1{font-size:clamp(25px,4vw,40px);color:#f8d48c}h2{font-size:17px;margin:0 0 8px}
+p{color:#b9cbe3;line-height:1.65}small{color:#a8c2df}a{color:#8bdaf2}code{overflow-wrap:anywhere}
+.card{border:1px solid #345373;border-radius:16px;background:#132539;padding:19px;margin:16px 0;box-shadow:0 10px 27px #0004}
+button{background:#edb955;color:#151c29;border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;margin:8px 8px 8px 0}button.secondary{background:#345473;color:#eef6ff}button:disabled{opacity:.6;cursor:wait}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;margin:10px 0;color:#d0e3f8}
+.ok{border-left:4px solid #59ce9e}.bad{border-left:4px solid #ef8e8e}.pending{border-left:4px solid #e8b86a}
+#summary{font-size:17px;font-weight:700}
+</style></head><body><main>
+<p style="letter-spacing:.16em;color:#c8a66a;font-size:12px">GAMIAULA · LABORATORIO TÉCNICO</p>
+<h1>Prueba de conexión al Centro de Comando</h1>
+<p>Esta prueba es de solo lectura: comprueba la respuesta del servicio <code>/exec</code> mediante <strong>GET</strong> y <strong>POST ping</strong>. No requiere invitaciones, credenciales ni modifica el progreso de ningún participante.</p>
+<div class="card"><h2>Servidor configurado</h2><pre id="url"></pre><p><small>Desde un archivo local el navegador usa origen <code>null</code>. La comprobación definitiva debe repetirse desde GitHub Pages o el origen real de Genially.</small></p></div>
+<div class="card"><button id="test">Probar GET + POST</button><button class="secondary" id="copy">Copiar diagnóstico</button><p id="summary">Aún no se han ejecutado pruebas.</p></div>
+<div class="card pending" id="getcard"><h2>Prueba 1 · GET público</h2><pre id="getlog">Sin ejecutar</pre></div>
+<div class="card pending" id="postcard"><h2>Prueba 2 · POST con action: ping</h2><pre id="postlog">Sin ejecutar</pre></div>
+<p>Un resultado bloqueado por CORS no significa que el Apps Script esté mal instalado. Significa que el navegador no puede leer esa respuesta desde el origen usado y necesitaremos un puente seguro. No usaremos <code>no-cors</code> para simular éxito.</p>
+</main><script>
+(function(){
+"use strict";
+const endpoint="https://script.google.com/macros/s/AKfycbywALdHkf7_lJHKEgwJJq_UWoNidy3sQjUThtPbRtfE6OP6W2dCVuTEW0cGveNGrq6qtw/exec";
+document.getElementById("url").textContent=endpoint;
+const $=id=>document.getElementById(id);
+let report="";
+function result(id,title,ok,text){
+ $(id+"card").className="card "+(ok?"ok":"bad");
+ $(id+"log").textContent=(ok?"✓ ":"✕ ")+title+"\n"+text;
+ return ok;
+}
+async function probe(method){
+ const ctr=new AbortController(),clock=setTimeout(()=>ctr.abort(),15000);
+ const opts={method:method,mode:"cors",credentials:"omit",redirect:"follow",signal:ctr.signal};
+ if(method==="POST"){opts.headers={"Content-Type":"text/plain;charset=UTF-8"};opts.body=JSON.stringify({action:"ping"});}
+ try{
+   const resp=await fetch(endpoint,opts);
+   const txt=await resp.text();
+   let json;
+   try{json=JSON.parse(txt);}catch(e){return {ok:false,text:"HTTP "+resp.status+"; respuesta no JSON: "+txt.slice(0,180)};}
+   return {ok:resp.ok&&json.ok===true,text:"HTTP "+resp.status+" | "+JSON.stringify(json).slice(0,350)};
+ }catch(e){return {ok:false,text:"Error: "+String(e.name==="TypeError"?"Posible bloqueo CORS, redirección o fallo de red":e.message)};}
+ finally{clearTimeout(clock);}
+}
+$("test").addEventListener("click",async function(){
+ this.disabled=true;
+ $("summary").textContent="Probando... no se envían datos personales.";
+ $("getcard").className="card pending";$("postcard").className="card pending";
+ $("getlog").textContent="Consultando GET...";$("postlog").textContent="En espera...";
+ const a=await probe("GET");
+ result("get","GET /exec",a.ok,a.text);
+ const b=await probe("POST");
+ result("post","POST ping",b.ok,b.text);
+ report="GAMIAULA 2.0 — DIAGNÓSTICO\nOrigen: "+location.origin+"\nGET: "+(a.ok?"OK":"ERROR")+" — "+a.text+"\nPOST: "+(b.ok?"OK":"ERROR")+" — "+b.text;
+ $("summary").textContent=a.ok&&b.ok?"Ambas peticiones funcionan desde este navegador.":"No se han validado ambas peticiones. Aún no debemos habilitar sincronización.";
+ this.disabled=false;
+});
+$("copy").addEventListener("click",async function(){
+ if(!report){$("summary").textContent="Ejecuta la prueba antes de copiar.";return;}
+ try{await navigator.clipboard.writeText(report);$("summary").textContent="Diagnóstico copiado.";}catch(e){prompt("Copia este diagnóstico:",report);}
+});
+})();
+</script></body></html>

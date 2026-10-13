@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0-beta.1",
+  "endpoint": "https://script.google.com/macros/s/AKfycbywALdHkf7_lJHKEgwJJq_UWoNidy3sQjUThtPbRtfE6OP6W2dCVuTEW0cGveNGrq6qtw/exec",
+  "mode": "diagnostic-only",
+  "auto_sync": false,
+  "sheet_status": "verified",
+  "deployment_status": "user-deployed-awaiting-live-tests",
+  "backend_actions": [
+    "ping",
+    "register",
+    "profile",
+    "redeem",
+    "allocate",
+    "advantages",
+    "event",
+    "delete_account"
+  ],
+  "notes": "URL no secreta. Nunca incluir tokens o invitaciones en el repositorio."
+}

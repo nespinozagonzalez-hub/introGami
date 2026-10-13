@@ -1,0 +1,58 @@
+{
+  "project": "Academia del Orbe",
+  "phase": "remaster-local-validated-awaiting-repository",
+  "created_at": "2026-10-13",
+  "staging_repo": "nespinozagonzalez-hub/introGami",
+  "staging_branch": "remaster-gamiaula-2-2026",
+  "staging_subfolder": "academia-orbe-remaster",
+  "desired_repo": "nespinozagonzalez-hub/gamiaula-academia-del-orbe",
+  "repo_created": false,
+  "github_pages_live": false,
+  "google_sheets_connected": false,
+  "views": [
+    "Centro de Comando",
+    "Módulo 1",
+    "Módulo 2",
+    "Módulo 3",
+    "RPG final"
+  ],
+  "assets": [
+    "5 NPC SVG",
+    "paisaje academia SVG"
+  ],
+  "original_resources": {
+    "videos": 9,
+    "documents": 6,
+    "syllabus": 1
+  },
+  "blockers": [
+    "Crear repositorio independiente: requiere sesión en interfaz GitHub",
+    "Activar Pages y verificar URL publicada",
+    "Validar escritura y lectura autenticadas con Sheets desde el origen publicado",
+    "Verificar Moodle real, permisos de recursos, Safari y Firefox"
+  ],
+  "version": "2.0.1",
+  "updated_at": "2026-10-13",
+  "source_branch": "remaster-gamiaula-2-2026",
+  "active_missions": 9,
+  "final_guardians": 4,
+  "backend_health": {
+    "get": "ok:true",
+    "post_ping": "ok:true",
+    "authenticated_writes_tested": false
+  },
+  "local_browser_qa": {
+    "groups_passed": 15,
+    "javascript_errors": 0,
+    "view_widths": [
+      390,
+      480,
+      768,
+      1024,
+      1366,
+      1920
+    ],
+    "battle_widths_checked": true
+  },
+  "supplemental_research_readings": 2
+}
