@@ -2123,7 +2123,7 @@ const GUARDIANS = [
     accentRgb:'92,207,209',
     theme:'valle',
     particleColor:'rgba(170,255,210,.85)',
-    spritePath:'assets/guardian_valle.png',
+    spritePath:null,
     spriteLabel:'Retrato del Guardián del Valle',
     silhouetteSvg:silhouetteValle(),
     intro:'Una figura encapuchada emerge entre la niebla. <b>El Guardián del Valle</b> alza su báculo. Primero deberás ganar la iniciativa para decidir quién abre el duelo.',
@@ -2140,7 +2140,7 @@ const GUARDIANS = [
     accentRgb:'255,140,94',
     theme:'forja',
     particleColor:'rgba(255,180,120,.85)',
-    spritePath:'assets/guardian_forja.png',
+    spritePath:null,
     spriteLabel:'Retrato del Maestro de la Forja',
     silhouetteSvg:silhouetteForja(),
     intro:'El calor del horno te envuelve. <b>El Maestro de la Forja</b> golpea su martillo: solo avanzan quienes ya superaron al guardián anterior.',
@@ -2157,7 +2157,7 @@ const GUARDIANS = [
     accentRgb:'90,155,255',
     theme:'flow',
     particleColor:'rgba(150,200,255,.85)',
-    spritePath:'assets/guardian_flow.png',
+    spritePath:null,
     spriteLabel:'Retrato del Arquitecto del Flow',
     silhouetteSvg:silhouetteFlow(),
     intro:'Líneas geométricas giran a tu alrededor. <b>El Arquitecto del Flow</b> transforma cada intercambio en una prueba de diseño.',
@@ -2174,7 +2174,7 @@ const GUARDIANS = [
     accentRgb:'200,120,255',
     theme:'caos',
     particleColor:'rgba(220,170,255,.85)',
-    spritePath:'assets/guardian_caos.png',
+    spritePath:null,
     spriteLabel:'Retrato del Custodio del Caos',
     silhouetteSvg:silhouetteCaos(),
     intro:'Un torbellino oscuro desgarra la cámara. <b>El Custodio del Caos</b> abre la prueba final: ya no hay espacio para errores innecesarios.',
@@ -3221,7 +3221,7 @@ function renderBattleGuardianSprite(g){
   return g && g.silhouetteSvg ? g.silhouetteSvg : '';
 }
 function renderBattlePlayerSprite(){
-  return `<img src="${PLAYER_SPRITE_PATH}" alt="" class="battle-sprite-img player-main" loading="eager" decoding="async">`;
+  return silhouettePlayer();
 }
 
 /* =========================================================
