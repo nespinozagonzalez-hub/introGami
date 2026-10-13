@@ -1,0 +1,4361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>La Consagración del Orbe — V3 épica unificada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   1. TOKENS Y BASE
+   ========================================================= */
+:root{
+  --bg-0:#070b14;
+  --bg-1:#0c121d;
+  --bg-2:#121a28;
+  --bg-3:#1a2438;
+  --panel:#162033;
+  --panel-2:#1d2a42;
+  --line:rgba(196,214,255,.10);
+  --line-strong:rgba(196,214,255,.18);
+  --text:#eaf0fb;
+  --text-soft:#c7d2e6;
+  --muted:#8a98b4;
+  --gold:#f0b347;
+  --gold-2:#ffd27a;
+  --gold-deep:#c98613;
+  --blue:#3a7ad8;
+  --blue-2:#5a9bff;
+  --teal:#5ccfd1;
+  --good:#3ed299;
+  --bad:#ff6e6e;
+  --shadow-lg:0 24px 60px rgba(0,0,0,.55);
+  --shadow-md:0 12px 32px rgba(0,0,0,.42);
+  --font-display:'Cinzel', 'Times New Roman', serif;
+  --font-body:'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --font-pop:'Baloo 2', 'Manrope', system-ui, sans-serif;
+}
+
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html, body{
+  margin:0; padding:0;
+  font-family:var(--font-body);
+  color:var(--text);
+  background:var(--bg-0);
+  min-height:100%;
+}
+body{
+  background:
+    radial-gradient(1200px 600px at 12% -10%, rgba(58,122,216,.20), transparent 60%),
+    radial-gradient(900px 500px at 100% 5%, rgba(240,179,71,.12), transparent 60%),
+    radial-gradient(800px 600px at 50% 110%, rgba(58,122,216,.18), transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 38%, var(--bg-2));
+  overflow-x:hidden;
+}
+button, input, select, textarea{font:inherit; color:inherit}
+button{cursor:pointer; border:none; background:none}
+input{outline:none}
+::selection{background:rgba(240,179,71,.32); color:#fff}
+
+/* =========================================================
+   2. ATMÓSFERA
+   ========================================================= */
+.atmosphere{position:fixed; inset:0; pointer-events:none; z-index:1}
+.atmosphere .grain{
+  position:absolute; inset:0; opacity:.045; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.atmosphere .hex{
+  position:absolute; inset:0; opacity:.07;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(240,179,71,.10), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'><path d='M15 1 L45 1 L60 26 L45 51 L15 51 L0 26 Z' fill='none' stroke='rgba(196,214,255,0.9)' stroke-width='0.6'/></svg>");
+  background-size:60px 52px;
+}
+.atmosphere .particles{position:absolute; inset:0; overflow:hidden}
+.particle{
+  position:absolute; width:6px; height:6px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.95), rgba(255,210,122,.55) 40%, rgba(58,122,216,0) 75%);
+  animation:drift linear infinite; opacity:.55; filter:blur(.4px);
+}
+@keyframes drift{
+  0%{transform:translateY(40px) translateX(0) scale(.7); opacity:0}
+  10%{opacity:.55}
+  90%{opacity:.55}
+  100%{transform:translateY(-110vh) translateX(40px) scale(1.2); opacity:0}
+}
+
+/* =========================================================
+   3. PANTALLAS Y NAVEGACIÓN
+   ========================================================= */
+.screen{
+  position:relative; z-index:5;
+  min-height:100vh;
+  display:none;
+  animation:screenIn .5s cubic-bezier(.2,.7,.3,1);
+}
+.screen.active{display:block}
+@keyframes screenIn{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+.screen-pad{padding:24px}
+
+/* =========================================================
+   4. COMPONENTES BASE
+   ========================================================= */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:13px 22px; border-radius:14px;
+  font-family:var(--font-body); font-weight:700; font-size:14px;
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:transform .18s ease, box-shadow .22s ease, filter .22s ease, background .22s ease;
+  user-select:none; position:relative; overflow:hidden;
+  white-space:nowrap;
+}
+.btn:focus-visible{outline:2px solid var(--gold-2); outline-offset:3px}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn.primary{
+  background:linear-gradient(135deg, var(--gold), var(--gold-2));
+  color:#1a1208;
+  box-shadow:0 14px 32px rgba(240,179,71,.30), inset 0 -3px 0 rgba(0,0,0,.18);
+}
+.btn.primary:hover{filter:brightness(1.06); box-shadow:0 18px 38px rgba(240,179,71,.42), inset 0 -3px 0 rgba(0,0,0,.18)}
+.btn.secondary{
+  background:linear-gradient(135deg, var(--blue), var(--blue-2));
+  color:#fff;
+  box-shadow:0 12px 28px rgba(58,122,216,.30), inset 0 -3px 0 rgba(0,0,0,.18);
+}
+.btn.secondary:hover{filter:brightness(1.08)}
+.btn.ghost{
+  background:rgba(255,255,255,.04); color:var(--text);
+  border:1px solid var(--line-strong); box-shadow:none;
+}
+.btn.ghost:hover{background:rgba(255,255,255,.07); border-color:rgba(240,179,71,.35)}
+.btn.danger{
+  background:rgba(255,110,110,.12); color:#ffd0d0;
+  border:1px solid rgba(255,110,110,.32);
+}
+.btn.danger:hover{background:rgba(255,110,110,.20)}
+.btn.small{padding:9px 14px; font-size:12px; border-radius:10px}
+.btn.large{padding:18px 32px; font-size:15px; border-radius:16px}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
+.input{
+  width:100%;
+  background:rgba(7,11,20,.55);
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+  padding:14px 18px;
+  font-family:var(--font-body); font-size:15px;
+  color:var(--text);
+  transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.input::placeholder{color:var(--muted)}
+.input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(240,179,71,.18), inset 0 0 0 1px rgba(240,179,71,.40);
+  background:rgba(7,11,20,.78);
+}
+.eyebrow{
+  font-family:var(--font-display); font-weight:600;
+  text-transform:uppercase; letter-spacing:.34em;
+  font-size:12px; color:var(--gold-2);
+}
+
+/* =========================================================
+   5. PANTALLA INTRO
+   ========================================================= */
+#screen-intro .screen-pad{
+  display:flex; align-items:center; justify-content:center;
+  min-height:100vh;
+}
+.intro-card{
+  position:relative;
+  width:min(960px, 100%);
+  background:
+    radial-gradient(600px 200px at 50% -10%, rgba(240,179,71,.10), transparent 70%),
+    linear-gradient(180deg, rgba(29,42,66,.90), rgba(12,18,29,.96));
+  border:1px solid var(--line-strong);
+  border-radius:28px;
+  padding:48px 44px 40px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.intro-card::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:3px;
+  background:linear-gradient(90deg, transparent 8%, var(--gold) 35%, var(--gold-2) 50%, var(--gold) 65%, transparent 92%);
+  opacity:.85;
+}
+.sigil{
+  width:130px; height:130px; margin:0 auto 22px;
+  position:relative;
+  display:grid; place-items:center;
+  animation:sigilFloat 6s ease-in-out infinite;
+}
+@keyframes sigilFloat{
+  0%, 100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+.sigil-ring{
+  position:absolute; inset:0; border-radius:50%;
+  background:conic-gradient(from 0deg, rgba(240,179,71,.0), rgba(240,179,71,.85), rgba(240,179,71,.0) 60%);
+  animation:rotate 8s linear infinite;
+  opacity:.6;
+  mask:radial-gradient(circle, transparent 56%, #000 58%, #000 70%, transparent 72%);
+  -webkit-mask:radial-gradient(circle, transparent 56%, #000 58%, #000 70%, transparent 72%);
+}
+.sigil-ring-2{
+  position:absolute; inset:14px; border-radius:50%;
+  border:1px dashed rgba(240,179,71,.45);
+  animation:rotate 14s linear infinite reverse;
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.sigil-core{
+  width:78px; height:78px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffd97a 0%, #f0b347 38%, #c98613 70%, #5a3608 100%);
+  box-shadow:0 0 50px rgba(240,179,71,.55), inset 0 -8px 14px rgba(0,0,0,.30), inset 0 6px 10px rgba(255,221,138,.45);
+  animation:pulse 3.2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 50px rgba(240,179,71,.55), inset 0 -8px 14px rgba(0,0,0,.30), inset 0 6px 10px rgba(255,221,138,.45)}
+  50%{box-shadow:0 0 80px rgba(240,179,71,.85), inset 0 -8px 14px rgba(0,0,0,.30), inset 0 6px 10px rgba(255,221,138,.55)}
+}
+.intro-title{
+  font-family:var(--font-display); font-weight:700;
+  text-align:center;
+  font-size:clamp(34px, 5.4vw, 64px);
+  line-height:1.04; letter-spacing:.01em;
+  margin:6px 0 14px;
+  background:linear-gradient(180deg, #ffffff 30%, #c9d6ee 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.intro-eyebrow{text-align:center; margin-bottom:8px}
+.intro-lore{
+  text-align:center;
+  max-width:680px; margin:0 auto;
+  color:var(--text-soft); line-height:1.75;
+  font-size:16px;
+}
+
+/* Cards de información en intro */
+.intro-info{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin-top:28px;
+}
+.intro-info-card{
+  padding:18px 20px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--line);
+  border-radius:18px;
+}
+.intro-info-card h4{
+  margin:0 0 8px; font-size:14px; font-weight:700;
+  color:var(--gold-2); letter-spacing:.06em; text-transform:uppercase;
+}
+.intro-info-card p, .intro-info-card li{
+  margin:0; color:var(--text-soft); line-height:1.7; font-size:14px;
+}
+.intro-info-card ul{margin:0; padding-left:18px}
+
+.intro-form{
+  margin:24px auto 0;
+  max-width:560px;
+  display:grid; gap:12px;
+}
+.intro-form label{
+  font-size:11px; font-weight:600;
+  text-transform:uppercase; letter-spacing:.18em;
+  color:var(--gold-2);
+}
+.intro-cta{display:flex; justify-content:center; margin-top:18px}
+.intro-notice{
+  margin-top:24px; text-align:center;
+  font-size:12px; line-height:1.7; color:var(--muted);
+  max-width:560px; margin-left:auto; margin-right:auto;
+}
+.intro-notice b{color:var(--text-soft)}
+
+/* =========================================================
+   6. PANTALLA HUB
+   ========================================================= */
+#screen-hub .screen-pad{
+  max-width:1320px; margin:0 auto;
+  display:flex; flex-direction:column; gap:16px;
+}
+
+/* Topbar */
+.hub-topbar{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center; gap:18px;
+  padding:14px 22px;
+  background:linear-gradient(180deg, rgba(22,32,51,.92), rgba(15,22,36,.94));
+  border:1px solid var(--line-strong);
+  border-radius:20px;
+  box-shadow:var(--shadow-md);
+}
+.hub-brand{display:flex; align-items:center; gap:14px; min-width:0}
+.hub-mini-sigil{
+  width:46px; height:46px; border-radius:13px;
+  display:grid; place-items:center;
+  background:radial-gradient(circle at 50% 50%, rgba(255,210,122,.55), rgba(240,179,71,.18) 50%, transparent 75%), linear-gradient(180deg, #243352, #131a28);
+  box-shadow:0 0 22px rgba(240,179,71,.20), inset 0 0 12px rgba(255,255,255,.05);
+  border:1px solid var(--line-strong);
+  flex:0 0 auto;
+  position:relative; overflow:hidden;
+}
+.hub-mini-sigil-core{
+  width:22px; height:22px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffd97a, #c98613 70%);
+  box-shadow:0 0 12px rgba(240,179,71,.55), inset 0 -2px 4px rgba(0,0,0,.3);
+  animation:pulse 3.2s ease-in-out infinite;
+}
+.hub-brand-text{min-width:0}
+.hub-brand-title{
+  font-family:var(--font-display); font-weight:700;
+  font-size:18px; letter-spacing:.02em;
+}
+.hub-brand-sub{font-size:12px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+.hub-stats{
+  display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+}
+.stat-pill{
+  display:flex; align-items:center; gap:12px;
+  padding:10px 16px;
+  background:rgba(7,11,20,.55);
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+}
+.stat-icon{
+  width:30px; height:30px; border-radius:9px;
+  display:grid; place-items:center;
+  background:linear-gradient(180deg, rgba(240,179,71,.20), rgba(240,179,71,.05));
+  border:1px solid rgba(240,179,71,.30);
+  font-size:14px; flex:0 0 auto;
+}
+.stat-text{display:flex; flex-direction:column; line-height:1.2}
+.stat-label{font-size:10px; text-transform:uppercase; letter-spacing:.16em; color:var(--muted)}
+.stat-value{font-family:var(--font-display); font-weight:700; font-size:16px; color:var(--text)}
+
+.hub-actions{display:flex; gap:10px; flex-wrap:wrap}
+
+/* Hero */
+.hub-hero{
+  position:relative;
+  padding:28px 34px;
+  background:
+    radial-gradient(700px 220px at 0% 0%, rgba(240,179,71,.10), transparent 60%),
+    radial-gradient(800px 240px at 100% 0%, rgba(58,122,216,.20), transparent 60%),
+    linear-gradient(180deg, rgba(22,32,51,.92), rgba(15,22,36,.92));
+  border:1px solid var(--line-strong);
+  border-radius:22px;
+  box-shadow:var(--shadow-md);
+  overflow:hidden;
+}
+.hub-hero::before{
+  content:""; position:absolute; inset:auto 0 0 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold) 30%, transparent 60%, var(--blue-2) 80%, transparent);
+}
+.hub-hero h2{
+  margin:0 0 8px;
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(22px, 3vw, 30px);
+  letter-spacing:.01em;
+}
+.hub-hero p{margin:0; color:var(--text-soft); line-height:1.7; max-width:780px; font-size:15px}
+
+/* Strip de fragmentos */
+.frag-strip{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:12px;
+}
+.frag-card{
+  position:relative;
+  padding:16px 18px;
+  background:linear-gradient(180deg, rgba(22,32,51,.74), rgba(13,19,32,.86));
+  border:1px solid var(--line-strong);
+  border-radius:16px;
+  display:flex; align-items:center; gap:14px;
+  transition:border-color .25s ease, box-shadow .25s ease;
+  overflow:hidden;
+}
+.frag-card.unlocked{
+  border-color:rgba(240,179,71,.42);
+  box-shadow:0 0 0 1px rgba(240,179,71,.10) inset, 0 12px 26px rgba(0,0,0,.35);
+}
+.frag-card.unlocked::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.frag-card-num{
+  width:38px; height:38px; border-radius:11px;
+  display:grid; place-items:center;
+  font-family:var(--font-display); font-weight:700; font-size:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line-strong);
+  color:var(--muted);
+  flex:0 0 auto;
+}
+.frag-card.unlocked .frag-card-num{
+  background:linear-gradient(135deg, var(--gold), var(--gold-2));
+  color:#1a1208;
+  border-color:transparent;
+  box-shadow:0 0 18px rgba(240,179,71,.45);
+}
+.frag-card-text{display:flex; flex-direction:column; min-width:0}
+.frag-card-label{font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:var(--muted)}
+.frag-card-value{
+  font-family:var(--font-display); font-weight:800; font-size:22px;
+  letter-spacing:.18em; line-height:1.2;
+  color:var(--muted);
+}
+.frag-card.unlocked .frag-card-value{
+  color:var(--gold-2);
+  text-shadow:0 0 16px rgba(240,179,71,.35);
+}
+
+/* Grid de portales */
+.portals-wrap{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:16px;
+}
+.portal{
+  position:relative;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:linear-gradient(180deg, rgba(22,32,51,.86), rgba(15,22,36,.94));
+  padding:20px 22px;
+  display:flex; flex-direction:column; gap:14px;
+  min-height:330px;
+  transition:transform .26s ease, box-shadow .26s ease, border-color .26s ease;
+}
+.portal::before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(420px 240px at 50% 100%, var(--portal-glow, rgba(58,122,216,.22)), transparent 70%);
+  opacity:.7; pointer-events:none; transition:opacity .3s ease;
+}
+.portal::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--portal-accent, var(--blue-2)), transparent);
+  opacity:.55;
+}
+.portal:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,.5), 0 0 36px var(--portal-glow, rgba(58,122,216,.32));
+  border-color:var(--portal-accent, rgba(90,155,255,.45));
+}
+.portal:hover::before{opacity:1}
+.portal-large{grid-column:1 / -1; min-height:240px}
+.portal-large .portal-grid{
+  display:grid; grid-template-columns:1fr auto; align-items:center; gap:24px;
+  flex:1;
+}
+.portal-large .portal-silhouette{height:200px}
+.portal-large .portal-foot{margin-top:14px}
+
+.portal-done{
+  border-color:rgba(62,210,153,.32);
+  box-shadow:0 0 0 1px rgba(62,210,153,.18) inset, 0 14px 32px rgba(0,0,0,.42);
+}
+.portal-done::after{background:linear-gradient(90deg, transparent, var(--good), transparent); opacity:.7}
+
+.portal-header{
+  display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+  position:relative; z-index:1;
+}
+.portal-name{
+  font-family:var(--font-display); font-weight:700;
+  font-size:20px; letter-spacing:.01em; line-height:1.2;
+}
+.portal-role{font-size:12px; color:var(--muted); margin-top:4px; letter-spacing:.04em}
+
+.portal-status{
+  font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.16em;
+  padding:5px 10px; border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line-strong);
+  color:var(--text-soft); white-space:nowrap;
+}
+.portal-status.pending{color:var(--muted)}
+.portal-status.done{
+  background:rgba(62,210,153,.14);
+  border-color:rgba(62,210,153,.42);
+  color:#bef5dd;
+}
+
+.portal-silhouette{
+  position:relative; z-index:1;
+  display:grid; place-items:center;
+  height:130px;
+  margin:6px 0;
+}
+.portal-silhouette svg{
+  width:auto; height:100%;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55)) drop-shadow(0 0 22px var(--portal-glow, rgba(58,122,216,.4)));
+  transition:transform .3s ease;
+}
+.portal:hover .portal-silhouette svg{transform:translateY(-3px) scale(1.04)}
+
+.portal-foot{
+  position:relative; z-index:1;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-top:auto;
+}
+.portal-fragment{
+  font-family:var(--font-display); font-weight:700;
+  font-size:18px; letter-spacing:.18em;
+  color:var(--gold-2);
+  padding:6px 12px;
+  background:rgba(240,179,71,.10);
+  border:1px solid rgba(240,179,71,.32);
+  border-radius:10px;
+}
+.portal-fragment.hidden-frag{
+  color:var(--muted);
+  background:rgba(255,255,255,.04);
+  border-color:var(--line-strong);
+}
+
+/* Botón explícito de "Ingresar" dentro del portal */
+.portal-enter{
+  position:relative; z-index:2;
+  width:100%;
+  padding:13px 18px;
+  border-radius:13px;
+  font-family:var(--font-body); font-weight:800; font-size:13px;
+  letter-spacing:.10em; text-transform:uppercase;
+  background:linear-gradient(135deg, var(--gold), var(--gold-2));
+  color:#1a1208;
+  box-shadow:0 12px 24px rgba(240,179,71,.30), inset 0 -3px 0 rgba(0,0,0,.15);
+  transition:transform .18s ease, filter .22s ease, box-shadow .22s ease;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.portal-enter:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.06);
+  box-shadow:0 18px 36px rgba(240,179,71,.42), inset 0 -3px 0 rgba(0,0,0,.15);
+}
+.portal-enter:active{transform:translateY(0)}
+.portal-enter:focus-visible{outline:2px solid var(--gold-2); outline-offset:3px}
+.portal-enter.done{
+  background:linear-gradient(135deg, var(--good), #6dffb6);
+  color:#0a2e1a;
+  box-shadow:0 12px 24px rgba(62,210,153,.30), inset 0 -3px 0 rgba(0,0,0,.15);
+}
+
+/* Hint inferior */
+.hub-hint{
+  display:flex; align-items:center; gap:14px;
+  padding:16px 22px;
+  background:linear-gradient(180deg, rgba(22,32,51,.74), rgba(15,22,36,.86));
+  border:1px solid var(--line-strong);
+  border-radius:18px;
+}
+.hub-hint-icon{
+  width:38px; height:38px; border-radius:12px;
+  display:grid; place-items:center; font-size:18px;
+  background:rgba(240,179,71,.12);
+  border:1px solid rgba(240,179,71,.32);
+  flex:0 0 auto;
+}
+.hub-hint-text{font-size:14px; color:var(--text-soft); line-height:1.6}
+.hub-hint-text b{color:var(--gold-2)}
+
+/* =========================================================
+   7. PANTALLA DE BATALLA
+   ========================================================= */
+#screen-battle .screen-pad{
+  max-width:1380px; margin:0 auto;
+  display:flex; flex-direction:column; gap:14px;
+  padding:18px;
+}
+
+.battle-topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:10px 18px;
+  background:linear-gradient(180deg, rgba(22,32,51,.92), rgba(15,22,36,.94));
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+  flex-wrap:wrap;
+}
+.battle-title{
+  font-family:var(--font-display); font-weight:700;
+  font-size:16px; letter-spacing:.04em;
+}
+.battle-title small{font-family:var(--font-body); font-weight:500; color:var(--muted); margin-left:8px; letter-spacing:0; font-size:12px}
+
+.battle-meta{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.turn-chip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 14px; border-radius:999px;
+  font-size:12px; font-weight:700;
+  letter-spacing:.10em; text-transform:uppercase;
+  background:rgba(58,122,216,.12);
+  border:1px solid rgba(90,155,255,.40);
+  color:#bcd4ff;
+  transition:all .3s ease;
+}
+.turn-chip.attacking{
+  background:rgba(255,140,94,.14);
+  border-color:rgba(255,140,94,.50);
+  color:#ffb088;
+}
+.turn-chip.defending{
+  background:rgba(90,155,255,.18);
+  border-color:rgba(90,155,255,.55);
+  color:#bcd4ff;
+}
+.turn-chip-dot{
+  width:6px; height:6px; border-radius:50%;
+  background:currentColor;
+  box-shadow:0 0 8px currentColor;
+  animation:pulseDot 1.6s ease-in-out infinite;
+}
+@keyframes pulseDot{0%,100%{opacity:.5} 50%{opacity:1}}
+
+.turn-counter{
+  font-size:11px; color:var(--muted);
+  letter-spacing:.10em;
+  font-family:var(--font-display); font-weight:600;
+}
+
+/* Arena */
+.arena{
+  position:relative;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  min-height:440px;
+  box-shadow:var(--shadow-lg);
+  background:var(--arena-bg, linear-gradient(180deg, #1a2b48 0%, #0e1a30 60%, #06101e 100%));
+}
+
+/* Backgrounds temáticos tipo Pokémon */
+.arena.theme-valle{
+  background:
+    radial-gradient(800px 280px at 70% 25%, rgba(170,255,210,.18), transparent 60%),
+    linear-gradient(180deg, #2d6a5b 0%, #1f4a44 35%, #122833 75%, #08151f 100%);
+}
+.arena.theme-forja{
+  background:
+    radial-gradient(800px 280px at 70% 25%, rgba(255,180,120,.30), transparent 60%),
+    linear-gradient(180deg, #6e3624 0%, #4a2218 35%, #2a130d 75%, #160805 100%);
+}
+.arena.theme-flow{
+  background:
+    radial-gradient(800px 280px at 70% 25%, rgba(150,200,255,.30), transparent 60%),
+    linear-gradient(180deg, #243f6f 0%, #16264a 35%, #0c1530 75%, #050920 100%);
+}
+.arena.theme-caos{
+  background:
+    radial-gradient(800px 280px at 70% 25%, rgba(220,170,255,.28), transparent 60%),
+    linear-gradient(180deg, #4a2670 0%, #2c1547 35%, #160829 75%, #0a0418 100%);
+}
+.arena::before{
+  content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(180deg, rgba(255,255,255,.022) 0 1px, transparent 1px 4px);
+  pointer-events:none; mix-blend-mode:overlay; opacity:.6;
+}
+.arena::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:3px;
+  background:linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-2) 50%, var(--gold) 70%, transparent);
+  opacity:.5;
+}
+
+/* Partículas temáticas dentro de la arena */
+.arena-particles{
+  position:absolute; inset:0; overflow:hidden; pointer-events:none;
+}
+.arena-particle{
+  position:absolute; width:5px; height:5px; border-radius:50%;
+  animation:arenaDrift linear infinite;
+  opacity:.6;
+}
+@keyframes arenaDrift{
+  0%{transform:translateY(0) translateX(0); opacity:0}
+  10%{opacity:.7}
+  90%{opacity:.5}
+  100%{transform:translateY(-100vh) translateX(20px); opacity:0}
+}
+
+/* Plataformas circulares (rúnicas) */
+.platform{
+  position:absolute;
+  width:280px; height:74px;
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at 50% 40%, var(--platform-color, rgba(90,155,255,.42)), transparent 65%),
+    radial-gradient(ellipse at 50% 50%, rgba(0,0,0,.55) 0%, rgba(0,0,0,.85) 70%);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 24px 40px rgba(0,0,0,.55), inset 0 0 30px rgba(0,0,0,.5);
+}
+.platform::before{
+  content:""; position:absolute; inset:14px;
+  border-radius:50%;
+  border:1px dashed rgba(255,255,255,.18);
+}
+.platform::after{
+  content:""; position:absolute; inset:auto 0 -14px 0; height:36px;
+  background:radial-gradient(ellipse at 50% 0%, var(--platform-color, rgba(90,155,255,.55)), transparent 70%);
+  filter:blur(6px); opacity:.8; pointer-events:none;
+}
+.platform-enemy{
+  top:60px; right:8%;
+  --platform-color:var(--platform-enemy-color, rgba(90,155,255,.5));
+}
+.platform-player{
+  bottom:170px; left:6%;
+  --platform-color:rgba(240,179,71,.42);
+}
+
+/* Sprites */
+.sprite{
+  position:absolute;
+  filter:drop-shadow(0 18px 14px rgba(0,0,0,.6));
+}
+.sprite svg{display:block; width:100%; height:100%}
+.sprite-enemy{
+  top:30px; right:11%;
+  width:230px; height:230px;
+  animation:enemyIdle 4s ease-in-out infinite;
+}
+@keyframes enemyIdle{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.sprite-enemy.entering{animation:enemyEntry 1.1s cubic-bezier(.2,.7,.3,1)}
+@keyframes enemyEntry{
+  0%{opacity:0; transform:translateY(-30px) scale(.7); filter:drop-shadow(0 0 30px rgba(240,179,71,1))}
+  60%{opacity:1; transform:translateY(8px) scale(1.05)}
+  100%{opacity:1; transform:translateY(0) scale(1)}
+}
+.sprite-player{
+  bottom:188px; left:9%;
+  width:170px; height:200px;
+  animation:playerIdle 5s ease-in-out infinite;
+}
+@keyframes playerIdle{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-4px) rotate(-1deg)}
+}
+.sprite.taking-damage{animation:shake .42s ease}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-10px) rotate(-2deg)}
+  40%{transform:translateX(10px) rotate(2deg)}
+  60%{transform:translateX(-7px) rotate(-1deg)}
+  80%{transform:translateX(7px) rotate(1deg)}
+}
+.sprite.defeated{animation:fadeOut 1s ease forwards}
+@keyframes fadeOut{
+  0%{opacity:1; transform:translateY(0)}
+  100%{opacity:0; transform:translateY(40px) scale(.8)}
+}
+
+/* HUDs flotantes en la arena (desktop/tablet) */
+.hud{
+  position:absolute;
+  background:linear-gradient(180deg, rgba(22,32,51,.92), rgba(15,22,36,.96));
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+  padding:14px 18px;
+  width:300px;
+  box-shadow:var(--shadow-md);
+  backdrop-filter:blur(6px);
+  z-index:3;
+}
+.hud::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--hud-accent, var(--blue-2)), transparent);
+}
+.hud-enemy{
+  top:28px; right:28px;
+  --hud-accent:var(--theme-accent, var(--blue-2));
+}
+.hud-player{
+  bottom:28px; left:28px;
+  --hud-accent:var(--gold);
+}
+.hud-name-row{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.hud-name{font-family:var(--font-display); font-weight:700; font-size:16px; letter-spacing:.02em}
+.hud-level{font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-2)}
+.hud-status{font-size:11px; color:var(--muted); margin-top:3px; letter-spacing:.04em; min-height:16px}
+.hud-status.defending{color:#bcd4ff}
+.hp-row{display:flex; align-items:center; gap:8px; margin-top:10px}
+.hp-label{font-family:var(--font-display); font-weight:700; font-size:11px; color:var(--text-soft); letter-spacing:.14em}
+.hp-track{
+  flex:1; height:10px; border-radius:6px;
+  background:rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden; position:relative;
+}
+.hp-fill{
+  height:100%; width:100%;
+  background:linear-gradient(90deg, var(--good), #6dffb6);
+  transition:width .55s cubic-bezier(.4,.0,.2,1);
+  box-shadow:inset 0 0 10px rgba(255,255,255,.18);
+  position:relative;
+}
+.hp-fill::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+  background-size:30px 100%;
+  animation:hpShine 2.5s linear infinite;
+}
+@keyframes hpShine{from{background-position:-30px 0} to{background-position:300px 0}}
+.hp-fill.mid{background:linear-gradient(90deg, var(--gold), var(--gold-2))}
+.hp-fill.low{background:linear-gradient(90deg, var(--bad), #ff9c9c)}
+.hp-num{font-size:11px; color:var(--text-soft); font-weight:700; min-width:48px; text-align:right}
+
+/* HUDs externos para móvil — siempre presentes pero ocultos en desktop */
+.hud-external-wrap{
+  display:none;
+  grid-template-columns:1fr 1fr; gap:10px;
+}
+.hud-external-wrap .hud{
+  position:relative; inset:auto; width:auto; backdrop-filter:none;
+}
+
+/* Defense ring visible en la arena */
+.defense-ring{
+  position:absolute;
+  bottom:160px; left:6%;
+  width:280px; height:130px;
+  border-radius:50%;
+  border:3px solid rgba(150,217,255,.85);
+  box-shadow:0 0 32px rgba(150,217,255,.55), inset 0 0 24px rgba(150,217,255,.25);
+  opacity:0;
+  transform:scale(.85);
+  transition:opacity .3s ease, transform .3s ease;
+  pointer-events:none;
+  z-index:2;
+}
+.defense-ring.on{
+  opacity:1; transform:scale(1);
+  animation:defenseGlow 1.8s ease-in-out infinite;
+}
+@keyframes defenseGlow{
+  0%,100%{box-shadow:0 0 32px rgba(150,217,255,.55), inset 0 0 24px rgba(150,217,255,.25)}
+  50%{box-shadow:0 0 48px rgba(150,217,255,.75), inset 0 0 32px rgba(150,217,255,.40)}
+}
+
+/* Floating damage popups */
+.dmg-pop{
+  position:absolute;
+  font-family:var(--font-display); font-weight:800;
+  font-size:32px; color:var(--bad);
+  text-shadow:0 4px 14px rgba(0,0,0,.7), 0 0 18px rgba(255,110,110,.6);
+  pointer-events:none;
+  animation:dmgPop 1.1s ease forwards;
+  z-index:6;
+}
+.dmg-pop.crit{
+  color:var(--gold-2);
+  text-shadow:0 4px 14px rgba(0,0,0,.7), 0 0 22px rgba(255,210,122,.7);
+  font-size:42px;
+}
+.dmg-pop.heal{color:var(--good)}
+@keyframes dmgPop{
+  0%{transform:translateY(0) scale(.6); opacity:0}
+  20%{transform:translateY(-8px) scale(1.1); opacity:1}
+  80%{transform:translateY(-50px) scale(1); opacity:1}
+  100%{transform:translateY(-72px) scale(.9); opacity:0}
+}
+
+/* =========================================================
+   8. ZONA INFERIOR DE BATALLA (default vs pregunta)
+   ========================================================= */
+.battle-bottom{
+  position:relative;
+  min-height:170px;
+}
+.bb-default{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:14px;
+}
+.bb-default.bb-entering{animation:bbIn .35s cubic-bezier(.2,.7,.3,1)}
+@keyframes bbIn{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:translateY(0)}}
+
+.dialogue{
+  background:linear-gradient(180deg, rgba(22,32,51,.94), rgba(15,22,36,.96));
+  border:1px solid var(--line-strong);
+  border-radius:18px;
+  padding:22px 26px;
+  min-height:170px;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative;
+  box-shadow:var(--shadow-md);
+}
+.dialogue::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.dialogue-label{
+  font-family:var(--font-display); font-weight:600;
+  font-size:11px; letter-spacing:.22em;
+  color:var(--gold-2); text-transform:uppercase;
+  margin-bottom:8px;
+}
+.dialogue-text{
+  font-size:16px; line-height:1.6;
+  color:var(--text); font-weight:500;
+}
+.dialogue-text b{color:var(--gold-2)}
+.dialogue-text i{color:#bcd4ff; font-style:normal}
+.dialogue.result-good{border-color:rgba(62,210,153,.42); box-shadow:var(--shadow-md), 0 0 26px rgba(62,210,153,.18)}
+.dialogue.result-bad{border-color:rgba(255,110,110,.42); box-shadow:var(--shadow-md), 0 0 26px rgba(255,110,110,.18)}
+
+.commands{
+  background:linear-gradient(180deg, rgba(22,32,51,.94), rgba(15,22,36,.96));
+  border:1px solid var(--line-strong);
+  border-radius:18px;
+  padding:14px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:10px;
+  min-height:170px;
+  box-shadow:var(--shadow-md);
+}
+.cmd{
+  border-radius:12px;
+  padding:14px 12px;
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+  gap:4px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line-strong);
+  color:var(--text);
+  transition:transform .18s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
+  text-align:left;
+  position:relative; overflow:hidden;
+}
+.cmd::before{
+  content:""; position:absolute; inset:0;
+  background:var(--cmd-glow, transparent);
+  opacity:0; transition:opacity .22s ease; pointer-events:none;
+}
+.cmd:hover{
+  transform:translateY(-2px);
+  border-color:var(--cmd-color, var(--gold));
+  background:rgba(255,255,255,.06);
+  box-shadow:0 10px 24px rgba(0,0,0,.4), 0 0 22px var(--cmd-shadow, rgba(240,179,71,.20));
+}
+.cmd:hover::before{opacity:1}
+.cmd:focus-visible{outline:2px solid var(--gold-2); outline-offset:2px}
+.cmd:disabled{opacity:.4; cursor:not-allowed; transform:none}
+.cmd-icon{
+  width:32px; height:32px; border-radius:9px;
+  display:grid; place-items:center;
+  background:var(--cmd-color, var(--gold));
+  color:#0c1220; font-weight:800;
+  position:relative; z-index:1;
+}
+.cmd-name{
+  font-family:var(--font-display); font-weight:700;
+  font-size:15px; letter-spacing:.04em;
+  position:relative; z-index:1;
+}
+.cmd-desc{
+  font-size:11px; color:var(--muted);
+  letter-spacing:.04em;
+  position:relative; z-index:1;
+}
+.cmd-attack{--cmd-color:#ff8c5e; --cmd-shadow:rgba(255,140,94,.30); --cmd-glow:radial-gradient(160px 80px at 30% 50%, rgba(255,140,94,.10), transparent 70%)}
+.cmd-skill{--cmd-color:var(--gold); --cmd-shadow:rgba(240,179,71,.30); --cmd-glow:radial-gradient(160px 80px at 30% 50%, rgba(240,179,71,.12), transparent 70%)}
+.cmd-defend{--cmd-color:var(--blue-2); --cmd-shadow:rgba(90,155,255,.30); --cmd-glow:radial-gradient(160px 80px at 30% 50%, rgba(90,155,255,.12), transparent 70%)}
+.cmd-analyze{--cmd-color:var(--teal); --cmd-shadow:rgba(92,207,209,.30); --cmd-glow:radial-gradient(160px 80px at 30% 50%, rgba(92,207,209,.10), transparent 70%)}
+
+/* Modo pregunta integrado */
+.bb-question{
+  background:linear-gradient(180deg, rgba(22,32,51,.96), rgba(13,19,32,.98));
+  border:1px solid rgba(240,179,71,.38);
+  border-radius:18px;
+  padding:18px 22px 16px;
+  display:flex; flex-direction:column; gap:14px;
+  box-shadow:var(--shadow-md), 0 0 38px rgba(240,179,71,.18);
+  animation:qPanelIn .35s cubic-bezier(.2,.7,.3,1);
+  position:relative;
+}
+.bb-question::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold-2) 50%, var(--gold) 60%, transparent);
+}
+@keyframes qPanelIn{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+.bb-question.skill-mode{
+  border-color:rgba(240,179,71,.65);
+  box-shadow:var(--shadow-md), 0 0 52px rgba(240,179,71,.32);
+}
+.bb-question.attack-mode{
+  border-color:rgba(255,140,94,.55);
+  box-shadow:var(--shadow-md), 0 0 38px rgba(255,140,94,.22);
+}
+.bb-question.attack-mode::before{
+  background:linear-gradient(90deg, transparent, #ff8c5e 40%, #ffb088 50%, #ff8c5e 60%, transparent);
+}
+
+.q-header{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+.q-banner{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 14px; border-radius:10px;
+  font-family:var(--font-display); font-weight:700;
+  font-size:12px; letter-spacing:.20em; text-transform:uppercase;
+  background:rgba(255,140,94,.10);
+  border:1px solid rgba(255,140,94,.40);
+  color:#ffb088;
+}
+.q-banner.skill{
+  background:rgba(240,179,71,.12);
+  border-color:rgba(240,179,71,.50);
+  color:var(--gold-2);
+}
+.q-banner-icon{
+  width:22px; height:22px; border-radius:6px;
+  display:grid; place-items:center;
+  background:currentColor; color:#0c1220;
+  font-weight:900; font-size:12px;
+}
+.q-stem{
+  font-size:14px; line-height:1.6;
+  background:rgba(7,11,20,.45);
+  border:1px solid var(--line-strong);
+  border-radius:11px;
+  padding:13px 16px;
+  color:var(--text);
+}
+.q-options{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.q-option{
+  display:grid; grid-template-columns:auto 1fr; align-items:center; gap:11px;
+  padding:10px 13px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line-strong);
+  border-radius:10px;
+  cursor:pointer;
+  transition:transform .15s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  text-align:left;
+  width:100%;
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:13px; line-height:1.4;
+}
+.q-option:hover{
+  border-color:rgba(240,179,71,.45);
+  background:rgba(240,179,71,.06);
+  transform:translateY(-1px);
+}
+.q-option:focus-visible{outline:2px solid var(--gold-2); outline-offset:2px}
+.q-option.selected{
+  border-color:var(--gold);
+  background:rgba(240,179,71,.12);
+  box-shadow:0 0 0 2px rgba(240,179,71,.28), 0 6px 16px rgba(240,179,71,.18);
+}
+.q-option-letter{
+  width:28px; height:28px; border-radius:8px;
+  display:grid; place-items:center;
+  font-family:var(--font-display); font-weight:700; font-size:13px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line-strong);
+  color:var(--text-soft);
+  flex:0 0 auto;
+}
+.q-option.selected .q-option-letter{
+  background:linear-gradient(135deg, var(--gold), var(--gold-2));
+  color:#1a1208;
+  border-color:transparent;
+}
+.q-option-text{font-size:13px; line-height:1.45}
+.q-foot{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  margin-top:2px; flex-wrap:wrap;
+}
+.q-hint{font-size:12px; color:var(--muted); letter-spacing:.02em}
+.q-foot-actions{display:flex; gap:10px}
+
+/* =========================================================
+   9. CAPA DE EFECTOS (FX en la arena)
+   ========================================================= */
+.battle-fx{
+  position:absolute; inset:0; pointer-events:none; z-index:5;
+  overflow:hidden;
+}
+
+/* Lunge del jugador hacia el enemigo */
+.sprite-player.lunging{animation:playerLunge .55s ease forwards}
+@keyframes playerLunge{
+  0%{transform:translate(0,0)}
+  35%{transform:translate(50px,-12px)}
+  55%{transform:translate(70px,0)}
+  100%{transform:translate(0,0)}
+}
+.sprite-enemy.lunging{animation:enemyLunge .55s ease forwards}
+@keyframes enemyLunge{
+  0%{transform:translate(0,0)}
+  35%{transform:translate(-50px,-12px)}
+  55%{transform:translate(-70px,0)}
+  100%{transform:translate(0,0)}
+}
+
+/* Slash (Atacar correcto) */
+.fx-slash{
+  position:absolute;
+  width:200px; height:10px;
+  border-radius:999px;
+  background:linear-gradient(90deg, transparent, #ff8c5e 25%, #ffd27a 50%, #ff8c5e 75%, transparent);
+  box-shadow:0 0 28px rgba(255,140,94,.85), 0 0 60px rgba(255,140,94,.45);
+  transform-origin:center;
+  animation:fxSlash .42s ease forwards;
+}
+@keyframes fxSlash{
+  0%{opacity:0; transform:translate(-40%,0) rotate(-22deg) scaleX(.2)}
+  30%{opacity:1; transform:translate(-10%,0) rotate(-22deg) scaleX(1)}
+  70%{opacity:1; transform:translate(20%,0) rotate(-22deg) scaleX(1)}
+  100%{opacity:0; transform:translate(45%,0) rotate(-22deg) scaleX(.6)}
+}
+
+/* Rayo dorado (Habilidad correcta) */
+.fx-bolt{
+  position:absolute;
+  width:10px; height:240px;
+  border-radius:999px;
+  background:linear-gradient(180deg, transparent, #ffd27a 18%, #ffffff 50%, #ffd27a 82%, transparent);
+  box-shadow:0 0 32px rgba(240,179,71,.95), 0 0 70px rgba(240,179,71,.55);
+  animation:fxBolt .55s ease forwards;
+  transform-origin:center bottom;
+}
+@keyframes fxBolt{
+  0%{opacity:0; transform:translateY(-220px) scaleY(.2)}
+  30%{opacity:1; transform:translateY(-20px) scaleY(1)}
+  60%{opacity:1; transform:translateY(0) scaleY(1)}
+  100%{opacity:0; transform:translateY(0) scaleY(.85)}
+}
+
+/* Garra/sombra del enemigo (jugador falla) */
+.fx-claw{
+  position:absolute;
+  width:170px; height:170px;
+  background:radial-gradient(circle at 50% 50%, transparent 28%, var(--fx-color, #ff6e6e) 32%, transparent 55%);
+  filter:blur(1.5px);
+  animation:fxClaw .55s ease forwards;
+  transform-origin:center;
+  mix-blend-mode:screen;
+}
+@keyframes fxClaw{
+  0%{opacity:0; transform:scale(.4) rotate(-30deg)}
+  35%{opacity:.95; transform:scale(1.1) rotate(0deg)}
+  100%{opacity:0; transform:scale(1.7) rotate(20deg)}
+}
+
+/* Onda + anillo en el impacto */
+.fx-impact{
+  position:absolute;
+  width:140px; height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle, var(--fx-color, #ff8c5e) 0%, var(--fx-color2, rgba(255,210,122,.3)) 30%, transparent 65%);
+  transform:translate(-50%,-50%) scale(0);
+  animation:fxImpact .6s ease forwards;
+  mix-blend-mode:screen;
+}
+@keyframes fxImpact{
+  0%{opacity:0; transform:translate(-50%,-50%) scale(0)}
+  25%{opacity:1; transform:translate(-50%,-50%) scale(1.2)}
+  100%{opacity:0; transform:translate(-50%,-50%) scale(2.4)}
+}
+.fx-ring{
+  position:absolute;
+  width:100px; height:100px;
+  border-radius:50%;
+  border:3px solid var(--fx-color, #ffd27a);
+  box-shadow:0 0 22px var(--fx-color, rgba(240,179,71,.7));
+  transform:translate(-50%,-50%) scale(.2);
+  animation:fxRing .55s ease forwards;
+  opacity:0;
+}
+@keyframes fxRing{
+  0%{opacity:0; transform:translate(-50%,-50%) scale(.2)}
+  25%{opacity:1; transform:translate(-50%,-50%) scale(.8)}
+  100%{opacity:0; transform:translate(-50%,-50%) scale(2.2)}
+}
+
+/* Sparks pequeños alrededor del impacto */
+.fx-spark{
+  position:absolute;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--fx-color, #ffd27a);
+  box-shadow:0 0 12px var(--fx-color, #ffd27a);
+  animation:fxSpark .7s ease forwards;
+}
+@keyframes fxSpark{
+  0%{transform:translate(0,0) scale(1); opacity:1}
+  100%{transform:translate(var(--dx,40px), var(--dy,-30px)) scale(0); opacity:0}
+}
+
+/* Flash global de la arena */
+.fx-flash{
+  position:absolute; inset:0;
+  background:var(--flash-bg, radial-gradient(circle at 70% 35%, rgba(255,210,122,.45), transparent 60%));
+  animation:fxFlash .55s ease forwards;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+@keyframes fxFlash{
+  0%{opacity:0}
+  20%{opacity:1}
+  100%{opacity:0}
+}
+
+/* Victory burst - explosión de luz al ganar */
+.fx-victory{
+  position:absolute; left:50%; top:50%;
+  width:100px; height:100px;
+  transform:translate(-50%,-50%);
+  pointer-events:none; z-index:7;
+}
+.fx-victory-ring{
+  position:absolute; inset:0;
+  border-radius:50%;
+  border:4px solid var(--gold-2);
+  box-shadow:0 0 40px var(--gold), 0 0 80px var(--gold);
+  animation:victoryRing 1.4s ease forwards;
+  opacity:0;
+}
+@keyframes victoryRing{
+  0%{opacity:0; transform:scale(.2)}
+  20%{opacity:1; transform:scale(1)}
+  100%{opacity:0; transform:scale(5)}
+}
+.fx-confetti{
+  position:absolute;
+  width:8px; height:14px;
+  border-radius:2px;
+  animation:confettiFall 1.6s ease-in forwards;
+  pointer-events:none;
+  z-index:7;
+}
+@keyframes confettiFall{
+  0%{opacity:0; transform:translate(0,0) rotate(0deg)}
+  10%{opacity:1}
+  100%{opacity:0; transform:translate(var(--cx,0px), var(--cy,200px)) rotate(720deg)}
+}
+
+/* =========================================================
+   10. MODAL SYSTEM
+   ========================================================= */
+.modal-layer{
+  position:fixed; inset:0; z-index:30;
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+  background:rgba(4,7,12,.78);
+  backdrop-filter:blur(10px);
+  opacity:0; pointer-events:none;
+  transition:opacity .3s ease;
+}
+.modal-layer.active{opacity:1; pointer-events:auto}
+.modal{
+  position:relative;
+  width:min(720px, 100%);
+  max-height:calc(100vh - 48px);
+  background:
+    radial-gradient(700px 220px at 50% -10%, rgba(240,179,71,.16), transparent 70%),
+    linear-gradient(180deg, rgba(29,42,66,.96), rgba(12,18,29,.98));
+  border:1px solid var(--line-strong);
+  border-radius:24px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  transform:scale(.94) translateY(10px);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1);
+}
+.modal-layer.active .modal{transform:scale(1) translateY(0)}
+.modal::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:3px;
+  background:linear-gradient(90deg, transparent 8%, var(--gold) 35%, var(--gold-2) 50%, var(--gold) 65%, transparent 92%);
+}
+.modal-pad{padding:32px 36px; max-height:calc(100vh - 48px); overflow:auto}
+.modal-eyebrow{text-align:center; margin-bottom:6px}
+.modal-title{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(22px, 3.2vw, 32px);
+  text-align:center;
+  margin:6px 0 12px; line-height:1.15;
+}
+.modal-text{
+  text-align:center; color:var(--text-soft);
+  line-height:1.7; font-size:15px;
+  max-width:540px; margin:0 auto;
+}
+.modal-actions{
+  display:flex; justify-content:center; gap:12px; flex-wrap:wrap;
+  margin-top:24px;
+}
+
+/* Final reveal */
+.final-orb{width:160px; height:160px; margin:8px auto 18px; position:relative}
+.final-orb-core{
+  position:absolute; inset:24px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffe9b8 0%, #f0b347 35%, #c98613 65%, #5a3608 100%);
+  box-shadow:0 0 90px rgba(240,179,71,.85), 0 0 36px rgba(240,179,71,.55), inset 0 -10px 18px rgba(0,0,0,.30), inset 0 8px 14px rgba(255,221,138,.50);
+  animation:pulse 2.6s ease-in-out infinite;
+}
+.final-orb-ring{
+  position:absolute; inset:0; border-radius:50%;
+  background:conic-gradient(from 0deg, transparent, rgba(240,179,71,.85), transparent 60%);
+  animation:rotate 6s linear infinite;
+  mask:radial-gradient(circle, transparent 64%, #000 66%, #000 80%, transparent 82%);
+  -webkit-mask:radial-gradient(circle, transparent 64%, #000 66%, #000 80%, transparent 82%);
+}
+.final-code{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(36px, 6vw, 56px);
+  letter-spacing:.32em; text-align:center;
+  margin:14px 0 6px;
+  background:linear-gradient(180deg, #fff, var(--gold-2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 0 24px rgba(240,179,71,.4);
+}
+
+/* Toasts */
+.toast-layer{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  z-index:50;
+  display:flex; flex-direction:column; gap:10px; align-items:center;
+  pointer-events:none;
+}
+.toast{
+  padding:13px 20px;
+  background:linear-gradient(180deg, rgba(29,42,66,.95), rgba(12,18,29,.96));
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  box-shadow:var(--shadow-md);
+  font-size:13px; font-weight:600; color:var(--text);
+  display:flex; align-items:center; gap:10px;
+  animation:toastIn .4s cubic-bezier(.2,.7,.3,1) forwards;
+  pointer-events:auto;
+}
+.toast.exit{animation:toastOut .35s ease forwards}
+.toast.success{border-color:rgba(62,210,153,.42)}
+.toast.success::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--good); box-shadow:0 0 10px var(--good)}
+.toast.info::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--blue-2); box-shadow:0 0 10px var(--blue-2)}
+@keyframes toastIn{from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)}}
+@keyframes toastOut{to{opacity:0; transform:translateY(20px)}}
+
+.hidden{display:none !important}
+
+/* =========================================================
+   11. RESPONSIVE
+   ========================================================= */
+
+/* Tablet ~ ancho medio */
+@media (max-width:1100px){
+  .hub-topbar{grid-template-columns:1fr; text-align:center}
+  .hub-stats{justify-content:center}
+  .hub-actions{justify-content:center}
+  .frag-strip{grid-template-columns:repeat(2, 1fr)}
+  .portals-wrap{grid-template-columns:repeat(2, 1fr)}
+  .portal-large{grid-column:1 / -1}
+  .portal-large .portal-grid{grid-template-columns:1fr}
+  .portal-large .portal-silhouette{height:140px}
+  .battle-bottom{min-height:auto}
+  .bb-default{grid-template-columns:1fr}
+  .commands{min-height:auto}
+  .arena{min-height:380px}
+  .hud{width:230px; padding:11px 13px}
+  .hud-enemy{top:14px; left:14px}
+  .hud-player{bottom:14px; right:14px}
+  .platform{width:200px; height:60px}
+  .platform-enemy{top:80px; right:6%}
+  .platform-player{bottom:80px; left:4%}
+  .sprite-enemy{top:46px; right:9%; width:170px; height:170px}
+  .sprite-player{bottom:96px; left:7%; width:130px; height:160px}
+  .defense-ring{bottom:60px; left:4%; width:220px; height:110px}
+  .hud-name{font-size:14px}
+  .intro-info{grid-template-columns:1fr}
+}
+
+/* Móvil — HUDs externos */
+@media (max-width:760px){
+  .screen-pad{padding:14px}
+  #screen-intro .screen-pad{padding:14px}
+  .intro-card{padding:32px 22px 28px}
+  .sigil{width:100px; height:100px}
+  .sigil-core{width:60px; height:60px}
+
+  .frag-strip{grid-template-columns:1fr 1fr; gap:8px}
+  .frag-card{padding:12px 14px}
+  .frag-card-num{width:32px; height:32px}
+  .frag-card-value{font-size:18px}
+
+  .portals-wrap{grid-template-columns:1fr}
+  .portal{min-height:auto; padding:18px 18px}
+  .portal-large{grid-column:auto}
+  .portal-silhouette{height:110px}
+
+  .battle-topbar{padding:10px 14px; gap:8px}
+  .battle-title{font-size:14px}
+  .battle-meta{width:100%; justify-content:space-between}
+
+  /* En móvil: HUDs salen de la arena, van afuera */
+  .hud-enemy, .hud-player{display:none !important}
+  .hud-external-wrap{display:grid !important}
+
+  .arena{min-height:320px}
+  .platform{width:140px; height:46px}
+  .platform-enemy{top:30px; right:6%}
+  .platform-player{bottom:24px; left:4%}
+  .sprite-enemy{top:6px; right:8%; width:120px; height:120px}
+  .sprite-player{bottom:34px; left:6%; width:100px; height:120px}
+  .defense-ring{bottom:14px; left:4%; width:160px; height:80px}
+
+  .commands{padding:10px; gap:8px}
+  .cmd{padding:10px 10px}
+  .cmd-icon{width:26px; height:26px; font-size:13px}
+  .cmd-name{font-size:13px}
+  .cmd-desc{font-size:10px}
+
+  .dialogue{padding:18px 20px; min-height:auto}
+  .dialogue-text{font-size:14px}
+
+  .q-options{grid-template-columns:1fr}
+  .q-stem{font-size:13px}
+  .q-option-text{font-size:12px}
+
+  .modal-pad{padding:22px 18px}
+  .final-orb{width:130px; height:130px}
+}
+
+/* Muy pequeño */
+@media (max-width:380px){
+  .stat-pill{padding:8px 12px}
+  .stat-value{font-size:14px}
+  .portal-name{font-size:18px}
+  .commands{grid-template-columns:1fr 1fr}
+}
+
+/* ===== Ajustes v4 ===== */
+.portal-locked{opacity:.78}
+.portal-lock-text{margin:6px 0 0; color:#ffddb8; font-size:12px; line-height:1.5}
+.portal-status.locked{background:rgba(255,160,90,.14); border-color:rgba(255,160,90,.35); color:#ffd2aa}
+.portal-enter.locked{background:linear-gradient(135deg, #4f5d77, #364154); color:#d6deeb; box-shadow:none; cursor:not-allowed; filter:saturate(.8)}
+.portal-enter.locked:hover{transform:none; filter:saturate(.8)}
+.sprite-enemy{width:270px; height:270px; right:10%; top:20px; filter:drop-shadow(0 18px 20px rgba(0,0,0,.62)) drop-shadow(0 0 30px rgba(255,255,255,.08))}
+.sprite-player{width:210px; height:240px; left:7%; bottom:170px}
+.sprite-enemy svg,.sprite-player svg{overflow:visible}
+.hud{box-shadow:0 18px 40px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.03)}
+.turn-counter{padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.04); border:1px solid var(--line-strong)}
+.battle-meta{row-gap:8px}
+.bb-choice{background:linear-gradient(180deg, rgba(22,32,51,.96), rgba(13,19,32,.98)); border:1px solid var(--line-strong); border-radius:18px; padding:20px 22px; display:flex; flex-direction:column; gap:14px; box-shadow:var(--shadow-md); animation:qPanelIn .35s cubic-bezier(.2,.7,.3,1)}
+.choice-header{font-family:var(--font-display); font-size:18px; letter-spacing:.02em}
+.choice-sub{font-size:14px; line-height:1.6; color:var(--text-soft)}
+.choice-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.choice-btn{border-radius:14px; padding:14px 16px; text-align:left; font-weight:700; background:rgba(255,255,255,.04); border:1px solid var(--line-strong); color:var(--text); transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease}
+.choice-btn:hover{transform:translateY(-2px); border-color:rgba(240,179,71,.4); background:rgba(255,255,255,.07); box-shadow:0 12px 24px rgba(0,0,0,.3)}
+.choice-btn.defend{border-color:rgba(90,155,255,.28)}
+.choice-btn.heal{border-color:rgba(62,210,153,.28)}
+.rotate-hint{position:fixed; left:12px; right:12px; bottom:12px; z-index:50; display:none; align-items:center; justify-content:center; text-align:center; padding:12px 16px; border-radius:14px; background:rgba(7,11,20,.92); border:1px solid rgba(240,179,71,.32); color:#fff7dc; box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.rotate-hint.show{display:flex}
+@media (max-width:980px){
+  .bb-choice .choice-actions{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .battle-meta{width:100%; justify-content:flex-start}
+  .turn-counter{font-size:10px}
+  .sprite-enemy{width:220px; height:220px; right:2%; top:50px}
+  .sprite-player{width:180px; height:205px; left:2%; bottom:150px}
+}
+
+
+/* ===== Ajustes visuales v5 ===== */
+.arena{min-height:470px}
+.platform-enemy{top:88px; right:9%; width:250px; height:68px}
+.platform-player{bottom:122px; left:8%; width:250px; height:68px}
+.sprite-enemy{top:34px; right:10.5%; width:220px; height:220px}
+.sprite-player{bottom:134px; left:11%; width:185px; height:220px}
+.hud-enemy{top:20px; right:20px; width:280px}
+.hud-player{bottom:28px; left:22px; width:265px}
+.defense-ring{bottom:112px; left:5.5%; width:290px; height:132px}
+.turn-banner{
+  position:absolute; left:50%; top:18px; transform:translateX(-50%) translateY(-18px) scale(.96);
+  min-width:220px; max-width:70%; padding:10px 18px; border-radius:999px;
+  background:rgba(8,14,27,.88); border:1px solid rgba(255,255,255,.14);
+  text-align:center; font-family:var(--font-display); letter-spacing:.14em; font-size:12px; color:#eaf2ff;
+  opacity:0; pointer-events:none; z-index:7; box-shadow:0 16px 34px rgba(0,0,0,.34);
+  transition:opacity .28s ease, transform .28s ease;
+}
+.turn-banner.show{opacity:1; transform:translateX(-50%) translateY(0) scale(1)}
+.turn-banner.player{border-color:rgba(240,179,71,.38); box-shadow:0 16px 34px rgba(0,0,0,.34), 0 0 0 1px rgba(240,179,71,.12) inset}
+.turn-banner.enemy{border-color:rgba(255,110,110,.38); box-shadow:0 16px 34px rgba(0,0,0,.34), 0 0 0 1px rgba(255,110,110,.12) inset}
+.turn-banner.initiative{border-color:rgba(92,207,209,.38); box-shadow:0 16px 34px rgba(0,0,0,.34), 0 0 0 1px rgba(92,207,209,.12) inset}
+.tutorial-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:6px}
+.tutorial-step{display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid var(--line-strong)}
+.tutorial-step span{flex:0 0 32px; width:32px; height:32px; border-radius:50%; display:grid; place-items:center; font-family:var(--font-display); font-weight:700; background:linear-gradient(135deg, var(--gold), var(--gold-2)); color:#1a1206}
+.tutorial-step b{font-size:14px}
+.tutorial-step small{display:block; color:var(--text-soft); line-height:1.5; margin-top:4px}
+@media (max-width:980px){
+  .platform-enemy{top:72px; right:7%; width:220px; height:60px}
+  .platform-player{bottom:102px; left:7%; width:220px; height:60px}
+  .sprite-enemy{top:24px; right:8%; width:190px; height:190px}
+  .sprite-player{bottom:112px; left:9%; width:165px; height:192px}
+  .hud-enemy{width:250px}
+  .hud-player{bottom:18px; width:240px}
+  .defense-ring{bottom:92px; left:4.7%; width:255px; height:118px}
+}
+@media (max-width:760px){
+  .arena{min-height:420px}
+  .platform-enemy{top:70px; right:4%; width:170px; height:46px}
+  .platform-player{bottom:84px; left:4%; width:170px; height:46px}
+  .sprite-enemy{top:28px; right:4%; width:138px; height:138px}
+  .sprite-player{bottom:84px; left:4%; width:120px; height:144px}
+  .hud-enemy{top:14px; right:14px; width:188px}
+  .hud-player{bottom:12px; left:12px; width:188px}
+  .defense-ring{bottom:68px; left:1.5%; width:165px; height:82px}
+  .turn-banner{top:12px; min-width:160px; font-size:10px; padding:8px 14px}
+  .tutorial-grid{grid-template-columns:1fr}
+}
+
+
+/* ===== V6 composición épica final — escenario pulido ===== */
+#screen-battle .screen-pad{
+  max-width:1480px;
+  gap:12px;
+}
+.battle-topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 16px 40px rgba(0,0,0,.32), inset 0 -1px 0 rgba(255,255,255,.04);
+}
+.battle-title{
+  text-shadow:0 0 18px rgba(255,255,255,.08);
+}
+.battle-meta .btn.small{
+  white-space:nowrap;
+}
+.arena{
+  min-height:540px !important;
+  overflow:hidden;
+  border-radius:22px;
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.48),
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    inset 0 -70px 95px rgba(0,0,0,.24);
+  animation:arenaBreath 10s ease-in-out infinite;
+}
+.arena::before{
+  opacity:.82;
+}
+.arena::after{
+  opacity:.72;
+  height:4px;
+  box-shadow:0 0 18px rgba(240,179,71,.24);
+}
+@keyframes arenaBreath{
+  0%,100%{filter:saturate(1) brightness(1)}
+  50%{filter:saturate(1.08) brightness(1.04)}
+}
+.arena.arena-pulse.arena-good{animation:arenaHitGood .52s ease, arenaBreath 10s ease-in-out infinite}
+.arena.arena-pulse.arena-bad{animation:arenaHitBad .52s ease, arenaBreath 10s ease-in-out infinite}
+@keyframes arenaHitGood{
+  0%,100%{transform:translateX(0); filter:saturate(1) brightness(1)}
+  25%{transform:translateX(-3px); filter:saturate(1.25) brightness(1.13)}
+  50%{transform:translateX(3px)}
+  75%{transform:translateX(-2px)}
+}
+@keyframes arenaHitBad{
+  0%,100%{transform:translateX(0); filter:saturate(1) brightness(1)}
+  25%{transform:translateX(4px); filter:saturate(1.18) brightness(1.06)}
+  50%{transform:translateX(-4px)}
+  75%{transform:translateX(2px)}
+}
+.turn-banner{
+  position:absolute;
+  left:50%;
+  top:22px;
+  transform:translateX(-50%) translateY(-14px) scale(.96);
+  min-width:240px;
+  max-width:76%;
+  padding:10px 18px;
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(10,17,31,.92), rgba(8,13,23,.82));
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 16px 34px rgba(0,0,0,.42), 0 0 26px rgba(255,255,255,.06);
+  text-align:center;
+  font-family:var(--font-display);
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#eef6ff;
+  opacity:0;
+  pointer-events:none;
+  z-index:8;
+  transition:opacity .26s ease, transform .26s ease;
+}
+.turn-banner.show{opacity:1; transform:translateX(-50%) translateY(0) scale(1)}
+.turn-banner.player{border-color:rgba(240,179,71,.42); box-shadow:0 16px 34px rgba(0,0,0,.42), 0 0 32px rgba(240,179,71,.16)}
+.turn-banner.enemy{border-color:rgba(255,110,110,.42); box-shadow:0 16px 34px rgba(0,0,0,.42), 0 0 32px rgba(255,110,110,.14)}
+.turn-banner.initiative{border-color:rgba(92,207,209,.45); box-shadow:0 16px 34px rgba(0,0,0,.42), 0 0 32px rgba(92,207,209,.16)}
+/* posiciones definitivas: jugador abajo izquierda, guardián abajo derecha, HUDs sin tapar */
+.platform-enemy{
+  top:auto !important;
+  bottom:150px !important;
+  right:11.5% !important;
+  width:300px !important;
+  height:78px !important;
+  z-index:1;
+}
+.sprite-enemy{
+  top:auto !important;
+  bottom:162px !important;
+  right:13.6% !important;
+  width:238px !important;
+  height:238px !important;
+  z-index:3;
+  filter:drop-shadow(0 22px 22px rgba(0,0,0,.68)) drop-shadow(0 0 34px rgba(92,207,209,.18)) !important;
+  transform-origin:center bottom;
+}
+.platform-player{
+  top:auto !important;
+  bottom:128px !important;
+  left:8.2% !important;
+  width:282px !important;
+  height:74px !important;
+  z-index:1;
+}
+.sprite-player{
+  top:auto !important;
+  bottom:148px !important;
+  left:11.4% !important;
+  width:190px !important;
+  height:224px !important;
+  z-index:3;
+  filter:drop-shadow(0 22px 18px rgba(0,0,0,.64)) drop-shadow(0 0 24px rgba(240,179,71,.14)) !important;
+  transform-origin:center bottom;
+}
+.hud-enemy{
+  top:24px !important;
+  right:24px !important;
+  left:auto !important;
+  width:286px !important;
+  z-index:6;
+  border-color:rgba(92,207,209,.22);
+}
+.hud-player{
+  left:24px !important;
+  right:auto !important;
+  bottom:24px !important;
+  width:272px !important;
+  z-index:6;
+  border-color:rgba(240,179,71,.22);
+}
+.defense-ring{
+  bottom:130px !important;
+  left:7.7% !important;
+  width:300px !important;
+  height:136px !important;
+  z-index:2;
+}
+.sprite-enemy::before,
+.sprite-player::before{
+  content:"";
+  position:absolute;
+  inset:-16px;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:.62;
+  z-index:-1;
+  filter:blur(16px);
+  animation:characterAura 3.6s ease-in-out infinite;
+}
+.sprite-enemy::before{background:radial-gradient(circle, var(--theme-accent, rgba(92,207,209,.55)), transparent 65%)}
+.sprite-player::before{background:radial-gradient(circle, rgba(240,179,71,.34), transparent 65%)}
+@keyframes characterAura{
+  0%,100%{transform:scale(.92); opacity:.34}
+  50%{transform:scale(1.04); opacity:.72}
+}
+.platform{
+  animation:platformPulse 4.5s ease-in-out infinite;
+}
+@keyframes platformPulse{
+  0%,100%{filter:brightness(1); transform:scaleX(1)}
+  50%{filter:brightness(1.14); transform:scaleX(.98)}
+}
+.sprite-enemy.entering{
+  animation:enemyEntryV6 1.05s cubic-bezier(.16,.84,.28,1), enemyIdle 4s ease-in-out 1.05s infinite !important;
+}
+@keyframes enemyEntryV6{
+  0%{opacity:0; transform:translateY(-46px) scale(.68); filter:drop-shadow(0 0 34px var(--theme-accent, #5ccfd1)) blur(2px)}
+  55%{opacity:1; transform:translateY(10px) scale(1.07); filter:drop-shadow(0 0 46px var(--theme-accent, #5ccfd1)) blur(0)}
+  100%{opacity:1; transform:translateY(0) scale(1)}
+}
+.sprite-player.lunging{animation:playerLungeV6 .55s ease forwards !important}
+@keyframes playerLungeV6{
+  0%{transform:translate(0,0) scale(1)}
+  36%{transform:translate(86px,-18px) scale(1.04)}
+  60%{transform:translate(104px,-6px) scale(1.02)}
+  100%{transform:translate(0,0) scale(1)}
+}
+.sprite-enemy.lunging{animation:enemyLungeV6 .55s ease forwards !important}
+@keyframes enemyLungeV6{
+  0%{transform:translate(0,0) scale(1)}
+  36%{transform:translate(-86px,-18px) scale(1.04)}
+  60%{transform:translate(-104px,-6px) scale(1.02)}
+  100%{transform:translate(0,0) scale(1)}
+}
+.bb-question, .bb-choice, .bb-default{
+  box-shadow:0 22px 54px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.03);
+}
+.q-stem{
+  font-size:14px;
+  line-height:1.5;
+}
+.q-options{
+  gap:10px;
+}
+.q-option{
+  min-height:50px;
+  transition:transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.q-option:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(0,0,0,.24);
+}
+.cmd{
+  transition:transform .16s ease, filter .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.cmd:hover:not(:disabled){
+  transform:translateY(-3px);
+  box-shadow:0 18px 32px rgba(0,0,0,.34), 0 0 20px rgba(240,179,71,.08);
+}
+@media (max-width:1100px){
+  .arena{min-height:500px !important;}
+  .platform-enemy{bottom:136px !important; right:9% !important; width:260px !important; height:66px !important;}
+  .sprite-enemy{bottom:148px !important; right:10% !important; width:210px !important; height:210px !important;}
+  .platform-player{bottom:116px !important; left:7% !important; width:250px !important; height:64px !important;}
+  .sprite-player{bottom:134px !important; left:10% !important; width:172px !important; height:204px !important;}
+  .hud-enemy{width:250px !important;}
+  .hud-player{width:244px !important;}
+  .defense-ring{bottom:118px !important; left:6.4% !important; width:260px !important; height:120px !important;}
+}
+@media (max-width:760px){
+  .arena{min-height:420px !important;}
+  .platform-enemy{bottom:110px !important; right:4% !important; width:170px !important; height:46px !important;}
+  .sprite-enemy{bottom:120px !important; right:3% !important; width:138px !important; height:138px !important;}
+  .platform-player{bottom:88px !important; left:4% !important; width:170px !important; height:46px !important;}
+  .sprite-player{bottom:98px !important; left:5% !important; width:118px !important; height:142px !important;}
+  .hud-enemy{top:12px !important; right:12px !important; width:178px !important; padding:10px 12px;}
+  .hud-player{bottom:12px !important; left:12px !important; width:176px !important; padding:10px 12px;}
+  .defense-ring{bottom:76px !important; left:2.5% !important; width:176px !important; height:86px !important;}
+  .turn-banner{top:10px; min-width:160px; font-size:10px; padding:8px 12px;}
+  .hud-name{font-size:12px}
+  .hud-status{font-size:10px}
+  .hp-num{font-size:10px; min-width:42px}
+}
+
+
+/* ===== V8 balance + sprites ===== */
+#questionCounter.review-mode{border-color:rgba(92,207,209,.50); color:#c9fffb; box-shadow:0 0 18px rgba(92,207,209,.14)}
+.portal-sprite-img{
+  width:auto;
+  max-width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55)) drop-shadow(0 0 22px var(--portal-glow, rgba(58,122,216,.4)));
+  transition:transform .3s ease;
+  pointer-events:none;
+  user-select:none;
+}
+.portal:hover .portal-sprite-img{transform:translateY(-3px) scale(1.04)}
+.portal-silhouette{height:150px}
+.portal-large .portal-silhouette{height:230px}
+.sprite img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center bottom;
+  pointer-events:none;
+  user-select:none;
+}
+.sprite-enemy img{filter:drop-shadow(0 16px 18px rgba(0,0,0,.44)) drop-shadow(0 0 24px var(--theme-accent, rgba(92,207,209,.4)))}
+.sprite-player img{filter:drop-shadow(0 12px 14px rgba(0,0,0,.42))}
+.sprite-player .battle-sprite-img{transform:scale(1.08) translateY(4px)}
+.sprite-enemy .battle-sprite-img.guardian-g1{transform:scale(1.05) translateY(8px)}
+.sprite-enemy .battle-sprite-img.guardian-g2{transform:scale(1.03) translateY(8px)}
+.sprite-enemy .battle-sprite-img.guardian-g3{transform:scale(1.08) translateY(2px)}
+.sprite-enemy .battle-sprite-img.guardian-g4{transform:scale(1.08) translateY(2px)}
+@media (max-width:760px){
+  .portal-silhouette{height:132px}
+  .portal-large .portal-silhouette{height:170px}
+  .sprite-player .battle-sprite-img{transform:scale(1.1) translateY(2px)}
+  .sprite-enemy .battle-sprite-img.guardian-g1{transform:scale(1.07) translateY(5px)}
+  .sprite-enemy .battle-sprite-img.guardian-g2{transform:scale(1.05) translateY(6px)}
+  .sprite-enemy .battle-sprite-img.guardian-g3{transform:scale(1.1) translateY(1px)}
+  .sprite-enemy .battle-sprite-img.guardian-g4{transform:scale(1.09) translateY(1px)}
+}
+
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     CAPA DE ATMÓSFERA
+     ========================================================= -->
+<div class="atmosphere" aria-hidden="true">
+  <div class="hex"></div>
+  <div class="grain"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<!-- =========================================================
+     PANTALLA: INTRO
+     ========================================================= -->
+<section id="screen-intro" class="screen active" aria-label="Pantalla de bienvenida">
+  <div class="screen-pad">
+    <div class="intro-card">
+      <div class="sigil" aria-hidden="true">
+        <div class="sigil-ring"></div>
+        <div class="sigil-ring-2"></div>
+        <div class="sigil-core"></div>
+      </div>
+      <div class="intro-eyebrow eyebrow">Módulo final · Consagración</div>
+      <h1 class="intro-title">La Consagración del Orbe</h1>
+      <p class="intro-lore">
+        Cuatro Guardianes custodian los fragmentos del código maestro del Orbe. Cada uno te pondrá a prueba con un desafío único.
+        Vence sus pruebas, recupera los fragmentos y conviértete en el Consagrado del Orbe.
+      </p>
+
+      <div class="intro-info">
+        <div class="intro-info-card">
+          <h4>Cómo se juega</h4>
+          <p>Selecciona un guardián desde la cámara central. En cada batalla puedes Atacar, usar una Habilidad, Defender o Analizar al enemigo. Responde correctamente para dañarlo; falla y te golpeará.</p>
+        </div>
+        <div class="intro-info-card">
+          <h4>Tu progreso</h4>
+          <p>Cada guardián vencido revela un fragmento del código maestro. Cuando los cuatro caigan, el Orbe se consagrará y verás el código completo. Tu avance se guarda en este navegador.</p>
+        </div>
+      </div>
+
+      <div class="intro-form">
+        <label for="playerName">Nombre del aspirante</label>
+        <input type="text" id="playerName" class="input" placeholder="Escribe tu nombre completo" maxlength="40" autocomplete="off">
+      </div>
+
+      <div class="intro-cta">
+        <button class="btn primary large" id="btnStart" type="button">Comenzar la travesía →</button>
+      </div>
+
+      <p class="intro-notice">
+        Tu progreso se guarda automáticamente en este navegador. Para no perder tu avance,
+        <b>usa siempre el mismo dispositivo y navegador</b> hasta completar la Consagración.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PANTALLA: HUB
+     ========================================================= -->
+<section id="screen-hub" class="screen" aria-label="Cámara de los guardianes">
+  <div class="screen-pad">
+
+    <header class="hub-topbar">
+      <div class="hub-brand">
+        <div class="hub-mini-sigil"><div class="hub-mini-sigil-core"></div></div>
+        <div class="hub-brand-text">
+          <div class="hub-brand-title">La Consagración del Orbe</div>
+          <div class="hub-brand-sub">Aspirante: <span id="brandPlayerName">—</span></div>
+        </div>
+      </div>
+
+      <div class="hub-stats">
+        <div class="stat-pill">
+          <div class="stat-icon">⚔</div>
+          <div class="stat-text">
+            <span class="stat-label">Guardianes</span>
+            <span class="stat-value"><span id="statGuardians">0</span> / 4</span>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-icon">◆</div>
+          <div class="stat-text">
+            <span class="stat-label">Fragmentos</span>
+            <span class="stat-value"><span id="statFragments">0</span> / 4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hub-actions">
+        <button class="btn ghost small" id="btnFullscreenHub" type="button">⛶ Pantalla completa</button>
+        <button class="btn ghost small" id="btnSave" type="button">Guardar avance</button>
+        <button class="btn danger small" id="btnReset" type="button">Reiniciar</button>
+      </div>
+    </header>
+
+    <div class="hub-hero">
+      <div class="eyebrow" style="margin-bottom:6px">Cámara central</div>
+      <h2>Los cuatro guardianes te aguardan</h2>
+      <p>Selecciona un guardián para iniciar el combate. Cada victoria revela un fragmento del código maestro. Cuando los cuatro caigan, el código del Orbe se consagrará por completo.</p>
+    </div>
+
+    <!-- Strip de fragmentos -->
+    <div class="frag-strip" id="fragStrip"></div>
+
+    <!-- Grid de portales -->
+    <div class="portals-wrap" id="portalsWrap"></div>
+
+    <div class="hub-hint">
+      <div class="hub-hint-icon">✦</div>
+      <div class="hub-hint-text" id="hubHintText">
+        <b>Selecciona un guardián</b> para iniciar el combate. Cada batalla es independiente y puede repetirse.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     PANTALLA: BATALLA
+     ========================================================= -->
+<section id="screen-battle" class="screen" aria-label="Pantalla de combate">
+  <div class="screen-pad">
+
+    <header class="battle-topbar">
+      <button class="btn ghost small" id="btnLeaveBattle" type="button">← Volver</button>
+      <div class="battle-title" id="battleTitle">
+        Combate <small id="battleSubtitle"></small>
+      </div>
+      <div class="battle-meta">
+        <span class="turn-counter" id="turnCounter">Ronda 1</span>
+        <span class="turn-counter" id="questionCounter">Preguntas 0 / 25</span>
+        <span class="turn-chip" id="turnChip"><span class="turn-chip-dot"></span><span>Iniciativa</span></span>
+        <button class="btn ghost small" id="btnBattleGuide" type="button">? Tutorial</button>
+        <button class="btn ghost small" id="btnFullscreenBattle" type="button">⛶ Pantalla completa</button>
+      </div>
+    </header>
+
+    <!-- HUDs externos para móvil -->
+    <div class="hud-external-wrap" id="hudExternalWrap">
+      <div class="hud" data-hud="enemy-mobile">
+        <div class="hud-name-row">
+          <span class="hud-name" id="enemyNameMobile">Guardián</span>
+          <span class="hud-level" id="enemyLevelMobile">NV ?</span>
+        </div>
+        <div class="hud-status" id="enemyStatusMobile">Pendiente</div>
+        <div class="hp-row">
+          <span class="hp-label">HP</span>
+          <div class="hp-track"><div class="hp-fill" id="enemyHpFillMobile" style="width:100%"></div></div>
+          <span class="hp-num" id="enemyHpNumMobile">100/100</span>
+        </div>
+      </div>
+      <div class="hud" data-hud="player-mobile">
+        <div class="hud-name-row">
+          <span class="hud-name" id="playerHudNameMobile">Aspirante</span>
+          <span class="hud-level">NV 14</span>
+        </div>
+        <div class="hud-status" id="playerStatusMobile">Listo</div>
+        <div class="hp-row">
+          <span class="hp-label">HP</span>
+          <div class="hp-track"><div class="hp-fill" id="playerHpFillMobile" style="width:100%"></div></div>
+          <span class="hp-num" id="playerHpNumMobile">100/100</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena" id="arena">
+
+      <div class="arena-particles" id="arenaParticles" aria-hidden="true"></div>
+      <div class="turn-banner" id="turnBanner" aria-hidden="true"></div>
+
+      <!-- HUD enemigo (desktop/tablet) -->
+      <div class="hud hud-enemy">
+        <div class="hud-name-row">
+          <span class="hud-name" id="enemyName">Guardián</span>
+          <span class="hud-level" id="enemyLevel">NV ?</span>
+        </div>
+        <div class="hud-status" id="enemyStatus">Pendiente</div>
+        <div class="hp-row">
+          <span class="hp-label">HP</span>
+          <div class="hp-track"><div class="hp-fill" id="enemyHpFill" style="width:100%"></div></div>
+          <span class="hp-num" id="enemyHpNum">100/100</span>
+        </div>
+      </div>
+
+      <div class="platform platform-enemy"></div>
+      <div class="sprite sprite-enemy" id="spriteEnemy" aria-hidden="true"></div>
+
+      <div class="platform platform-player"></div>
+      <div class="sprite sprite-player" id="spritePlayer" aria-hidden="true"></div>
+
+      <!-- Defense ring visible -->
+      <div class="defense-ring" id="defenseRing" aria-hidden="true"></div>
+
+      <!-- HUD jugador (desktop/tablet) -->
+      <div class="hud hud-player">
+        <div class="hud-name-row">
+          <span class="hud-name" id="playerHudName">Aspirante</span>
+          <span class="hud-level">NV 14</span>
+        </div>
+        <div class="hud-status" id="playerStatus">Listo para combatir</div>
+        <div class="hp-row">
+          <span class="hp-label">HP</span>
+          <div class="hp-track"><div class="hp-fill" id="playerHpFill" style="width:100%"></div></div>
+          <span class="hp-num" id="playerHpNum">100/100</span>
+        </div>
+      </div>
+
+      <!-- Capa FX -->
+      <div class="battle-fx" id="battleFx" aria-hidden="true"></div>
+
+    </div>
+
+    <!-- Bottom: dialogo + comandos / pregunta -->
+    <div class="battle-bottom">
+
+      <div class="bb-default" id="bbDefault">
+        <div class="dialogue" id="dialogueBox">
+          <div class="dialogue-label">Cámara de combate</div>
+          <div class="dialogue-text" id="dialogueText">El guardián aguarda en silencio.</div>
+        </div>
+        <div class="commands">
+          <button class="cmd cmd-attack" id="cmdAttack" type="button">
+            <span class="cmd-icon">⚔</span>
+            <span class="cmd-name">Atacar</span>
+            <span class="cmd-desc">Golpe base · requiere pregunta</span>
+          </button>
+          <button class="cmd cmd-skill" id="cmdSkill" type="button">
+            <span class="cmd-icon">✦</span>
+            <span class="cmd-name">Habilidad</span>
+            <span class="cmd-desc">Impacto reforzado · con recarga</span>
+          </button>
+          <button class="cmd cmd-defend" id="cmdDefend" type="button">
+            <span class="cmd-icon">◐</span>
+            <span class="cmd-name">Defender</span>
+            <span class="cmd-desc">Activa guardia para el próximo golpe</span>
+          </button>
+          <button class="cmd cmd-analyze" id="cmdRecover" type="button">
+            <span class="cmd-icon">✚</span>
+            <span class="cmd-name">Recuperar</span>
+            <span class="cmd-desc">Recupera vida con una pregunta</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bb-choice hidden" id="bbChoice">
+        <div class="choice-header" id="choiceHeader">Elección táctica</div>
+        <div class="choice-sub" id="choiceSub">Selecciona una opción para continuar.</div>
+        <div class="choice-actions" id="choiceActions"></div>
+      </div>
+
+      <div class="bb-question hidden" id="bbQuestion">
+        <div class="q-header">
+          <div class="q-banner" id="qBanner">
+            <span class="q-banner-icon" id="qBannerIcon">⚔</span>
+            <span id="qBannerText">Ataque directo</span>
+          </div>
+          <button class="btn ghost small" id="qCancel" type="button">Cancelar</button>
+        </div>
+        <div class="q-stem" id="qStem">—</div>
+        <div class="q-options" id="qOptions" role="radiogroup" aria-label="Opciones de respuesta"></div>
+        <div class="q-foot">
+          <div class="q-hint" id="qHint">Selecciona una respuesta para confirmar</div>
+          <div class="q-foot-actions">
+            <button class="btn primary" id="qSubmit" type="button" disabled>Confirmar respuesta →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     MODAL Y TOAST
+     ========================================================= -->
+<div class="modal-layer" id="modalLayer" aria-hidden="true">
+  <div class="modal" id="modal">
+    <div class="modal-pad" id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast-layer" id="toastLayer" aria-live="polite"></div>
+<div class="rotate-hint" id="rotateHint">↻ Para una mejor experiencia, gira tu dispositivo en horizontal o usa pantalla completa.</div>
+
+<script>
+/* =========================================================
+   CONSTANTES Y CONFIGURACIÓN
+   ========================================================= */
+const STORAGE_KEY = 'consagracion_orbe_v11_all_questions_proto';
+
+const FRAGMENTS = { g1:'OR', g2:'BE', g3:'20', g4:'26' };
+const FINAL_CODE = 'ORBE2026';
+
+const BATTLE_RULES = {
+  enemyHp:84,
+  playerHp:70,
+  attackHit:12,
+  skillHit:18,
+  enemyHit:8,
+  defendReduce:0.35,
+  healHit:12,
+  reactHeal:10,
+  reactHealDamage:3,
+  maxQuestions:25, // umbral de repaso, no derrota automática
+  skillCooldown:1,
+};
+
+const PLAYER_SPRITE_PATH = 'assets/player_knight.png';
+
+// Configuración de los 4 guardianes
+const GUARDIANS = [
+  {
+    id:'g1',
+    name:'Guardián del Valle',
+    role:'Custodio de los Fundamentos',
+    level:14,
+    enemyHp:70,
+    playerHp:65,
+    accent:'#5ccfd1',
+    accentRgb:'92,207,209',
+    theme:'valle',
+    particleColor:'rgba(170,255,210,.85)',
+    spritePath:null,
+    spriteLabel:'Retrato del Guardián del Valle',
+    silhouetteSvg:silhouetteValle(),
+    intro:'Una figura encapuchada emerge entre la niebla. <b>El Guardián del Valle</b> alza su báculo. Primero deberás ganar la iniciativa para decidir quién abre el duelo.',
+    analysis:'<b>El Guardián del Valle</b> custodia los fundamentos. Reemplaza luego sus 25 preguntas por contenido del primer bloque; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+  },
+  {
+    id:'g2',
+    name:'Maestro de la Forja',
+    role:'Forjador de las Herramientas',
+    level:18,
+    enemyHp:85,
+    playerHp:65,
+    accent:'#ff8c5e',
+    accentRgb:'255,140,94',
+    theme:'forja',
+    particleColor:'rgba(255,180,120,.85)',
+    spritePath:null,
+    spriteLabel:'Retrato del Maestro de la Forja',
+    silhouetteSvg:silhouetteForja(),
+    intro:'El calor del horno te envuelve. <b>El Maestro de la Forja</b> golpea su martillo: solo avanzan quienes ya superaron al guardián anterior.',
+    analysis:'<b>El Maestro de la Forja</b> castiga la duda y premia la precisión. Reemplaza luego sus 25 preguntas por las del segundo módulo; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+  },
+  {
+    id:'g3',
+    name:'Arquitecto del Flow',
+    role:'Tejedor del Diseño',
+    level:22,
+    enemyHp:100,
+    playerHp:70,
+    accent:'#5a9bff',
+    accentRgb:'90,155,255',
+    theme:'flow',
+    particleColor:'rgba(150,200,255,.85)',
+    spritePath:null,
+    spriteLabel:'Retrato del Arquitecto del Flow',
+    silhouetteSvg:silhouetteFlow(),
+    intro:'Líneas geométricas giran a tu alrededor. <b>El Arquitecto del Flow</b> transforma cada intercambio en una prueba de diseño.',
+    analysis:'<b>El Arquitecto del Flow</b> observa la estructura de cada decisión. Reemplaza luego sus 25 preguntas por las del tercer bloque; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+  },
+  {
+    id:'g4',
+    name:'Custodio del Caos',
+    role:'Señor del Simulador Final',
+    level:30,
+    enemyHp:120,
+    playerHp:75,
+    accent:'#c878ff',
+    accentRgb:'200,120,255',
+    theme:'caos',
+    particleColor:'rgba(220,170,255,.85)',
+    spritePath:null,
+    spriteLabel:'Retrato del Custodio del Caos',
+    silhouetteSvg:silhouetteCaos(),
+    intro:'Un torbellino oscuro desgarra la cámara. <b>El Custodio del Caos</b> abre la prueba final: ya no hay espacio para errores innecesarios.',
+    analysis:'<b>El Custodio del Caos</b> domina el simulador final. Reemplaza luego sus 25 preguntas por el bloque definitivo; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+  },
+];
+
+// Banco de 25 preguntas por guardián. Luego puedes reemplazar directamente estas listas.
+function buildPlaceholderQuestions(label){
+  return Array.from({length:25}, (_, i) => {
+    const answer = i % 4;
+    const options = [
+      `Alternativa A de reemplazo ${i+1}`,
+      `Alternativa B de reemplazo ${i+1}`,
+      `Alternativa C de reemplazo ${i+1}`,
+      `Alternativa D de reemplazo ${i+1}`,
+    ];
+    options[answer] = `Respuesta correcta de reemplazo ${i+1}`;
+    return {
+      stem:`[${i+1}/25] ${label}. Reemplaza este enunciado por tu pregunta real del guardián correspondiente.`,
+      options,
+      answer,
+    };
+  });
+}
+
+const QUESTION_BANKS = {
+  g1: [
+    {
+      stem: "¿Cuál de las siguientes opciones define mejor la gamificación educativa?",
+      options: ["Usar videojuegos comerciales en todas las clases.", "Aplicar elementos, dinámicas y lógicas del juego en contextos educativos con un propósito pedagógico.", "Transformar toda evaluación en una competencia con ganadores y perdedores.", "Reemplazar completamente la enseñanza tradicional por juegos digitales."],
+      answer: 1,
+    },
+    {
+      stem: "¿Qué elemento es fundamental para que una experiencia gamificada tenga sentido educativo?",
+      options: ["Que tenga muchos puntos y premios.", "Que todos los estudiantes compitan entre sí.", "Que esté conectada con objetivos de aprendizaje claros.", "Que use obligatoriamente tecnología digital."],
+      answer: 2,
+    },
+    {
+      stem: "En una experiencia gamificada, los puntos, insignias, niveles o recompensas son ejemplos de:",
+      options: ["Mecánicas de juego.", "Objetivos curriculares.", "Contenidos mínimos obligatorios.", "Evaluaciones sumativas tradicionales."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de estas opciones representa mejor una dinámica dentro de una experiencia gamificada?",
+      options: ["Un botón para iniciar sesión.", "Una imagen decorativa en la portada.", "Una tabla con fechas de entrega.", "La sensación de progreso, desafío o colaboración que surge durante la actividad."],
+      answer: 3,
+    },
+    {
+      stem: "Según la lógica MDA, las mecánicas se refieren principalmente a:",
+      options: ["Las emociones que siente el jugador.", "Las reglas, acciones y sistemas concretos disponibles en la experiencia.", "La interpretación final que hace el estudiante.", "El estilo visual de la actividad."],
+      answer: 1,
+    },
+    {
+      stem: "En el modelo MDA, la estética no se refiere solo a lo visual, sino también a:",
+      options: ["La experiencia emocional o sensorial que vive el participante.", "La cantidad de colores usados en la presentación.", "El tipo de letra utilizado en los documentos.", "El número de actividades evaluadas."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de estas decisiones muestra una gamificación mejor diseñada?",
+      options: ["Dar puntos por cualquier acción, aunque no tenga relación con el aprendizaje.", "Crear una narrativa, misiones y recompensas conectadas con los objetivos de la clase.", "Hacer que todos pierdan puntos cuando alguien se equivoca.", "Usar solo una ruleta para decidir quién responde."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál es una diferencia clave entre jugar y gamificar?",
+      options: ["Jugar siempre es educativo y gamificar no.", "Gamificar significa usar elementos de juego sin necesariamente jugar un juego completo.", "Gamificar solo ocurre cuando se usan videojuegos.", "Jugar y gamificar son exactamente lo mismo."],
+      answer: 1,
+    },
+    {
+      stem: "¿Qué riesgo existe cuando una gamificación se basa solo en puntos y premios?",
+      options: ["Que se vuelva más significativa automáticamente.", "Que los estudiantes aprendan más por el simple hecho de competir.", "Que la motivación se vuelva superficial y se pierda el sentido pedagógico.", "Que todos los estudiantes participen con la misma intensidad."],
+      answer: 2,
+    },
+    {
+      stem: "Una misión dentro de una experiencia gamificada debería:",
+      options: ["Estar conectada con una tarea o desafío de aprendizaje.", "Ser solo una frase decorativa.", "Entregarse únicamente al final del curso.", "No tener relación con la narrativa."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de estos elementos ayuda a que el estudiante perciba avance dentro de una gamificación?",
+      options: ["Quitar toda retroalimentación para aumentar el misterio.", "Mantener siempre el mismo nivel de dificultad.", "Ocultar completamente los objetivos de la experiencia.", "Usar niveles, progreso visible o desbloqueos."],
+      answer: 3,
+    },
+    {
+      stem: "¿Qué función cumple la retroalimentación en una experiencia gamificada?",
+      options: ["Permite que el estudiante sepa cómo va, qué logró y qué puede mejorar.", "Sirve solo para entregar una nota final.", "Reemplaza completamente la planificación docente.", "Evita que el estudiante tome decisiones."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de las siguientes opciones es un ejemplo de narrativa gamificada?",
+      options: ["Lean las páginas 10 a 15 y respondan.", "Hoy deben completar la actividad número 3.", "Son exploradores que deben recuperar fragmentos de conocimiento superando desafíos.", "La prueba será el viernes."],
+      answer: 2,
+    },
+    {
+      stem: "¿Qué característica debe tener una buena regla de juego o gamificación?",
+      options: ["Ser confusa para aumentar la dificultad.", "Ser clara, comprensible y coherente con el objetivo.", "Cambiar constantemente sin aviso.", "Estar oculta para todos los participantes."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál de estas opciones representa una mecánica de desbloqueo?",
+      options: ["Avanzar a una nueva misión solo después de completar un desafío anterior.", "Leer una instrucción en voz alta.", "Escribir una respuesta en el cuaderno.", "Ver una imagen decorativa en una diapositiva."],
+      answer: 0,
+    },
+    {
+      stem: "¿Por qué la narrativa puede fortalecer una gamificación?",
+      options: ["Porque reemplaza todos los contenidos académicos.", "Porque evita que el docente explique.", "Porque convierte automáticamente cualquier actividad en juego.", "Porque da sentido, contexto y propósito a las acciones del estudiante."],
+      answer: 3,
+    },
+    {
+      stem: "¿Cuál de estas opciones muestra una mala aplicación de gamificación?",
+      options: ["Diseñar misiones conectadas con los aprendizajes.", "Entregar retroalimentación frecuente.", "Usar puntos sin explicar para qué sirven ni cómo se relacionan con el aprendizaje.", "Permitir que los estudiantes visualicen su progreso."],
+      answer: 2,
+    },
+    {
+      stem: "¿Qué significa que una experiencia gamificada tenga propósito?",
+      options: ["Que cada elemento de juego esté conectado con una intención educativa.", "Que tenga muchas imágenes llamativas.", "Que incluya siempre competencias individuales.", "Que use tecnología avanzada."],
+      answer: 0,
+    },
+    {
+      stem: "En una gamificación, una insignia o logro debería representar:",
+      options: ["Un adorno sin relación con el proceso.", "Una evidencia simbólica de avance, dominio o participación.", "Un reemplazo automático de todas las calificaciones.", "Una recompensa entregada al azar."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál de estas opciones se relaciona mejor con la idea de progresión?",
+      options: ["Que todos hagan exactamente lo mismo sin cambios.", "Que no existan metas intermedias.", "Que el estudiante avance por etapas, niveles o desafíos cada vez más complejos.", "Que la actividad no tenga cierre."],
+      answer: 2,
+    },
+    {
+      stem: "¿Qué aspecto debe considerar el docente antes de elegir una mecánica de juego?",
+      options: ["Si la mecánica se ve entretenida, aunque no tenga relación con la clase.", "Si la mecánica ayuda al aprendizaje, la participación o la comprensión del proceso.", "Si la mecánica permite terminar más rápido la planificación.", "Si la mecánica obliga a todos a competir."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál de estas opciones representa mejor una experiencia gamificada equilibrada?",
+      options: ["Tiene narrativa, reglas claras, desafíos, retroalimentación y conexión con los aprendizajes.", "Tiene solo premios para quienes terminan primero.", "Tiene muchas imágenes, pero no objetivos claros.", "Tiene reglas complejas que nadie comprende."],
+      answer: 0,
+    },
+    {
+      stem: "¿Qué puede ocurrir si una gamificación tiene demasiadas reglas poco claras?",
+      options: ["Se vuelve más profunda automáticamente.", "Aumenta la motivación de todos los estudiantes.", "Puede generar confusión, frustración y pérdida de sentido.", "Mejora la comprensión de los contenidos."],
+      answer: 2,
+    },
+    {
+      stem: "¿Cuál de estas frases representa mejor el rol del docente en una experiencia gamificada?",
+      options: ["Solo observar mientras los estudiantes juegan.", "Diseñar, guiar, retroalimentar y conectar la experiencia con los aprendizajes.", "Evitar intervenir para que la experiencia sea completamente libre.", "Entregar premios sin explicar los criterios."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál sería una buena pregunta para evaluar si una gamificación está bien diseñada?",
+      options: ["¿Tiene suficientes colores y efectos visuales?", "¿Los estudiantes reciben premios en cada clase?", "¿La experiencia se ve como un videojuego profesional?", "¿Las mecánicas, desafíos y narrativa ayudan realmente a aprender?"],
+      answer: 3,
+    },
+  ],
+  g2: [
+    {
+      stem: "¿Cuál debería ser el primer paso antes de elegir herramientas para una gamificación?",
+      options: ["Elegir la plataforma más llamativa.", "Definir objetivos de aprendizaje y propósito de la experiencia.", "Crear recompensas antes de conocer la actividad.", "Diseñar cartas y dados sin planificar."],
+      answer: 1,
+    },
+    {
+      stem: "¿Por qué es importante planificar las fases de una gamificación?",
+      options: ["Porque permite ordenar la experiencia, evitar improvisaciones y conectar cada etapa con el aprendizaje.", "Porque elimina la necesidad de evaluar.", "Porque obliga a usar siempre tecnología.", "Porque transforma cualquier clase automáticamente en juego."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de estas opciones representa mejor una fase inicial de diseño gamificado?",
+      options: ["Entregar premios al azar.", "Crear una tabla de posiciones sin explicar el objetivo.", "Elegir colores para la presentación final.", "Analizar el contexto, los estudiantes y el problema o necesidad pedagógica."],
+      answer: 3,
+    },
+    {
+      stem: "Una carta de recompensa bien diseñada debería:",
+      options: ["Entregarse sin relación con el desempeño.", "Ser solo decorativa.", "Tener un efecto claro, comprensible y equilibrado dentro de la experiencia.", "Reemplazar completamente la retroalimentación docente."],
+      answer: 2,
+    },
+    {
+      stem: "¿Cuál es una ventaja de usar cartas en una gamificación educativa?",
+      options: ["Permiten introducir decisiones, recompensas, poderes o eventos de manera concreta y visible.", "Evitan que los estudiantes piensen.", "Funcionan solo en clases de lenguaje.", "Hacen innecesaria la planificación."],
+      answer: 0,
+    },
+    {
+      stem: "Si una carta entrega demasiado poder a un estudiante o grupo, ¿qué problema puede generar?",
+      options: ["Mayor equilibrio en la experiencia.", "Desmotivación o sensación de injusticia en los demás participantes.", "Más claridad en los objetivos.", "Mejor retroalimentación automática."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál de estas cartas estaría mejor formulada para una gamificación?",
+      options: ["Ganas porque sí.", "Puedes saltarte toda la actividad.", "El docente decide algo al azar.", "Roba 1 pista adicional para resolver el desafío actual."],
+      answer: 3,
+    },
+    {
+      stem: "¿Qué debería evitarse al crear materiales gamificados?",
+      options: ["Que tengan instrucciones claras.", "Que sean coherentes con la narrativa.", "Que estén conectados con la actividad.", "Que se vean bonitos, pero no tengan función pedagógica."],
+      answer: 3,
+    },
+    {
+      stem: "¿Para qué puede servir una navaja suiza de gamificación?",
+      options: ["Para reunir herramientas rápidas que permitan dinamizar clases, crear azar controlado, candados, dados o desafíos.", "Para reemplazar completamente al docente.", "Para evitar que los estudiantes trabajen colaborativamente.", "Para entregar notas automáticas sin criterios."],
+      answer: 0,
+    },
+    {
+      stem: "Un lanzador de dados personalizable puede ser útil porque:",
+      options: ["Hace que todo dependa del azar sin planificación.", "Permite introducir variabilidad, decisiones o eventos dentro de una actividad.", "Elimina la necesidad de reglas.", "Solo sirve para juegos de rol comerciales."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál sería un buen uso pedagógico de un candado digital en una gamificación?",
+      options: ["Bloquear contenidos sin dar pistas.", "Obligar a memorizar números al azar.", "Evitar que los estudiantes avancen aunque hayan aprendido.", "Permitir que los estudiantes desbloqueen una misión al resolver correctamente un desafío."],
+      answer: 3,
+    },
+    {
+      stem: "¿Qué hace que un recurso gamificado sea realmente útil para el docente?",
+      options: ["Que sea difícil de entender.", "Que tenga muchas animaciones, aunque no se relacione con la clase.", "Que pueda aplicarse de manera clara, rápida y alineada con un propósito educativo.", "Que dependa solo de internet."],
+      answer: 2,
+    },
+    {
+      stem: "¿Cuál es una buena práctica al usar IA para crear materiales gamificados?",
+      options: ["Pedir cualquier cosa sin explicar el contexto.", "Entregar objetivos, nivel educativo, asignatura, tono, formato y criterios esperados.", "Copiar el primer resultado sin revisarlo.", "Evitar adaptar el material al curso real."],
+      answer: 1,
+    },
+    {
+      stem: "¿Por qué no conviene depender completamente de la IA al diseñar una gamificación?",
+      options: ["Porque la IA no puede apoyar procesos creativos.", "Porque siempre entrega respuestas incorrectas.", "Porque solo sirve para crear imágenes.", "Porque el docente debe revisar, ajustar y asegurar coherencia pedagógica y contextual."],
+      answer: 3,
+    },
+    {
+      stem: "¿Qué información mínima debería incluir un buen prompt para crear una actividad gamificada?",
+      options: ["Solo el nombre de la asignatura.", "Objetivo, edad o nivel, contenido, tipo de actividad, tono y formato esperado.", "Únicamente la frase “hazlo entretenido”.", "Solo una lista de colores."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál de estas opciones muestra un uso más sólido de una plataforma para gamificar?",
+      options: ["Elegirla porque está de moda.", "Usarla sin explicar reglas ni propósito.", "Integrarla cuando aporta seguimiento, interacción, narrativa, desafíos o retroalimentación útil.", "Usarla solo para que la clase parezca moderna."],
+      answer: 2,
+    },
+    {
+      stem: "¿Qué criterio debería considerar un docente antes de usar una plataforma digital?",
+      options: ["Si realmente mejora o potencia la experiencia de aprendizaje.", "Si tiene más botones que otras.", "Si obliga a todos a competir.", "Si permite evitar planificar."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de estas situaciones muestra una mala selección de herramienta?",
+      options: ["Usar un formulario para recoger respuestas de una misión.", "Usar una ruleta para asignar eventos aleatorios.", "Usar una plataforma compleja que los estudiantes no entienden y que no aporta al objetivo.", "Usar cartas para entregar poderes equilibrados."],
+      answer: 2,
+    },
+    {
+      stem: "¿Qué significa que una herramienta sea un medio y no un fin en gamificación?",
+      options: ["Que la herramienta debe estar al servicio del aprendizaje y no usarse solo por ser llamativa.", "Que las herramientas no deberían usarse nunca.", "Que lo importante es usar la mayor cantidad de plataformas posibles.", "Que la tecnología siempre es superior a lo analógico."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál de estas combinaciones representa mejor un sistema híbrido de gamificación?",
+      options: ["Solo una presentación con imágenes.", "Cartas físicas, narrativa, formulario digital, candados y retroalimentación docente.", "Una plataforma sin explicación.", "Un ranking sin actividad asociada."],
+      answer: 1,
+    },
+    {
+      stem: "¿Por qué es importante testear una gamificación antes de aplicarla?",
+      options: ["Para comprobar si las reglas, tiempos, recursos y desafíos funcionan como se espera.", "Para hacerla más difícil sin razón.", "Para eliminar la participación estudiantil.", "Para evitar modificar cualquier error."],
+      answer: 0,
+    },
+    {
+      stem: "Si una actividad gamificada resulta demasiado confusa, ¿qué debería hacer el docente?",
+      options: ["Mantenerla igual para que los estudiantes se adapten.", "Aumentar la cantidad de reglas.", "Simplificar instrucciones, revisar el flujo y ajustar la experiencia.", "Quitar todos los desafíos."],
+      answer: 2,
+    },
+    {
+      stem: "¿Qué característica debería tener una misión creada con apoyo de IA?",
+      options: ["Ser genérica y aplicable a cualquier curso sin cambios.", "Tener contexto, objetivo, instrucciones claras y criterios de logro.", "Ser muy extensa aunque no se entienda.", "Evitar cualquier relación con la narrativa."],
+      answer: 1,
+    },
+    {
+      stem: "¿Cuál de estas opciones muestra una buena integración entre recurso y narrativa?",
+      options: ["Un candado que se abre con una clave obtenida al resolver una misión de la historia.", "Una ruleta usada sin explicación.", "Una carta entregada sin relación con el desafío.", "Un dado lanzado solo para perder tiempo."],
+      answer: 0,
+    },
+    {
+      stem: "¿Cuál sería una buena pregunta final para evaluar si un material gamificado está bien diseñado?",
+      options: ["¿Se ve suficientemente decorado?", "¿Usa más tecnología que otras clases?", "¿El recurso ayuda a que los estudiantes comprendan, decidan, avancen o participen mejor?", "¿Tiene premios para todos sin importar el proceso?"],
+      answer: 2,
+    }
+  ],
+  g3: [
+    {
+        "stem": "¿Qué describe mejor el concepto de flow en una experiencia gamificada?",
+        "options": [
+            "Un estado en que la actividad es tan fácil que no exige esfuerzo.",
+            "Un estado de concentración y disfrute donde el desafío se equilibra con las habilidades del participante.",
+            "Una actividad donde todos compiten al mismo tiempo.",
+            "Una secuencia de premios entregados sin relación con el aprendizaje."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Qué puede ocurrir si una experiencia gamificada tiene desafíos demasiado fáciles?",
+        "options": [
+            "Puede generar aburrimiento o baja implicación.",
+            "Siempre aumenta la motivación.",
+            "Hace que el aprendizaje sea más profundo.",
+            "Elimina la necesidad de retroalimentación."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "¿Qué puede ocurrir si los desafíos son demasiado difíciles para el nivel del estudiante?",
+        "options": [
+            "Se produce automáticamente mayor aprendizaje.",
+            "Aumenta siempre la colaboración.",
+            "El estudiante puede frustrarse o abandonar la experiencia.",
+            "Se evita la necesidad de apoyo docente."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Cuál de estas decisiones ayuda a mantener el flow?",
+        "options": [
+            "Usar siempre el mismo nivel de dificultad.",
+            "Evitar toda retroalimentación.",
+            "Cambiar las reglas constantemente sin aviso.",
+            "Entregar desafíos progresivos, claros y ajustados al nivel de los participantes."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "¿Por qué es útil conocer perfiles de jugadores al diseñar una gamificación?",
+        "options": [
+            "Porque obliga a clasificar rígidamente a cada estudiante para siempre.",
+            "Porque permite adaptar motivaciones, roles, desafíos y tipos de participación.",
+            "Porque evita planificar actividades variadas.",
+            "Porque todos los estudiantes se motivan por lo mismo."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "Un estudiante que disfruta explorar, descubrir secretos y encontrar rutas alternativas se relaciona más con un perfil de:",
+        "options": [
+            "Explorador.",
+            "Socializador.",
+            "Competidor.",
+            "Observador pasivo."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "Un estudiante que se motiva especialmente por superar marcas, ganar desafíos y destacar en rankings se relaciona más con un perfil de:",
+        "options": [
+            "Coleccionista.",
+            "Narrador.",
+            "Competidor o triunfador.",
+            "Mediador."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Cuál sería una buena estrategia para incluir a estudiantes con perfil más colaborativo o social?",
+        "options": [
+            "Obligar siempre a competir individualmente.",
+            "Eliminar toda interacción entre estudiantes.",
+            "Premiar solo al estudiante más rápido.",
+            "Diseñar misiones grupales, roles de apoyo y desafíos donde la cooperación importe."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "¿Qué riesgo existe al usar perfiles de jugadores de manera rígida?",
+        "options": [
+            "Que se diseñen experiencias más inclusivas.",
+            "Que se encasille a los estudiantes y se limite su participación a una sola forma de jugar.",
+            "Que aumente la variedad de actividades.",
+            "Que todos comprendan mejor la narrativa."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Cuál de estas opciones muestra una gamificación que considera distintos perfiles de jugadores?",
+        "options": [
+            "Hay misiones de exploración, cooperación, logros personales y desafíos competitivos equilibrados.",
+            "Solo hay ranking y premios para el primer lugar.",
+            "Todos deben hacer exactamente la misma acción sin alternativas.",
+            "Solo se entregan puntos por velocidad."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "¿Qué función puede cumplir un video dentro de una experiencia gamificada?",
+        "options": [
+            "Reemplazar toda interacción pedagógica.",
+            "Servir solo como decoración.",
+            "Introducir narrativa, explicar misiones, presentar personajes o dar contexto al desafío.",
+            "Evitar que el estudiante participe activamente."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Qué aspecto es importante al crear un video para una gamificación?",
+        "options": [
+            "Que sea lo más largo posible.",
+            "Que tenga muchos efectos aunque no se entienda.",
+            "Que no tenga conexión con la misión.",
+            "Que tenga claridad, ritmo, propósito y relación con la experiencia."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "¿Cuál sería un buen uso de CapCut u otra herramienta de edición de video en una gamificación?",
+        "options": [
+            "Hacer un video extenso sin relación con la actividad.",
+            "Crear una introducción narrativa breve que active la misión.",
+            "Saturar la pantalla con efectos y texto.",
+            "Evitar explicar lo que deben hacer los estudiantes."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Qué error se debe evitar al crear videos para una experiencia gamificada?",
+        "options": [
+            "Priorizar efectos visuales por sobre la comprensión de la misión.",
+            "Usar música, imágenes o efectos con intención narrativa.",
+            "Mantener el mensaje claro.",
+            "Usar una duración breve y precisa."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "Al usar IA para crear un juego educativo, ¿qué información debería entregarse en el prompt?",
+        "options": [
+            "Solo “crea un juego entretenido”.",
+            "Solo el nombre de la asignatura.",
+            "Objetivo de aprendizaje, edad o nivel, contenido, tipo de juego, mecánicas deseadas y formato final.",
+            "Una lista de colores sin contexto."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Por qué es importante revisar un juego creado con IA antes de aplicarlo?",
+        "options": [
+            "Porque la IA siempre entrega productos perfectos.",
+            "Porque no se puede modificar nada de lo generado.",
+            "Porque revisar impide la creatividad.",
+            "Porque el docente debe verificar coherencia, dificultad, instrucciones, contenido y seguridad pedagógica."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "¿Cuál de estas opciones representa un buen prompt maestro para crear un juego educativo?",
+        "options": [
+            "Hazme algo bonito.",
+            "Diseña un juego educativo sobre fotosíntesis para 6° básico, con objetivos claros, reglas, misiones, retroalimentación y evaluación.",
+            "Crea un juego para cualquier curso.",
+            "Hazlo rápido y difícil."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Qué debe tener un juego educativo para ser aplicable en aula?",
+        "options": [
+            "Reglas claras, objetivo pedagógico, dinámica comprensible y tiempo de implementación realista.",
+            "Solo una estética llamativa.",
+            "Mucha dificultad sin apoyo.",
+            "Premios sin criterios."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "¿Qué ventaja tiene crear prototipos de juegos con IA?",
+        "options": [
+            "Elimina la necesidad de pensar pedagógicamente.",
+            "Asegura que todos los juegos serán perfectos.",
+            "Permite obtener una primera versión editable que luego puede ajustarse al contexto real.",
+            "Impide modificar reglas o estética."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Qué pregunta debería hacerse un docente antes de usar un juego creado con IA?",
+        "options": [
+            "¿Se ve suficientemente complejo?",
+            "¿Tiene muchos botones?",
+            "¿Puede reemplazar toda mi enseñanza?",
+            "¿Este juego ayuda realmente a lograr el aprendizaje esperado?"
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "¿Cuál de estas opciones muestra una buena relación entre narrativa y mecánica?",
+        "options": [
+            "La historia no tiene relación con las tareas.",
+            "La historia habla de una misión y las actividades permiten avanzar resolviendo desafíos asociados.",
+            "Las mecánicas aparecen sin explicación.",
+            "La narrativa se usa solo como adorno inicial."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Qué permite mejorar una experiencia cuando se prueba como prototipo?",
+        "options": [
+            "Detectar problemas de instrucciones, ritmo, dificultad o funcionamiento antes de aplicarla masivamente.",
+            "Evitar toda modificación.",
+            "Hacerla más confusa.",
+            "Eliminar la retroalimentación."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "¿Qué elemento ayuda a que una experiencia tipo juego se sienta más inmersiva?",
+        "options": [
+            "Actividades desconectadas entre sí.",
+            "Reglas ocultas y cambiantes.",
+            "Una narrativa coherente, decisiones significativas y retroalimentación durante el avance.",
+            "Solo una tabla de notas."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Qué debería hacer el docente si un juego creado con IA resulta demasiado complejo?",
+        "options": [
+            "Aplicarlo igual para no perder tiempo.",
+            "Eliminar los objetivos de aprendizaje.",
+            "Agregar más mecánicas sin revisar.",
+            "Simplificar reglas, ajustar dificultad y clarificar instrucciones."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "¿Cuál sería una buena pregunta final para evaluar el diseño de una experiencia tipo juego?",
+        "options": [
+            "¿Tiene suficientes efectos visuales?",
+            "¿La experiencia equilibra desafío, claridad, motivación y aprendizaje?",
+            "¿Todos compiten todo el tiempo?",
+            "¿La IA hizo todo sin intervención docente?"
+        ],
+        "answer": 1
+    }
+],
+  g4: [
+    {
+        "stem": "Estás aplicando una gamificación y varios estudiantes no entienden qué deben hacer. ¿Cuál es la mejor decisión?",
+        "options": [
+            "Continuar igual para no romper la narrativa.",
+            "Castigar al grupo por no entender.",
+            "Detener brevemente, clarificar instrucciones y retomar la misión con una explicación simple.",
+            "Cambiar completamente la actividad sin explicar."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "Durante una actividad gamificada, la plataforma digital deja de funcionar. ¿Qué acción es más adecuada?",
+        "options": [
+            "Suspender todo de inmediato.",
+            "Culpar a los estudiantes por la falla.",
+            "Eliminar la evaluación sin registrar nada.",
+            "Activar una alternativa analógica o simplificada que mantenga el propósito de la misión."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "Un grupo avanza muy rápido y termina antes que los demás. ¿Qué decisión ayuda a mantener el flow?",
+        "options": [
+            "Hacer que esperen sin tarea.",
+            "Entregar un desafío extra, rol de apoyo o misión opcional.",
+            "Quitarles puntos por avanzar rápido.",
+            "Obligar a todos a terminar al mismo tiempo sin alternativas."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "Un grupo está muy frustrado porque no logra resolver un desafío. ¿Qué debería hacer el docente?",
+        "options": [
+            "Entregar una pista graduada o apoyo que mantenga el desafío sin eliminarlo.",
+            "Dar la respuesta completa inmediatamente.",
+            "Decirles que abandonen la actividad.",
+            "Subir aún más la dificultad."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "La competencia entre equipos se vuelve demasiado intensa y genera conflictos. ¿Cuál es una buena respuesta?",
+        "options": [
+            "Aumentar los premios para que compitan más.",
+            "Ignorar el conflicto.",
+            "Incorporar objetivos cooperativos, reglas de respeto y recompensas por colaboración.",
+            "Eliminar toda regla del juego."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "Un estudiante no se siente motivado por puntos ni rankings. ¿Qué ajuste podría ayudar?",
+        "options": [
+            "Obligarle a competir más.",
+            "Quitarle la participación.",
+            "Darle menos información.",
+            "Ofrecer alternativas como exploración, roles, logros personales o colaboración."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "Si una gamificación está generando mucho entusiasmo pero poco aprendizaje, ¿qué debería revisar el docente?",
+        "options": [
+            "Si hay suficientes colores.",
+            "Si los elementos de juego están conectados con los objetivos pedagógicos.",
+            "Si la música es más intensa.",
+            "Si los premios son más grandes."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Qué indica que una experiencia está perdiendo flow?",
+        "options": [
+            "Aparecen señales de aburrimiento, ansiedad, confusión o desconexión.",
+            "Los estudiantes están concentrados y comprenden el desafío.",
+            "Hay equilibrio entre reto y habilidad.",
+            "Los estudiantes reciben retroalimentación clara."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "Una misión tarda mucho más de lo planificado y se acerca el final de la clase. ¿Qué decisión es más adecuada?",
+        "options": [
+            "Cortar la actividad sin cierre.",
+            "Ignorar el tiempo restante.",
+            "Ajustar el alcance, cerrar con una síntesis breve y dejar una continuidad clara.",
+            "Cambiar la evaluación sin avisar."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "Los estudiantes preguntan constantemente qué deben hacer, aunque la actividad ya empezó. ¿Qué puede estar fallando?",
+        "options": [
+            "La cantidad de premios.",
+            "La existencia de narrativa.",
+            "El nombre de los equipos.",
+            "La claridad de instrucciones, reglas o flujo de la experiencia."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "Un equipo encuentra una forma de ganar puntos sin realizar el aprendizaje esperado. ¿Qué debería hacer el docente?",
+        "options": [
+            "Permitirlo siempre porque forma parte del juego.",
+            "Revisar la regla, cerrar el vacío del sistema y explicar el ajuste con claridad.",
+            "Cancelar toda la gamificación.",
+            "Quitar puntos al azar."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Cuál es una buena forma de manejar una regla que debe cambiarse durante la experiencia?",
+        "options": [
+            "Explicar el motivo, ajustar la regla y mantener la coherencia con el propósito pedagógico.",
+            "Cambiarla en secreto.",
+            "Culpar a los estudiantes por encontrar el problema.",
+            "Eliminar todas las reglas restantes."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "Un recurso visual o digital se ve muy atractivo, pero distrae del contenido. ¿Qué decisión conviene tomar?",
+        "options": [
+            "Mantenerlo porque se ve bonito.",
+            "Agregar más efectos.",
+            "Ajustarlo o reducirlo para que apoye la comprensión y no la reemplace.",
+            "Usarlo como evaluación final."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Qué debe hacer el docente si nota que solo participan los estudiantes más extrovertidos?",
+        "options": [
+            "Dejar que el grupo se autorregule completamente.",
+            "Premiar solo a quienes hablan más.",
+            "Eliminar la colaboración.",
+            "Incorporar roles diversos, turnos de participación y misiones que permitan distintas formas de contribuir."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "Si un estudiante se equivoca en un desafío, ¿qué tipo de retroalimentación favorece mejor el aprendizaje?",
+        "options": [
+            "“Está malo” sin explicación.",
+            "Una retroalimentación clara que indique qué revisar, qué mejorar y cómo volver a intentarlo.",
+            "Quitarle toda posibilidad de continuar.",
+            "Ignorar el error."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "En una gamificación, ¿qué significa ajustar en vivo de manera responsable?",
+        "options": [
+            "Hacer pequeñas modificaciones para mantener claridad, equilibrio y sentido pedagógico.",
+            "Cambiar todo sin avisar.",
+            "Eliminar los objetivos.",
+            "Improvisar sin observar lo que ocurre."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "Estás usando una narrativa de aventura, pero los desafíos no se relacionan con ella. ¿Qué problema puede aparecer?",
+        "options": [
+            "El aprendizaje mejora automáticamente.",
+            "Los estudiantes entenderán mejor las reglas.",
+            "La experiencia puede sentirse decorativa o desconectada.",
+            "La retroalimentación será innecesaria."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Qué decisión ayuda a cerrar bien una experiencia gamificada?",
+        "options": [
+            "Terminar apenas suena el timbre.",
+            "Entregar puntos sin explicar.",
+            "No revisar lo ocurrido.",
+            "Hacer una síntesis, recuperar aprendizajes, reconocer avances y conectar con el propósito inicial."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "Si una gamificación requiere evidencias de aprendizaje, ¿qué debería asegurar el docente?",
+        "options": [
+            "Que solo sean decorativas.",
+            "Que las evidencias estén alineadas con los objetivos y sean posibles de revisar.",
+            "Que nadie sepa qué debe entregar.",
+            "Que dependan exclusivamente del azar."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Cuál de estas decisiones muestra mejor gestión de una crisis técnica?",
+        "options": [
+            "Tener una ruta alternativa preparada y mantener el foco en el aprendizaje.",
+            "Culpar a la conexión a internet y terminar la clase.",
+            "Cambiar toda la evaluación sin criterios.",
+            "Ignorar que los estudiantes no pueden avanzar."
+        ],
+        "answer": 0
+    },
+    {
+        "stem": "Una experiencia gamificada tiene muchos elementos: cartas, puntos, historia, niveles, tienda y rankings. Los estudiantes se confunden. ¿Qué conviene hacer?",
+        "options": [
+            "Agregar más elementos para que sea más entretenida.",
+            "Eliminar el aprendizaje.",
+            "Simplificar el sistema, priorizar lo esencial y explicar el flujo paso a paso.",
+            "Mantener todo igual porque ya está diseñado."
+        ],
+        "answer": 2
+    },
+    {
+        "stem": "¿Qué indicador muestra que una gamificación está funcionando bien?",
+        "options": [
+            "Los estudiantes solo buscan premios.",
+            "Nadie pregunta nada porque no entiende.",
+            "El docente no necesita intervenir nunca.",
+            "Los estudiantes participan, comprenden el desafío, reciben retroalimentación y avanzan en el aprendizaje."
+        ],
+        "answer": 3
+    },
+    {
+        "stem": "Un estudiante intenta romper el sistema encontrando una trampa en las reglas. ¿Cuál es una respuesta formativa?",
+        "options": [
+            "Castigarlo sin explicar.",
+            "Usar la situación para ajustar reglas, conversar sobre juego limpio y mejorar el diseño.",
+            "Cancelar la actividad para todos.",
+            "Premiarlo automáticamente."
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "¿Qué pregunta debería guiar la toma de decisiones durante una gamificación?",
+        "options": [
+            "¿Esto hace que la experiencia se vea más compleja?",
+            "¿Esta decisión mantiene el aprendizaje, la claridad y la motivación?",
+            "¿Esto aumenta la cantidad de premios?",
+            "¿Esto hace que todos compitan más?"
+        ],
+        "answer": 1
+    },
+    {
+        "stem": "En el desafío final, ¿qué demuestra que un participante comprendió la gamificación más allá de lo visual?",
+        "options": [
+            "Puede explicar cómo narrativa, mecánicas, reglas, recursos y evaluación se conectan con el aprendizaje.",
+            "Puede elegir muchos colores.",
+            "Puede crear recompensas sin criterios.",
+            "Puede usar una plataforma digital sin propósito."
+        ],
+        "answer": 0
+    }
+],
+};
+
+let state = loadState() || initialState();
+let battle = freshBattle();
+
+function initialState(){
+  return {
+    playerName:'',
+    g1:{ done:false }, g2:{ done:false }, g3:{ done:false }, g4:{ done:false },
+    fragments:{ g1:false, g2:false, g3:false, g4:false },
+    finalRevealed:false,
+    battleTutorialSeen:false,
+    savedAt:null,
+  };
+}
+function freshBattle(){
+  return {
+    guardianId:null,
+    enemyHp:BATTLE_RULES.enemyHp, enemyHpMax:BATTLE_RULES.enemyHp,
+    playerHp:BATTLE_RULES.playerHp, playerHpMax:BATTLE_RULES.playerHp,
+    finished:false,
+    outcome:null,
+    loseReason:null,
+    questionMode:null,
+    questionSelected:null,
+    currentQuestion:null,
+    turn:1,
+    questionsAsked:0,
+    questionsLimit:BATTLE_RULES.maxQuestions,
+    questionCursor:0,
+    guardStance:false,
+    skillCooldown:0,
+    pendingAction:null,
+    phase:'idle',
+    reviewModeNotified:false,
+  };
+}
+
+/* =========================================================
+   SILUETAS SVG (sprites enemigos y jugador)
+   ========================================================= */
+function silhouetteValle(){
+  return `<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="vGlow" cx="50%" cy="22%" r="60%"><stop offset="0%" stop-color="#5ccfd1" stop-opacity=".55"/><stop offset="60%" stop-color="#5ccfd1" stop-opacity="0"/></radialGradient>
+      <linearGradient id="vBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0e1822" stop-opacity=".95"/><stop offset="100%" stop-color="#000" stop-opacity=".98"/></linearGradient>
+    </defs>
+    <ellipse cx="100" cy="80" rx="70" ry="60" fill="url(#vGlow)"/>
+    <rect x="158" y="30" width="5" height="180" fill="#0a0e16" opacity=".85" rx="2"/>
+    <circle cx="160" cy="32" r="10" fill="#5ccfd1" opacity=".85" filter="blur(.4px)"/>
+    <circle cx="160" cy="32" r="5" fill="#fff" opacity=".75"/>
+    <path d="M 100 26 C 60 30 40 60 44 100 L 36 220 L 164 220 L 156 100 C 160 60 140 30 100 26 Z" fill="url(#vBody)"/>
+    <path d="M 70 60 C 76 96 84 110 100 112 C 116 110 124 96 130 60 C 116 50 84 50 70 60 Z" fill="#000" opacity=".82"/>
+    <circle cx="90" cy="86" r="2.4" fill="#5ccfd1" opacity=".95"/>
+    <circle cx="110" cy="86" r="2.4" fill="#5ccfd1" opacity=".95"/>
+    <path d="M 60 130 L 80 220 L 88 220 L 78 132 Z" fill="#000" opacity=".5"/>
+    <path d="M 140 130 L 120 220 L 112 220 L 122 132 Z" fill="#000" opacity=".5"/>
+  </svg>`;
+}
+function silhouetteForja(){
+  return `<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="fGlow" cx="50%" cy="35%" r="60%"><stop offset="0%" stop-color="#ff8c5e" stop-opacity=".55"/><stop offset="60%" stop-color="#ff8c5e" stop-opacity="0"/></radialGradient>
+      <linearGradient id="fBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#15080a" stop-opacity=".95"/><stop offset="100%" stop-color="#000" stop-opacity=".98"/></linearGradient>
+    </defs>
+    <ellipse cx="100" cy="100" rx="80" ry="68" fill="url(#fGlow)"/>
+    <rect x="14" y="40" width="6" height="140" fill="#0a0e16" opacity=".88" rx="2"/>
+    <rect x="2" y="20" width="34" height="46" rx="6" fill="#0a0e16" opacity=".90"/>
+    <rect x="6" y="26" width="26" height="34" rx="3" fill="#ff8c5e" opacity=".22"/>
+    <ellipse cx="100" cy="58" rx="32" ry="28" fill="url(#fBody)"/>
+    <path d="M 50 90 L 150 90 L 162 200 L 38 200 Z" fill="url(#fBody)"/>
+    <ellipse cx="44" cy="100" rx="22" ry="20" fill="url(#fBody)"/>
+    <ellipse cx="156" cy="100" rx="22" ry="20" fill="url(#fBody)"/>
+    <rect x="58" y="195" width="32" height="40" rx="4" fill="url(#fBody)"/>
+    <rect x="110" y="195" width="32" height="40" rx="4" fill="url(#fBody)"/>
+    <circle cx="90" cy="58" r="3" fill="#ff8c5e" opacity=".95"/>
+    <circle cx="110" cy="58" r="3" fill="#ff8c5e" opacity=".95"/>
+    <rect x="62" y="148" width="76" height="6" fill="#ff8c5e" opacity=".30" rx="2"/>
+  </svg>`;
+}
+function silhouetteFlow(){
+  return `<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="lGlow" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#5a9bff" stop-opacity=".60"/><stop offset="60%" stop-color="#5a9bff" stop-opacity="0"/></radialGradient>
+      <linearGradient id="lBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1024" stop-opacity=".95"/><stop offset="100%" stop-color="#000" stop-opacity=".98"/></linearGradient>
+    </defs>
+    <ellipse cx="100" cy="110" rx="80" ry="80" fill="url(#lGlow)"/>
+    <circle cx="100" cy="100" r="34" fill="url(#lBody)"/>
+    <circle cx="100" cy="100" r="34" fill="none" stroke="#5a9bff" stroke-width="1.2" opacity=".55"/>
+    <circle cx="100" cy="100" r="22" fill="none" stroke="#5a9bff" stroke-width=".9" opacity=".40" stroke-dasharray="3 3"/>
+    <circle cx="100" cy="100" r="10" fill="#5a9bff" opacity=".75"/>
+    <path d="M 70 76 C 56 50 64 30 80 24 C 86 40 78 58 70 76 Z" fill="url(#lBody)"/>
+    <path d="M 130 76 C 144 50 136 30 120 24 C 114 40 122 58 130 76 Z" fill="url(#lBody)"/>
+    <path d="M 100 60 C 92 40 100 22 100 14 C 100 22 108 40 100 60 Z" fill="url(#lBody)"/>
+    <path d="M 70 120 C 60 150 56 180 64 220 L 136 220 C 144 180 140 150 130 120 C 120 130 80 130 70 120 Z" fill="url(#lBody)"/>
+    <polygon points="100,20 110,40 100,60 90,40" fill="none" stroke="#5a9bff" stroke-width="1" opacity=".5"/>
+    <polygon points="40,140 60,150 40,160 20,150" fill="none" stroke="#5a9bff" stroke-width="1" opacity=".4"/>
+    <polygon points="160,140 180,150 160,160 140,150" fill="none" stroke="#5a9bff" stroke-width="1" opacity=".4"/>
+  </svg>`;
+}
+function silhouetteCaos(){
+  return `<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="cGlow" cx="50%" cy="35%" r="60%"><stop offset="0%" stop-color="#c878ff" stop-opacity=".60"/><stop offset="60%" stop-color="#c878ff" stop-opacity="0"/></radialGradient>
+      <linearGradient id="cBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#160820" stop-opacity=".95"/><stop offset="100%" stop-color="#000" stop-opacity=".98"/></linearGradient>
+    </defs>
+    <ellipse cx="100" cy="100" rx="84" ry="78" fill="url(#cGlow)"/>
+    <path d="M 100 24 L 132 50 L 174 60 L 154 100 L 174 140 L 140 156 L 130 200 L 100 222 L 70 200 L 60 156 L 26 140 L 46 100 L 26 60 L 68 50 Z" fill="url(#cBody)"/>
+    <path d="M 100 8 L 110 30 L 90 30 Z" fill="url(#cBody)"/>
+    <path d="M 16 100 L 38 90 L 38 110 Z" fill="url(#cBody)"/>
+    <path d="M 184 100 L 162 90 L 162 110 Z" fill="url(#cBody)"/>
+    <path d="M 100 232 L 110 218 L 90 218 Z" fill="url(#cBody)"/>
+    <circle cx="100" cy="100" r="22" fill="#c878ff" opacity=".25"/>
+    <circle cx="100" cy="100" r="14" fill="#c878ff" opacity=".55"/>
+    <circle cx="100" cy="100" r="6" fill="#fff" opacity=".95"/>
+    <path d="M 100 100 L 60 50" stroke="#c878ff" stroke-width="1" opacity=".4"/>
+    <path d="M 100 100 L 140 50" stroke="#c878ff" stroke-width="1" opacity=".4"/>
+    <path d="M 100 100 L 60 150" stroke="#c878ff" stroke-width="1" opacity=".4"/>
+    <path d="M 100 100 L 140 150" stroke="#c878ff" stroke-width="1" opacity=".4"/>
+  </svg>`;
+}
+function silhouettePlayer(){
+  return `<svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="ppGlow" cx="50%" cy="35%" r="58%"><stop offset="0%" stop-color="#f0b347" stop-opacity=".48"/><stop offset="70%" stop-color="#f0b347" stop-opacity="0"/></radialGradient>
+      <linearGradient id="ppArmor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#24344d"/><stop offset="100%" stop-color="#0c1220"/></linearGradient>
+      <linearGradient id="ppCape" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a7ad8"/><stop offset="100%" stop-color="#173970"/></linearGradient>
+      <linearGradient id="ppGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffd27a"/><stop offset="100%" stop-color="#f0b347"/></linearGradient>
+    </defs>
+    <ellipse cx="110" cy="112" rx="88" ry="84" fill="url(#ppGlow)"/>
+    <path d="M 52 110 C 32 126 24 170 36 232 L 78 232 C 78 198 84 160 90 136 Z" fill="url(#ppCape)" opacity=".95"/>
+    <path d="M 168 110 C 188 126 196 170 184 232 L 142 232 C 142 198 136 160 130 136 Z" fill="url(#ppCape)" opacity=".95"/>
+    <path d="M 110 26 C 76 30 58 58 62 104 L 54 232 L 166 232 L 158 104 C 162 58 144 30 110 26 Z" fill="url(#ppArmor)"/>
+    <path d="M 84 68 C 90 98 98 112 110 114 C 122 112 130 98 136 68 C 126 58 94 58 84 68 Z" fill="#0b0f1b" opacity=".85"/>
+    <path d="M 92 120 L 110 108 L 128 120 L 122 162 L 98 162 Z" fill="#1b2435" stroke="rgba(255,255,255,.08)"/>
+    <path d="M 110 108 L 130 122 L 124 164 L 110 182 L 96 164 L 90 122 Z" fill="url(#ppArmor)" stroke="rgba(255,255,255,.06)"/>
+    <circle cx="110" cy="138" r="12" fill="url(#ppGold)"/>
+    <circle cx="110" cy="138" r="5" fill="#fff" opacity=".75"/>
+    <path d="M 68 130 L 44 184 L 60 190 L 82 142 Z" fill="#d8e4ff" opacity=".95"/>
+    <path d="M 44 184 L 36 208 L 54 214 L 60 190 Z" fill="#8fb1ff"/>
+    <path d="M 150 118 L 184 130 L 176 172 L 142 160 Z" fill="rgba(123,162,255,.18)" stroke="#9abaff" stroke-width="3"/>
+    <path d="M 150 118 L 176 128 L 170 160 L 146 152 Z" fill="rgba(255,255,255,.08)"/>
+    <path d="M 84 230 L 76 258 L 96 258 L 102 230 Z" fill="#0b0f1b"/>
+    <path d="M 136 230 L 144 258 L 124 258 L 118 230 Z" fill="#0b0f1b"/>
+    <path d="M 74 48 C 86 32 98 24 110 20 C 122 24 134 32 146 48" fill="none" stroke="url(#ppGold)" stroke-width="4" opacity=".85"/>
+  </svg>`;
+}
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+function getGuardian(id){ return GUARDIANS.find(g => g.id === id); }
+function countDone(){ return ['g1','g2','g3','g4'].filter(id => state[id].done).length; }
+function countFragments(){ return Object.values(state.fragments).filter(Boolean).length; }
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* =========================================================
+   GUARDADO Y CARGA
+   ========================================================= */
+function saveState(silent){
+  try{
+    state.savedAt = new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    if(!silent) toast('Avance guardado · ' + state.savedAt, 'success');
+    return true;
+  }catch(e){
+    if(!silent) toast('No se pudo guardar el avance', 'info');
+    return false;
+  }
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    if(!data || typeof data !== 'object') return null;
+    if(!data.g1 || !data.g2 || !data.g3 || !data.g4) return null;
+    if(!data.fragments) data.fragments = { g1:false, g2:false, g3:false, g4:false };
+    if(typeof data.battleTutorialSeen !== 'boolean') data.battleTutorialSeen = false;
+    return data;
+  }catch(e){ return null; }
+}
+function resetAllProgress(){
+  localStorage.removeItem(STORAGE_KEY);
+  state = initialState();
+  $('#playerName').value = '';
+  navigateTo('intro');
+  toast('Progreso reiniciado completamente', 'info');
+}
+
+/* =========================================================
+   PARTÍCULAS DE FONDO (atmósfera global)
+   ========================================================= */
+function buildParticles(){
+  const box = $('#particles');
+  box.innerHTML = '';
+  const count = window.innerWidth < 760 ? 14 : 28;
+  for(let i=0; i<count; i++){
+    const p = document.createElement('span');
+    p.className = 'particle';
+    const s = 4 + Math.random()*9;
+    p.style.width = s+'px'; p.style.height = s+'px';
+    p.style.left = (Math.random()*100)+'%';
+    p.style.bottom = (Math.random()*15 - 5)+'vh';
+    p.style.animationDuration = (14 + Math.random()*18)+'s';
+    p.style.animationDelay = (-Math.random()*30)+'s';
+    box.appendChild(p);
+  }
+}
+
+// Partículas temáticas dentro de la arena (color por guardián)
+function buildArenaParticles(color){
+  const box = $('#arenaParticles');
+  if(!box) return;
+  box.innerHTML = '';
+  const count = window.innerWidth < 760 ? 8 : 16;
+  for(let i=0; i<count; i++){
+    const p = document.createElement('span');
+    p.className = 'arena-particle';
+    const s = 3 + Math.random()*5;
+    p.style.width = s+'px'; p.style.height = s+'px';
+    p.style.left = (Math.random()*100)+'%';
+    p.style.bottom = (Math.random()*30 - 10)+'%';
+    p.style.background = `radial-gradient(circle at 35% 35%, ${color}, transparent 70%)`;
+    p.style.boxShadow = `0 0 8px ${color}`;
+    p.style.animationDuration = (12 + Math.random()*14)+'s';
+    p.style.animationDelay = (-Math.random()*22)+'s';
+    box.appendChild(p);
+  }
+}
+
+/* =========================================================
+   NAVEGACIÓN ENTRE PANTALLAS
+   ========================================================= */
+function navigateTo(screen){
+  $$('.screen').forEach(s => s.classList.remove('active'));
+  document.body.classList.toggle('in-battle', screen === 'battle');
+  if(screen === 'intro') $('#screen-intro').classList.add('active');
+  else if(screen === 'hub') { $('#screen-hub').classList.add('active'); renderHub(); }
+  else if(screen === 'battle') $('#screen-battle').classList.add('active');
+  updateRotateHint();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function renderPortalSprite(g){
+  if(g && g.spritePath){
+    return `<img src="${g.spritePath}" alt="${escapeHtml(g.spriteLabel || g.name)}" class="portal-sprite-img guardian-${g.id}" loading="eager" decoding="async">`;
+  }
+  return g && g.silhouetteSvg ? g.silhouetteSvg : '';
+}
+function renderBattleGuardianSprite(g){
+  if(g && g.spritePath){
+    return `<img src="${g.spritePath}" alt="" class="battle-sprite-img guardian-${g.id}" loading="eager" decoding="async">`;
+  }
+  return g && g.silhouetteSvg ? g.silhouetteSvg : '';
+}
+function renderBattlePlayerSprite(){
+  return silhouettePlayer();
+}
+
+/* =========================================================
+   RENDER: HUB
+   ========================================================= */
+function renderHub(){
+  $('#brandPlayerName').textContent = state.playerName || 'Aspirante anónimo';
+  $('#statGuardians').textContent = countDone();
+  $('#statFragments').textContent = countFragments();
+
+  const done = countDone();
+  const hintEl = $('#hubHintText');
+  if(done === 0){
+    hintEl.innerHTML = '<b>Debes avanzar en orden.</b> Comienza por el Guardián del Valle y ve desbloqueando el resto de portales.';
+  } else if(done < 4){
+    hintEl.innerHTML = `Has vencido a <b>${done} de 4 guardianes</b>. El siguiente portal disponible brilla con mayor intensidad.`;
+  } else {
+    hintEl.innerHTML = '<b>¡Todos los guardianes han caído!</b> El código maestro del Orbe se ha consagrado.';
+  }
+
+  const stripWrap = $('#fragStrip');
+  stripWrap.innerHTML = '';
+  GUARDIANS.forEach((g, idx) => {
+    const isUnlocked = state.fragments[g.id];
+    const num = ['I','II','III','IV'][idx];
+    const fragText = isUnlocked ? FRAGMENTS[g.id] : '?';
+    const card = document.createElement('div');
+    card.className = 'frag-card' + (isUnlocked ? ' unlocked' : '');
+    card.innerHTML = `
+      <div class="frag-card-num">${num}</div>
+      <div class="frag-card-text">
+        <div class="frag-card-label">Fragmento ${num}</div>
+        <div class="frag-card-value">${fragText}</div>
+      </div>
+    `;
+    stripWrap.appendChild(card);
+  });
+
+  const wrap = $('#portalsWrap');
+  wrap.innerHTML = '';
+  GUARDIANS.forEach((g, idx) => {
+    const isLarge = (idx === 3);
+    const isDone = state[g.id].done;
+    const isLocked = !isGuardianUnlocked(g.id);
+    const fragmentText = isDone ? FRAGMENTS[g.id] : '???';
+    const statusText = isDone ? '✓ Vencido' : (isLocked ? 'Bloqueado' : (isLarge ? 'Final' : 'Disponible'));
+    const enterText = isDone ? 'Volver a entrar' : (isLocked ? 'Bloqueado' : 'Ingresar');
+    const lockText = isLocked ? '<p class="portal-lock-text">Debes vencer primero al guardián anterior.</p>' : '';
+
+    const portal = document.createElement('div');
+    portal.className = 'portal' + (isLarge ? ' portal-large' : '') + (isDone ? ' portal-done' : '') + (isLocked ? ' portal-locked' : '');
+    portal.style.setProperty('--portal-glow', `rgba(${g.accentRgb},.30)`);
+    portal.style.setProperty('--portal-accent', g.accent);
+
+    if(isLarge){
+      portal.innerHTML = `
+        <div class="portal-grid">
+          <div>
+            <div class="portal-header">
+              <div>
+                <div class="portal-name">${escapeHtml(g.name)}</div>
+                <div class="portal-role">${escapeHtml(g.role)}</div>
+              </div>
+              <div class="portal-status ${isDone ? 'done' : (isLocked ? 'locked' : 'pending')}">${statusText}</div>
+            </div>
+            <p style="margin:14px 0 18px; color:var(--text-soft); line-height:1.6; font-size:14px">
+              El gran simulador de situaciones emergentes. Solo aquellos que ya dominaron las cámaras previas deberían enfrentarlo.
+            </p>
+            ${lockText}
+            <div class="portal-foot">
+              <div class="portal-fragment ${isDone ? '' : 'hidden-frag'}">${fragmentText}</div>
+            </div>
+          </div>
+          <div class="portal-silhouette">${renderPortalSprite(g)}</div>
+        </div>
+        <button type="button" class="portal-enter ${isDone ? 'done' : ''} ${isLocked ? 'locked' : ''}" data-guardian="${g.id}" ${isLocked ? 'disabled' : ''}>
+          <span>${enterText}</span>
+          <span>${isLocked ? '🔒' : '→'}</span>
+        </button>
+      `;
+    } else {
+      portal.innerHTML = `
+        <div class="portal-header">
+          <div>
+            <div class="portal-name">${escapeHtml(g.name)}</div>
+            <div class="portal-role">${escapeHtml(g.role)}</div>
+          </div>
+          <div class="portal-status ${isDone ? 'done' : (isLocked ? 'locked' : 'pending')}">${statusText}</div>
+        </div>
+        <div class="portal-silhouette">${renderPortalSprite(g)}</div>
+        ${lockText}
+        <div class="portal-foot">
+          <div class="portal-fragment ${isDone ? '' : 'hidden-frag'}">${fragmentText}</div>
+        </div>
+        <button type="button" class="portal-enter ${isDone ? 'done' : ''} ${isLocked ? 'locked' : ''}" data-guardian="${g.id}" ${isLocked ? 'disabled' : ''}>
+          <span>${enterText}</span>
+          <span>${isLocked ? '🔒' : '→'}</span>
+        </button>
+      `;
+    }
+    wrap.appendChild(portal);
+  });
+
+  if(countDone() === 4 && !state.finalRevealed){
+    state.finalRevealed = true;
+    saveState(true);
+    setTimeout(() => openFinalReveal(), 600);
+  }
+}
+
+/* =========================================================
+   BATALLA: INICIO
+   ========================================================= */
+function isGuardianUnlocked(gid){
+  const idx = GUARDIANS.findIndex(g => g.id === gid);
+  if(idx <= 0) return true;
+  return state[GUARDIANS[idx - 1].id].done;
+}
+function getCurrentGuardian(){ return getGuardian(battle.guardianId); }
+function getCurrentQuestion(){
+  const bank = QUESTION_BANKS[battle.guardianId] || [];
+  if(!bank.length) return null;
+  return bank[battle.questionCursor % bank.length];
+}
+function registerQuestionUse(){
+  battle.questionCursor += 1;
+  battle.questionsAsked += 1;
+  if(battle.questionsAsked > battle.questionsLimit && !battle.reviewModeNotified){
+    battle.reviewModeNotified = true;
+    toast('Entraste en modo repaso: las preguntas pueden repetirse para reforzar el aprendizaje.', 'info');
+  }
+  updateBattleCounters();
+}
+function updateBattleCounters(){
+  $('#turnCounter').textContent = 'Ronda ' + battle.turn;
+  const counter = $('#questionCounter');
+  if(!counter) return;
+  if(battle.questionsAsked <= battle.questionsLimit){
+    counter.textContent = 'Preguntas ' + battle.questionsAsked + ' / ' + battle.questionsLimit;
+    counter.classList.remove('review-mode');
+  } else {
+    counter.textContent = 'Repaso · ' + battle.questionsAsked + ' usadas';
+    counter.classList.add('review-mode');
+  }
+}
+
+function startBattle(gid){
+  if(!isGuardianUnlocked(gid)){
+    toast('Ese guardián aún está bloqueado. Debes vencer al anterior primero.', 'info');
+    return;
+  }
+  const g = getGuardian(gid);
+  if(!g) return;
+
+  battle = freshBattle();
+  battle.guardianId = gid;
+  battle.enemyHpMax = g.enemyHp || BATTLE_RULES.enemyHp;
+  battle.enemyHp = battle.enemyHpMax;
+  battle.playerHpMax = g.playerHp || BATTLE_RULES.playerHp;
+  battle.playerHp = battle.playerHpMax;
+
+  hideChoicePanel();
+  exitQuestionMode(true);
+  swapBottom('default');
+
+  const fx = $('#battleFx');
+  if(fx) fx.innerHTML = '';
+
+  const arena = $('#arena');
+  arena.className = 'arena theme-' + g.theme;
+  arena.style.setProperty('--theme-accent', g.accent);
+  arena.style.setProperty('--platform-enemy-color', `rgba(${g.accentRgb},.55)`);
+
+  buildArenaParticles(g.particleColor);
+
+  $('#spriteEnemy').innerHTML = renderBattleGuardianSprite(g);
+  $('#spriteEnemy').classList.remove('defeated','taking-damage','lunging','entering');
+  void $('#spriteEnemy').offsetWidth;
+  $('#spriteEnemy').classList.add('entering');
+  setTimeout(()=>$('#spriteEnemy').classList.remove('entering'), 1100);
+
+  $('#spritePlayer').innerHTML = renderBattlePlayerSprite();
+  $('#spritePlayer').classList.remove('defeated','taking-damage','lunging');
+
+  $('#defenseRing').classList.remove('on');
+
+  $('#enemyName').textContent = g.name;
+  $('#enemyNameMobile').textContent = g.name;
+  $('#enemyLevel').textContent = 'NV ' + g.level;
+  $('#enemyLevelMobile').textContent = 'NV ' + g.level;
+  $('#enemyStatus').textContent = g.role;
+  $('#enemyStatusMobile').textContent = g.role;
+
+  $('#playerHudName').textContent = state.playerName || 'Aspirante';
+  $('#playerHudNameMobile').textContent = state.playerName || 'Aspirante';
+  setPlayerStatus('Preparando la iniciativa', false);
+
+  updateHpBars();
+  updateBattleCounters();
+  refreshCommandDescriptions();
+
+  $('#battleTitle').innerHTML = `Combate <small>vs. ${escapeHtml(g.name)}</small>`;
+  setTurnIndicator('initiative', 1);
+  setDialogue(g.intro, '');
+  enableCommands(false);
+
+  navigateTo('battle');
+  if(!state.battleTutorialSeen){
+    state.battleTutorialSeen = true;
+    saveState(true);
+    setTimeout(() => openBattleTutorialModal(true), 260);
+  } else {
+    setTimeout(beginInitiative, 500);
+  }
+}
+
+function setTurnIndicator(who, turn){
+  battle.turn = turn;
+  updateBattleCounters();
+  const chip = $('#turnChip');
+  chip.classList.remove('attacking','defending');
+  const text = chip.querySelector('span:last-child');
+  if(who === 'player') text.textContent = 'Tu turno';
+  else if(who === 'initiative') text.textContent = 'Iniciativa';
+  else if(who === 'enemy') text.textContent = 'Turno rival';
+  else if(who === 'reaction') text.textContent = 'Respuesta táctica';
+  else if(who === 'defending') { chip.classList.add('defending'); text.textContent = 'Guardia activa'; }
+  else if(who === 'attacking') { chip.classList.add('attacking'); text.textContent = 'Resolviendo'; }
+  else if(who === 'end') text.textContent = 'Combate resuelto';
+}
+
+function setPlayerStatus(text, defending){
+  $('#playerStatus').textContent = text;
+  $('#playerStatusMobile').textContent = text;
+  $('#playerStatus').classList.toggle('defending', !!defending);
+  $('#playerStatusMobile').classList.toggle('defending', !!defending);
+}
+
+function updateHpBars(){
+  const ePct = Math.max(0, Math.min(100, (battle.enemyHp/battle.enemyHpMax)*100));
+  ['#enemyHpFill','#enemyHpFillMobile'].forEach(sel => {
+    const el = $(sel);
+    el.style.width = ePct + '%';
+    el.classList.remove('mid','low');
+    if(ePct < 35) el.classList.add('low');
+    else if(ePct < 65) el.classList.add('mid');
+  });
+  $('#enemyHpNum').textContent = `${battle.enemyHp}/${battle.enemyHpMax}`;
+  $('#enemyHpNumMobile').textContent = `${battle.enemyHp}/${battle.enemyHpMax}`;
+
+  const pPct = Math.max(0, Math.min(100, (battle.playerHp/battle.playerHpMax)*100));
+  ['#playerHpFill','#playerHpFillMobile'].forEach(sel => {
+    const el = $(sel);
+    el.style.width = pPct + '%';
+    el.classList.remove('mid','low');
+    if(pPct < 35) el.classList.add('low');
+    else if(pPct < 65) el.classList.add('mid');
+  });
+  $('#playerHpNum').textContent = `${battle.playerHp}/${battle.playerHpMax}`;
+  $('#playerHpNumMobile').textContent = `${battle.playerHp}/${battle.playerHpMax}`;
+}
+
+function setDialogue(htmlText, mood){
+  $('#dialogueText').innerHTML = htmlText;
+  const box = $('#dialogueBox');
+  box.classList.remove('result-good','result-bad');
+  if(mood === 'good') box.classList.add('result-good');
+  else if(mood === 'bad') box.classList.add('result-bad');
+}
+
+function enableCommands(on){
+  ['#cmdAttack','#cmdSkill','#cmdDefend','#cmdRecover'].forEach(sel => {
+    $(sel).disabled = !on;
+  });
+  if(on && battle.skillCooldown > 0) $('#cmdSkill').disabled = true;
+}
+
+function refreshCommandDescriptions(){
+  const skillDesc = $('#cmdSkill .cmd-desc');
+  skillDesc.textContent = battle.skillCooldown > 0
+    ? `Recarga: ${battle.skillCooldown} ronda${battle.skillCooldown > 1 ? 's' : ''}`
+    : 'Impacto reforzado · requiere pregunta';
+  $('#cmdDefend .cmd-desc').textContent = battle.guardStance
+    ? 'Guardia lista para el próximo golpe'
+    : 'Activa guardia para el próximo golpe';
+}
+
+let turnBannerTimer = null;
+function showTurnBanner(text, kind){
+  const el = $('#turnBanner');
+  if(!el) return;
+  el.textContent = text;
+  el.className = 'turn-banner ' + (kind || '') + ' show';
+  clearTimeout(turnBannerTimer);
+  turnBannerTimer = setTimeout(() => el.classList.remove('show'), 1350);
+}
+
+function beginInitiative(){
+  battle.phase = 'initiative';
+  setTurnIndicator('initiative', battle.turn);
+  showTurnBanner('INICIATIVA', 'initiative');
+  setDialogue('Se resolverá la <b>iniciativa</b>. Si aciertas, podrás decidir quién comienza el combate.');
+  enterQuestionMode('initiative');
+}
+
+function beginPlayerTurn(){
+  if(battle.finished) return;
+  hideChoicePanel();
+  exitQuestionMode(true);
+  battle.phase = 'player';
+  setTurnIndicator(battle.guardStance ? 'defending' : 'player', battle.turn);
+  showTurnBanner(battle.guardStance ? 'TU TURNO · GUARDIA ACTIVA' : 'TU TURNO', 'player');
+  setPlayerStatus(battle.guardStance ? 'Guardia preparada' : 'Esperando tu acción', battle.guardStance);
+  setDialogue('Es tu turno. Elige una acción para continuar el combate.');
+  refreshCommandDescriptions();
+  enableCommands(true);
+  swapBottom('default');
+}
+
+function actionAttack(){
+  if(battle.finished || battle.phase !== 'player') return;
+  battle.pendingAction = 'attack';
+  enterQuestionMode('attack');
+}
+function actionSkill(){
+  if(battle.finished || battle.phase !== 'player' || battle.skillCooldown > 0) return;
+  battle.pendingAction = 'skill';
+  enterQuestionMode('skill');
+}
+function actionDefend(){
+  if(battle.finished || battle.phase !== 'player') return;
+  battle.pendingAction = 'defend';
+  enterQuestionMode('defend');
+}
+function actionRecover(){
+  if(battle.finished || battle.phase !== 'player') return;
+  battle.pendingAction = 'heal';
+  enterQuestionMode('heal');
+}
+
+function startEnemyTurn(){
+  if(battle.finished) return;
+  hideChoicePanel();
+  exitQuestionMode(true);
+  battle.phase = 'enemy';
+  enableCommands(false);
+  setTurnIndicator('enemy', battle.turn);
+  showTurnBanner('TURNO DEL GUARDIÁN', 'enemy');
+  const enemyMoves = [
+    'Golpe descendente',
+    'Embate rúnico',
+    'Descarga del orbe',
+    'Barrida ceremonial',
+  ];
+  const move = enemyMoves[(battle.turn - 1) % enemyMoves.length];
+  setDialogue(`<b>${escapeHtml(getCurrentGuardian().name)}</b> prepara <b>${move}</b>. Decide si responderás con <b>defensa</b> o con <b>recuperación</b>.`);
+  showChoicePanel('Respuesta táctica', 'Esta decisión también se resuelve con una pregunta.', [
+    { label:'Responder con defensa', kind:'defend', onClick:() => { battle.pendingAction = 'react-defend'; enterQuestionMode('react-defend'); } },
+    { label:'Recuperar vida y resistir', kind:'heal', onClick:() => { battle.pendingAction = 'react-heal'; enterQuestionMode('react-heal'); } },
+  ]);
+  setTurnIndicator('reaction', battle.turn);
+}
+
+function showChoicePanel(title, text, actions){
+  $('#choiceHeader').textContent = title;
+  $('#choiceSub').innerHTML = text;
+  $('#choiceActions').innerHTML = actions.map((a, i) => `<button type="button" class="choice-btn ${a.kind || ''}" data-choice-index="${i}">${a.label}</button>`).join('');
+  $$('#choiceActions .choice-btn').forEach((btn, idx) => btn.addEventListener('click', actions[idx].onClick));
+  swapBottom('choice');
+}
+function hideChoicePanel(){
+  $('#choiceActions').innerHTML = '';
+  $('#bbChoice').classList.add('hidden');
+}
+
+function enterQuestionMode(mode){
+  if(battle.finished) return;
+  const q = getCurrentQuestion();
+  if(!q){
+    setDialogue('<b>Aviso:</b> no hay preguntas disponibles para este guardián. Vuelve a la cámara y avisa al docente.', 'bad');
+    swapBottom('default');
+    enableCommands(false);
+    toast('No se encontraron preguntas para este guardián.', 'info');
+    return;
+  }
+  battle.questionMode = mode;
+  battle.questionSelected = null;
+  battle.currentQuestion = q;
+
+  const bannerData = {
+    initiative:{icon:'⚑', text:'Iniciativa'},
+    attack:{icon:'⚔', text:'Ataque'},
+    skill:{icon:'✦', text:'Habilidad'},
+    defend:{icon:'◐', text:'Defensa'},
+    heal:{icon:'✚', text:'Recuperación'},
+    'react-defend':{icon:'🛡', text:'Defensa reactiva'},
+    'react-heal':{icon:'✚', text:'Recuperación reactiva'},
+  }[mode] || {icon:'?', text:'Pregunta'};
+
+  const isSkill = (mode === 'skill');
+  const letters = ['A','B','C','D'];
+  const banner = $('#qBanner');
+  banner.classList.toggle('skill', isSkill);
+  $('#qBannerIcon').textContent = bannerData.icon;
+  $('#qBannerText').textContent = bannerData.text + ' · ' + getCurrentGuardian().name;
+
+  const panel = $('#bbQuestion');
+  panel.classList.remove('skill-mode','attack-mode');
+  panel.classList.add(isSkill ? 'skill-mode' : 'attack-mode');
+
+  const bank = QUESTION_BANKS[battle.guardianId] || [];
+  const reviewMode = battle.questionCursor >= Math.max(1, Math.min(bank.length, battle.questionsLimit));
+  $('#qStem').textContent = (reviewMode ? 'Repaso · ' : '') + q.stem;
+  if(reviewMode){
+    $('#qBannerText').textContent = $('#qBannerText').textContent + ' · Repaso';
+  }
+  const optsWrap = $('#qOptions');
+  optsWrap.innerHTML = q.options.map((opt, i) => `
+    <button type="button" class="q-option" data-opt="${i}" role="radio" aria-checked="false">
+      <span class="q-option-letter">${letters[i]}</span>
+      <span class="q-option-text">${escapeHtml(opt)}</span>
+    </button>
+  `).join('');
+
+  $$('#qOptions .q-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      $$('#qOptions .q-option').forEach(o => { o.classList.remove('selected'); o.setAttribute('aria-checked','false'); });
+      opt.classList.add('selected');
+      opt.setAttribute('aria-checked','true');
+      battle.questionSelected = parseInt(opt.getAttribute('data-opt'), 10);
+      $('#qSubmit').disabled = false;
+      $('#qHint').textContent = 'Respuesta seleccionada. Puedes confirmar.';
+    });
+  });
+  $('#qSubmit').disabled = true;
+  $('#qHint').textContent = 'Selecciona una alternativa para continuar';
+  $('#qCancel').style.display = (mode === 'attack' || mode === 'skill' || mode === 'defend' || mode === 'heal') ? '' : 'none';
+
+  swapBottom('question');
+  setTurnIndicator('attacking', battle.turn);
+}
+
+function exitQuestionMode(silent){
+  battle.questionMode = null;
+  battle.questionSelected = null;
+  battle.currentQuestion = null;
+  if(!silent) swapBottom('default');
+}
+
+function swapBottom(target){
+  ['default','choice','question'].forEach(name => {
+    const el = $('#bb' + name.charAt(0).toUpperCase() + name.slice(1));
+    if(el) el.classList.add('hidden');
+  });
+  const map = { default:'#bbDefault', choice:'#bbChoice', question:'#bbQuestion' };
+  const targetEl = $(map[target] || '#bbDefault');
+  if(targetEl){
+    targetEl.classList.remove('hidden');
+    if(target === 'default'){
+      targetEl.classList.remove('bb-entering'); void targetEl.offsetWidth;
+      targetEl.classList.add('bb-entering');
+      setTimeout(()=>targetEl.classList.remove('bb-entering'), 360);
+    }
+  }
+}
+
+function getRectInArena(el){
+  const arena = $('#arena');
+  const aR = arena.getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  return {
+    left:r.left - aR.left, top:r.top - aR.top,
+    width:r.width, height:r.height,
+    cx:r.left - aR.left + r.width/2,
+    cy:r.top - aR.top + r.height/2,
+  };
+}
+
+function spawnFx(html, opts){
+  opts = opts || {};
+  const el = document.createElement('div');
+  el.innerHTML = html.trim();
+  const node = el.firstChild;
+  if(opts.styles){
+    Object.entries(opts.styles).forEach(([k,v]) => {
+      if(k.startsWith('--')) node.style.setProperty(k, v);
+      else node.style[k] = v;
+    });
+  }
+  $('#battleFx').appendChild(node);
+  setTimeout(()=>node.remove(), opts.life || 800);
+  return node;
+}
+
+function spawnSparks(cx, cy, color, count){
+  count = count || 8;
+  for(let i=0; i<count; i++){
+    const angle = (Math.PI * 2 * i / count) + Math.random()*0.4;
+    const dist = 40 + Math.random()*30;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - 10;
+    spawnFx(`<div class="fx-spark"></div>`, {
+      styles: {
+        left:(cx-3)+'px', top:(cy-3)+'px',
+        '--fx-color':color,
+        '--dx':dx+'px', '--dy':dy+'px',
+      },
+      life: 800,
+    });
+  }
+}
+
+function flashArena(kind){
+  const bg = (kind === 'good')
+    ? 'radial-gradient(circle at 70% 35%, rgba(255,210,122,.45), transparent 60%)'
+    : 'radial-gradient(circle at 20% 65%, rgba(255,110,110,.45), transparent 60%)';
+  spawnFx(`<div class="fx-flash"></div>`, { styles: { background: bg }, life: 600 });
+}
+
+function arenaPulse(kind){
+  const arena = $('#arena');
+  if(!arena) return;
+  arena.classList.remove('arena-good','arena-bad','arena-pulse');
+  void arena.offsetWidth;
+  arena.classList.add('arena-pulse', kind === 'bad' ? 'arena-bad' : 'arena-good');
+  setTimeout(() => arena.classList.remove('arena-pulse','arena-good','arena-bad'), 620);
+}
+
+function playPlayerAttackFx(mode){
+  const enemy = getRectInArena($('#spriteEnemy'));
+  const player = getRectInArena($('#spritePlayer'));
+
+  $('#spritePlayer').classList.remove('lunging'); void $('#spritePlayer').offsetWidth;
+  $('#spritePlayer').classList.add('lunging');
+  setTimeout(()=>$('#spritePlayer').classList.remove('lunging'), 600);
+
+  if(mode === 'skill'){
+    setTimeout(() => {
+      spawnFx(`<div class="fx-bolt"></div>`, {
+        styles: { left:(enemy.cx - 5)+'px', top:(enemy.cy - 240)+'px' },
+        life: 600,
+      });
+    }, 200);
+    setTimeout(() => {
+      spawnFx(`<div class="fx-impact"></div>`, {
+        styles: {
+          left:enemy.cx+'px', top:enemy.cy+'px',
+          '--fx-color':'rgba(240,179,71,.85)',
+          '--fx-color2':'rgba(255,255,255,.35)',
+        },
+        life: 700,
+      });
+      spawnFx(`<div class="fx-ring"></div>`, {
+        styles: { left:enemy.cx+'px', top:enemy.cy+'px', '--fx-color':'#ffd27a' },
+        life: 700,
+      });
+      spawnSparks(enemy.cx, enemy.cy, '#ffd27a', 12);
+      flashArena('good');
+      arenaPulse('good');
+    }, 480);
+  } else {
+    setTimeout(() => {
+      const startX = (player.cx + player.width*0.3);
+      spawnFx(`<div class="fx-slash"></div>`, {
+        styles: {
+          left:startX+'px', top:(player.cy - 30)+'px',
+          width:(enemy.cx - startX + 80)+'px',
+        },
+        life: 500,
+      });
+    }, 220);
+    setTimeout(() => {
+      spawnFx(`<div class="fx-impact"></div>`, {
+        styles: {
+          left:enemy.cx+'px', top:enemy.cy+'px',
+          '--fx-color':'rgba(255,140,94,.85)',
+          '--fx-color2':'rgba(255,210,122,.30)',
+        },
+        life: 700,
+      });
+      spawnFx(`<div class="fx-ring"></div>`, {
+        styles: { left:enemy.cx+'px', top:enemy.cy+'px', '--fx-color':'#ff8c5e' },
+        life: 700,
+      });
+      spawnSparks(enemy.cx, enemy.cy, '#ff8c5e', 8);
+    }, 460);
+  }
+}
+
+function playEnemyCounterFx(){
+  const player = getRectInArena($('#spritePlayer'));
+  const g = getCurrentGuardian();
+
+  $('#spriteEnemy').classList.remove('lunging'); void $('#spriteEnemy').offsetWidth;
+  $('#spriteEnemy').classList.add('lunging');
+  setTimeout(()=>$('#spriteEnemy').classList.remove('lunging'), 600);
+
+  setTimeout(() => {
+    spawnFx(`<div class="fx-claw"></div>`, {
+      styles: {
+        left:(player.cx - 85)+'px', top:(player.cy - 85)+'px',
+        '--fx-color':g.accent,
+      },
+      life: 700,
+    });
+  }, 240);
+  setTimeout(() => {
+    spawnFx(`<div class="fx-impact"></div>`, {
+      styles: {
+        left:player.cx+'px', top:player.cy+'px',
+        '--fx-color':'rgba(255,110,110,.85)',
+        '--fx-color2':'rgba(255,140,94,.25)',
+      },
+      life: 700,
+    });
+    spawnSparks(player.cx, player.cy, '#ff6e6e', 6);
+    flashArena('bad');
+    arenaPulse('bad');
+  }, 460);
+}
+
+function playVictoryBurst(){
+  const enemy = getRectInArena($('#spriteEnemy'));
+  for(let i=0; i<3; i++){
+    setTimeout(() => {
+      spawnFx(`<div class="fx-victory"><div class="fx-victory-ring"></div></div>`, {
+        styles: { left:enemy.cx+'px', top:enemy.cy+'px', transform:'translate(-50%,-50%)' },
+        life: 1500,
+      });
+    }, i * 220);
+  }
+  setTimeout(() => {
+    const colors = ['#ffd27a','#f0b347','#fff','#5ccfd1'];
+    for(let i=0; i<24; i++){
+      const dx = (Math.random()-0.5) * 240;
+      const dy = 80 + Math.random()*180;
+      spawnFx(`<div class="fx-confetti"></div>`, {
+        styles: {
+          left:enemy.cx+'px', top:enemy.cy+'px',
+          background:colors[i % colors.length],
+          '--cx':dx+'px', '--cy':dy+'px',
+          animationDelay:(Math.random()*0.3)+'s',
+        },
+        life: 2000,
+      });
+    }
+    flashArena('good');
+      arenaPulse('good');
+  }, 220);
+}
+
+function resolveAnswer(mode, optionIndex){
+  const q = battle.currentQuestion;
+  if(!q) return;
+  const correct = optionIndex === q.answer;
+  registerQuestionUse();
+  exitQuestionMode(true);
+
+  setTimeout(() => {
+    if(mode === 'initiative') return resolveInitiative(correct);
+    if(mode === 'attack') return resolvePlayerAttack(correct, 'attack');
+    if(mode === 'skill') return resolvePlayerAttack(correct, 'skill');
+    if(mode === 'defend') return resolvePlayerDefend(correct);
+    if(mode === 'heal') return resolvePlayerHeal(correct);
+    if(mode === 'react-defend') return resolveReactiveDefense(correct);
+    if(mode === 'react-heal') return resolveReactiveHeal(correct);
+  }, 200);
+}
+
+function resolveInitiative(correct){
+  if(correct){
+    setDialogue('<b>¡Has ganado la iniciativa!</b> Ahora puedes decidir quién abrirá el combate.', 'good');
+    showChoicePanel('Iniciativa ganada', 'Elige quién realizará la primera acción del combate.', [
+      { label:'Empiezo yo', kind:'defend', onClick:() => { hideChoicePanel(); beginPlayerTurn(); } },
+      { label:'Que empiece el guardián', kind:'heal', onClick:() => { hideChoicePanel(); startEnemyTurn(); } },
+    ]);
+  } else {
+    setDialogue('<b>Has fallado la iniciativa.</b> El guardián tomará la primera ofensiva.', 'bad');
+    setTimeout(startEnemyTurn, 700);
+  }
+}
+
+function resolvePlayerAttack(correct, mode){
+  const dmg = mode === 'skill' ? BATTLE_RULES.skillHit : BATTLE_RULES.attackHit;
+  if(mode === 'skill') battle.skillCooldown = BATTLE_RULES.skillCooldown + 1;
+  if(correct){
+    playPlayerAttackFx(mode);
+    setTimeout(() => {
+      battle.enemyHp = Math.max(0, battle.enemyHp - dmg);
+      popDamage($('#spriteEnemy'), dmg, mode === 'skill' ? 'crit' : null);
+      shake('#spriteEnemy');
+      setDialogue(mode === 'skill'
+        ? '<b>¡Habilidad acertada!</b> El golpe reforzado impacta de lleno al guardián.'
+        : '<b>¡Ataque exitoso!</b> Tu respuesta abre una brecha en la defensa rival.', 'good');
+      updateHpBars();
+      finishAfterPlayerAction();
+    }, 520);
+  } else {
+    setDialogue(mode === 'skill'
+      ? '<b>La habilidad falló.</b> El guardián lee tu vacilación y prepara su represalia.'
+      : '<b>Respuesta incorrecta.</b> El ataque no logra conectar con el guardián.', 'bad');
+    finishAfterPlayerAction();
+  }
+}
+
+function resolvePlayerDefend(correct){
+  if(correct){
+    battle.guardStance = true;
+    $('#defenseRing').classList.add('on');
+    setPlayerStatus('Guardia preparada', true);
+    setDialogue('<b>Defensa levantada.</b> El próximo golpe rival llegará amortiguado.', 'good');
+  } else {
+    battle.guardStance = false;
+    $('#defenseRing').classList.remove('on');
+    setPlayerStatus('Defensa fallida', false);
+    setDialogue('<b>No lograste consolidar la guardia.</b> Quedas más expuesto al siguiente ataque.', 'bad');
+  }
+  finishAfterPlayerAction();
+}
+
+function resolvePlayerHeal(correct){
+  if(correct){
+    battle.playerHp = Math.min(battle.playerHpMax, battle.playerHp + BATTLE_RULES.healHit);
+    popDamage($('#spritePlayer'), BATTLE_RULES.healHit, 'heal');
+    setDialogue('<b>Recuperación exitosa.</b> Reordenas tu energía antes de la ofensiva rival.', 'good');
+    updateHpBars();
+  } else {
+    setDialogue('<b>La recuperación falló.</b> No alcanzas a recomponerte del todo.', 'bad');
+  }
+  finishAfterPlayerAction();
+}
+
+function baseEnemyDamage(){
+  let dmg = BATTLE_RULES.enemyHit;
+  if(battle.guardStance) dmg = Math.round(dmg * 0.7);
+  return dmg;
+}
+
+function consumeGuardStance(){
+  battle.guardStance = false;
+  $('#defenseRing').classList.remove('on');
+  setPlayerStatus('Guardia consumida', false);
+  refreshCommandDescriptions();
+}
+
+function resolveReactiveDefense(correct){
+  let dmg = baseEnemyDamage();
+  if(correct) dmg = Math.round(dmg * BATTLE_RULES.defendReduce);
+  playEnemyCounterFx();
+  setTimeout(() => {
+    battle.playerHp = Math.max(0, battle.playerHp - dmg);
+    popDamage($('#spritePlayer'), dmg);
+    shake('#spritePlayer');
+    setDialogue(correct
+      ? '<b>¡Bloqueo correcto!</b> Contienes gran parte del golpe rival.'
+      : '<b>Defensa incorrecta.</b> El guardián atraviesa tu cobertura y el impacto te alcanza de lleno.', correct ? 'good' : 'bad');
+    updateHpBars();
+    if(battle.guardStance) consumeGuardStance();
+    finishAfterEnemyAction();
+  }, 520);
+}
+
+function resolveReactiveHeal(correct){
+  let dmg = baseEnemyDamage();
+  if(correct){
+    battle.playerHp = Math.min(battle.playerHpMax, battle.playerHp + BATTLE_RULES.reactHeal);
+    popDamage($('#spritePlayer'), BATTLE_RULES.reactHeal, 'heal');
+    dmg = Math.min(dmg, BATTLE_RULES.reactHealDamage);
+  }
+  playEnemyCounterFx();
+  setTimeout(() => {
+    battle.playerHp = Math.max(0, battle.playerHp - dmg);
+    popDamage($('#spritePlayer'), dmg);
+    shake('#spritePlayer');
+    setDialogue(correct
+      ? '<b>Recuperación parcial lograda.</b> Te recompones un poco, pero el ataque igualmente alcanza a rozarte.'
+      : '<b>La recuperación falló.</b> El guardián aprovecha tu vacilación y te golpea con fuerza.', correct ? 'good' : 'bad');
+    updateHpBars();
+    if(battle.guardStance) consumeGuardStance();
+    finishAfterEnemyAction();
+  }, 520);
+}
+
+function finishAfterPlayerAction(){
+  refreshCommandDescriptions();
+  setTimeout(() => {
+    if(checkBattleOutcome()) return;
+    startEnemyTurn();
+  }, 680);
+}
+
+function finishAfterEnemyAction(){
+  refreshCommandDescriptions();
+  setTimeout(() => {
+    if(checkBattleOutcome()) return;
+    battle.turn += 1;
+    if(battle.skillCooldown > 0) battle.skillCooldown -= 1;
+    beginPlayerTurn();
+  }, 760);
+}
+
+function checkBattleOutcome(){
+  if(battle.enemyHp <= 0){ onBattleWin(); return true; }
+  if(battle.playerHp <= 0){ battle.loseReason = 'hp'; onBattleLose(); return true; }
+  // Las preguntas ya no provocan derrota automática: al superar el umbral, el combate entra en modo repaso.
+  return false;
+}
+
+function popDamage(spriteEl, n, variant){
+  const rect = spriteEl.getBoundingClientRect();
+  const arenaRect = $('#arena').getBoundingClientRect();
+  const pop = document.createElement('div');
+  pop.className = 'dmg-pop' + (variant ? ' ' + variant : '');
+  pop.textContent = (variant === 'heal' ? '+' : '-') + n;
+  pop.style.left = (rect.left - arenaRect.left + rect.width/2 - 20) + 'px';
+  pop.style.top = (rect.top - arenaRect.top + 20) + 'px';
+  $('#arena').appendChild(pop);
+  setTimeout(()=>pop.remove(), 1200);
+}
+function shake(sel){
+  const el = $(sel);
+  el.classList.remove('taking-damage');
+  void el.offsetWidth;
+  el.classList.add('taking-damage');
+  setTimeout(()=>el.classList.remove('taking-damage'), 500);
+}
+
+function onBattleWin(){
+  battle.finished = true;
+  battle.outcome = 'win';
+  setTurnIndicator('end', battle.turn);
+  enableCommands(false);
+  playVictoryBurst();
+  setTimeout(()=> $('#spriteEnemy').classList.add('defeated'), 800);
+  setDialogue('<b>¡Victoria!</b> El guardián cae derrotado y libera su fragmento.', 'good');
+  state[battle.guardianId].done = true;
+  state.fragments[battle.guardianId] = true;
+  saveState(true);
+  setTimeout(() => openVictoryModal(), 1700);
+}
+function onBattleLose(){
+  battle.finished = true;
+  battle.outcome = 'lose';
+  setTurnIndicator('end', battle.turn);
+  enableCommands(false);
+  $('#spritePlayer').classList.add('defeated');
+  setDialogue('<b>Has caído.</b> Tu energía se agota frente al guardián. Puedes volver a intentarlo con las preguntas en modo repaso si lo necesitas.', 'bad');
+  setTimeout(() => openDefeatModal(), 1100);
+}
+
+/* =========================================================
+   MODALES
+   ========================================================= */
+function openModal(html){
+  $('#modalContent').innerHTML = html;
+  $('#modalLayer').classList.add('active');
+  $('#modalLayer').setAttribute('aria-hidden','false');
+}
+function closeModal(){
+  $('#modalLayer').classList.remove('active');
+  $('#modalLayer').setAttribute('aria-hidden','true');
+  $('#modalContent').innerHTML = '';
+}
+
+function openBattleTutorialModal(autoStart){
+  const html = `
+    <div class="modal-eyebrow eyebrow" style="color:#ffd9a0">Tutorial de combate</div>
+    <h2 class="modal-title">Cómo funciona esta batalla</h2>
+    <div class="tutorial-grid">
+      <div class="tutorial-step"><span>1</span><div><b>Iniciativa</b><br><small>Primero respondes una pregunta. Si aciertas, eliges quién comienza.</small></div></div>
+      <div class="tutorial-step"><span>2</span><div><b>Tu turno</b><br><small>Puedes atacar, usar habilidad, defender o recuperar vida. Cada acción se resuelve con una pregunta.</small></div></div>
+      <div class="tutorial-step"><span>3</span><div><b>Turno del guardián</b><br><small>El rival también actúa. Tú respondes con defensa o recuperación para resistir su ofensiva.</small></div></div>
+      <div class="tutorial-step"><span>4</span><div><b>Preguntas y repaso</b><br><small>Tienes hasta <b>25 preguntas únicas</b> antes de entrar en modo repaso. Si se supera ese número, algunas preguntas vuelven a aparecer para reforzar lo aprendido.</small></div></div>
+    </div>
+    <p class="modal-text" style="margin-top:14px">Consejo rápido: usa <b>Defender</b> cuando estés bajo presión y <b>Recuperar</b> cuando necesites recomponerte antes del siguiente intercambio.</p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="battleTutorialClose" type="button">Cerrar</button>
+      <button class="btn primary" id="battleTutorialStart" type="button">Entendido, comenzar</button>
+    </div>
+  `;
+  openModal(html);
+  $('#battleTutorialClose').addEventListener('click', () => {
+    closeModal();
+    if(autoStart) setTimeout(beginInitiative, 180);
+  });
+  $('#battleTutorialStart').addEventListener('click', () => {
+    closeModal();
+    setTimeout(beginInitiative, 180);
+  });
+}
+
+function openVictoryModal(){
+  const g = getGuardian(battle.guardianId);
+  const frag = FRAGMENTS[g.id];
+  const num = ['I','II','III','IV'][GUARDIANS.findIndex(x=>x.id===g.id)];
+  const html = `
+    <div class="modal-eyebrow eyebrow">Victoria</div>
+    <h2 class="modal-title">¡${escapeHtml(g.name)} ha caído!</h2>
+    <p class="modal-text">Has superado la prueba. El guardián libera su fragmento del código maestro.</p>
+    <div style="display:flex; align-items:center; justify-content:center; margin:24px 0 8px">
+      <div style="font-family:var(--font-display); font-weight:800;
+        font-size:48px; letter-spacing:.32em; padding:18px 36px;
+        background:linear-gradient(135deg, rgba(240,179,71,.22), rgba(240,179,71,.08));
+        border:1px solid rgba(240,179,71,.42);
+        border-radius:16px; color:var(--gold-2);
+        text-shadow:0 0 24px rgba(240,179,71,.5);">${frag}</div>
+    </div>
+    <p class="modal-text" style="font-size:13px">Fragmento ${num} recuperado · ${countDone()} / 4</p>
+    <div class="modal-actions">
+      <button class="btn primary" id="vReturn" type="button">Volver a la cámara</button>
+    </div>
+  `;
+  openModal(html);
+  $('#vReturn').addEventListener('click', () => { closeModal(); navigateTo('hub'); });
+}
+
+function openDefeatModal(){
+  const g = getGuardian(battle.guardianId);
+  const bodyText = 'Tu energía se ha agotado. Reagrupa tu estrategia y vuelve a intentarlo: cada combate puede repetirse las veces que necesites. Si superas las 25 preguntas, el sistema entra en modo repaso para que puedas reforzar lo aprendido.';
+  const html = `
+    <div class="modal-eyebrow eyebrow" style="color:#ffa0a0">Derrota</div>
+    <h2 class="modal-title">El ${escapeHtml(g.name)} te ha vencido</h2>
+    <p class="modal-text">${bodyText}</p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="dReturn" type="button">Volver a la cámara</button>
+      <button class="btn primary" id="dRetry" type="button">Reintentar combate</button>
+    </div>
+  `;
+  openModal(html);
+  $('#dReturn').addEventListener('click', () => { closeModal(); navigateTo('hub'); });
+  $('#dRetry').addEventListener('click', () => { closeModal(); startBattle(g.id); });
+}
+
+function openFinalReveal(){
+  const html = `
+    <div style="text-align:center">
+      <div class="final-orb" aria-hidden="true">
+        <div class="final-orb-ring"></div>
+        <div class="final-orb-core"></div>
+      </div>
+      <div class="modal-eyebrow eyebrow">Consagración cumplida</div>
+      <h2 class="modal-title">El Orbe se ha consagrado</h2>
+      <p class="modal-text">Has vencido a los cuatro guardianes y reunido todos los fragmentos del código maestro. La travesía ha llegado a su revelación final.</p>
+      <div style="margin-top:14px; padding:18px 22px;
+        background:linear-gradient(135deg, rgba(240,179,71,.15), rgba(240,179,71,.04));
+        border:1px solid rgba(240,179,71,.40);
+        border-radius:18px;">
+        <div style="font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-2); font-weight:700">Código maestro del Orbe</div>
+        <div class="final-code">${FINAL_CODE}</div>
+        <div style="font-size:12px; color:var(--muted)">${FRAGMENTS.g1} · ${FRAGMENTS.g2} · ${FRAGMENTS.g3} · ${FRAGMENTS.g4}</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="frClose" type="button">Cerrar</button>
+        <button class="btn primary" id="frCopy" type="button">Copiar código</button>
+      </div>
+    </div>
+  `;
+  openModal(html);
+  $('#frClose').addEventListener('click', closeModal);
+  $('#frCopy').addEventListener('click', () => {
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(FINAL_CODE).then(
+        ()=> toast('Código copiado al portapapeles', 'success'),
+        ()=> toast('No se pudo copiar', 'info')
+      );
+    } else {
+      toast('Copia: ' + FINAL_CODE, 'info');
+    }
+  });
+}
+
+function openResetConfirm(){
+  const html = `
+    <div class="modal-eyebrow eyebrow" style="color:#ffa0a0">Confirmar reinicio</div>
+    <h2 class="modal-title">¿Reiniciar todo el progreso?</h2>
+    <p class="modal-text">Se borrarán <b>todos los guardianes vencidos, fragmentos recuperados y tu identidad</b> guardada en este navegador. Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="rCancel" type="button">Cancelar</button>
+      <button class="btn danger" id="rConfirm" type="button">Sí, reiniciar todo</button>
+    </div>
+  `;
+  openModal(html);
+  $('#rCancel').addEventListener('click', closeModal);
+  $('#rConfirm').addEventListener('click', () => { closeModal(); resetAllProgress(); });
+}
+
+/* =========================================================
+   TOASTS
+   ========================================================= */
+function toast(msg, type){
+  type = type || 'success';
+  const layer = $('#toastLayer');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  layer.appendChild(t);
+  setTimeout(()=>{
+    t.classList.add('exit');
+    setTimeout(()=>t.remove(), 350);
+  }, 2400);
+}
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+function syncFullscreenButtons(){
+  const active = !!document.fullscreenElement;
+  ['#btnFullscreenHub','#btnFullscreenBattle'].forEach(sel => {
+    const btn = $(sel);
+    if(btn) btn.textContent = active ? '⤫ Salir de pantalla completa' : '⛶ Pantalla completa';
+  });
+}
+async function toggleFullscreen(){
+  try{
+    if(!document.fullscreenElement){
+      const el = document.documentElement;
+      if(el.requestFullscreen) await el.requestFullscreen();
+      if(screen.orientation && screen.orientation.lock){
+        try{ await screen.orientation.lock('landscape'); }catch(e){}
+      }
+    } else {
+      if(document.exitFullscreen) await document.exitFullscreen();
+      if(screen.orientation && screen.orientation.unlock){
+        try{ screen.orientation.unlock(); }catch(e){}
+      }
+    }
+  }catch(e){
+    toast('No fue posible activar el modo de pantalla completa en este dispositivo.', 'info');
+  }
+  syncFullscreenButtons();
+  updateRotateHint();
+}
+function updateRotateHint(){
+  const hint = $('#rotateHint');
+  if(!hint) return;
+  const show = document.body.classList.contains('in-battle') && window.innerWidth <= 900 && window.innerHeight > window.innerWidth;
+  hint.classList.toggle('show', show);
+}
+
+function boot(){
+  buildParticles();
+  updateRotateHint();
+  syncFullscreenButtons();
+
+  if(state.playerName){
+    $('#playerName').value = state.playerName;
+  }
+
+  $('#btnStart').addEventListener('click', () => {
+    const name = ($('#playerName').value || '').trim();
+    if(!name){
+      const inp = $('#playerName');
+      inp.focus();
+      inp.style.borderColor = 'var(--bad)';
+      inp.style.boxShadow = '0 0 0 3px rgba(255,110,110,.18)';
+      setTimeout(()=>{ inp.style.borderColor = ''; inp.style.boxShadow = ''; }, 1400);
+      toast('Escribe tu nombre para comenzar', 'info');
+      return;
+    }
+    state.playerName = name;
+    saveState(true);
+    navigateTo('hub');
+  });
+
+  $('#playerName').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') $('#btnStart').click();
+  });
+
+  $('#btnSave').addEventListener('click', () => saveState());
+  $('#btnReset').addEventListener('click', openResetConfirm);
+  $('#btnFullscreenHub').addEventListener('click', toggleFullscreen);
+  $('#btnFullscreenBattle').addEventListener('click', toggleFullscreen);
+  $('#btnBattleGuide').addEventListener('click', () => openBattleTutorialModal(false));
+  document.addEventListener('fullscreenchange', syncFullscreenButtons);
+  window.addEventListener('resize', updateRotateHint);
+  window.addEventListener('orientationchange', updateRotateHint);
+
+  document.addEventListener('click', (e) => {
+    const enterBtn = e.target.closest('.portal-enter');
+    if(enterBtn && !enterBtn.disabled){
+      const gid = enterBtn.getAttribute('data-guardian');
+      if(gid) startBattle(gid);
+    }
+  });
+
+  $('#btnLeaveBattle').addEventListener('click', () => {
+    if(battle.finished){ navigateTo('hub'); return; }
+    const html = `
+      <div class="modal-eyebrow eyebrow" style="color:#ffd9a0">Abandonar combate</div>
+      <h2 class="modal-title">¿Volver a la cámara?</h2>
+      <p class="modal-text">Si abandonas ahora, el combate se reiniciará la próxima vez que entres a este guardián.</p>
+      <div class="modal-actions">
+        <button class="btn ghost" id="lCancel" type="button">Continuar combate</button>
+        <button class="btn secondary" id="lLeave" type="button">Volver a la cámara</button>
+      </div>
+    `;
+    openModal(html);
+    $('#lCancel').addEventListener('click', closeModal);
+    $('#lLeave').addEventListener('click', () => { closeModal(); navigateTo('hub'); });
+  });
+
+  $('#cmdAttack').addEventListener('click', actionAttack);
+  $('#cmdSkill').addEventListener('click', actionSkill);
+  $('#cmdDefend').addEventListener('click', actionDefend);
+  $('#cmdRecover').addEventListener('click', actionRecover);
+
+  $('#qCancel').addEventListener('click', () => {
+    if(!battle.questionMode) return;
+    const canCancel = ['attack','skill','defend','heal'].includes(battle.questionMode);
+    if(!canCancel) return;
+    exitQuestionMode();
+    setDialogue('Has cancelado la acción. <b>Selecciona otra opción.</b>');
+  });
+  $('#qSubmit').addEventListener('click', () => {
+    if(battle.questionSelected === null || battle.questionMode === null) return;
+    const mode = battle.questionMode;
+    const sel = battle.questionSelected;
+    resolveAnswer(mode, sel);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && battle.questionMode){
+      const canCancel = ['attack','skill','defend','heal'].includes(battle.questionMode);
+      if(canCancel){
+        exitQuestionMode();
+        setDialogue('Has cancelado la acción. <b>Selecciona otra opción.</b>');
+      }
+    }
+  });
+}
+
+boot();
+</script>
+
+<script src="../gami-v2-final.js" defer></script>
+</body>
+</html>
