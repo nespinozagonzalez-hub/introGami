@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" role="img" aria-label="Nexo, gato arcano">
+<defs><radialGradient id="a"><stop stop-color="#aa8bf6" stop-opacity=".28"/><stop offset="1" stop-color="#aa8bf6" stop-opacity="0"/></radialGradient><linearGradient id="c" x2="1" y2="1"><stop stop-color="#3b4f82"/><stop offset="1" stop-color="#181f38"/></linearGradient></defs>
+<circle cx="120" cy="121" r="115" fill="url(#a)"/><path d="M42 280 Q39 192 115 197 Q200 192 208 280Z" fill="url(#c)" stroke="#aa8bf6" stroke-opacity=".45" stroke-width="3"/>
+<path d="M58 131 L49 43 L99 82 Q117 70 143 81 L193 41 L187 138 Q190 188 128 199 Q52 201 58 131Z" fill="#293451" stroke="#687aa0" stroke-width="4"/>
+<path d="M59 64 L69 99 L91 86Z M182 64 L171 101 L147 86Z" fill="#bc85b7"/>
+<ellipse cx="89" cy="136" rx="18" ry="22" fill="#a7fa87"/><ellipse cx="151" cy="136" rx="18" ry="22" fill="#a7fa87"/>
+<ellipse cx="90" cy="136" rx="4" ry="17" fill="#1b2435"/><ellipse cx="150" cy="136" rx="4" ry="17" fill="#1b2435"/>
+<path d="M117 157 L130 157 L123 169Z" fill="#d79db6"/><path d="M123 169 q-14 17 -29 4 M123 169 q14 17 29 4" stroke="#e2c4d7" stroke-width="3" fill="none"/>
+<path d="M96 164 L46 153 M96 174 L41 177 M148 164 L199 153 M148 174 L201 177" stroke="#b3bcd8" stroke-width="2"/>
+<path d="M87 230 Q120 246 155 230 L166 262 L72 262Z" fill="#243c6b" stroke="#7ddcf7" stroke-width="3"/><circle cx="122" cy="232" r="14" fill="#40d5f6" stroke="#dfc175" stroke-width="5"/>
+</svg>

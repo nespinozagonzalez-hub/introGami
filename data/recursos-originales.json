@@ -1,0 +1,166 @@
+{
+  "version": "2026-10",
+  "originales": true,
+  "total": 16,
+  "resources": [
+    {
+      "id": "m1_video1",
+      "module": 1,
+      "title": "Elementos de un juego",
+      "description": "Video propio de GamiAula sobre los componentes básicos de un juego y su utilidad al gamificar.",
+      "url": "https://youtu.be/Cvhnj_7QtA0",
+      "embed": "https://www.youtube.com/embed/Cvhnj_7QtA0",
+      "type": "video",
+      "source_repo": "modulo-1-GamiV2"
+    },
+    {
+      "id": "m1_video2",
+      "module": 1,
+      "title": "Gamification to improve our world — Yu-kai Chou",
+      "description": "Charla complementaria sobre el poder transformador de la gamificación.",
+      "url": "https://www.youtube.com/watch?v=v5Qjuegtiyc",
+      "embed": "https://www.youtube.com/embed/v5Qjuegtiyc",
+      "type": "video",
+      "source_repo": "modulo-1-GamiV2"
+    },
+    {
+      "id": "m1_doc1",
+      "module": 1,
+      "title": "Guía 1 — Gamificación",
+      "description": "Material base del módulo para organizar conceptos y sostener el trabajo de las misiones.",
+      "url": "https://drive.google.com/file/d/1mR55X2m_FUKMvFN0Cd0vxR9qbOZ8eejG/view?usp=sharing",
+      "embed": "https://drive.google.com/file/d/1mR55X2m_FUKMvFN0Cd0vxR9qbOZ8eejG/preview",
+      "type": "documento",
+      "source_repo": "modulo-1-GamiV2"
+    },
+    {
+      "id": "m1_doc2",
+      "module": 1,
+      "title": "Gamificación en educación: una panorámica",
+      "description": "Texto de profundización sobre motivación, inmersión, compromiso e interacción.",
+      "url": "https://drive.google.com/file/d/1mPsws9GROvD2tYWSUnW0OVuCkZhGj3KC/view?usp=sharing",
+      "embed": "https://drive.google.com/file/d/1mPsws9GROvD2tYWSUnW0OVuCkZhGj3KC/preview",
+      "type": "documento",
+      "source_repo": "modulo-1-GamiV2"
+    },
+    {
+      "id": "m2_video1",
+      "module": 2,
+      "title": "Fases para una gamificación",
+      "description": "Video propio sobre cómo pensar y estructurar una gamificación.",
+      "url": "https://youtu.be/fmiwEyj1Yy4",
+      "embed": "https://www.youtube.com/embed/fmiwEyj1Yy4",
+      "type": "video",
+      "source_repo": "modulo-2-gami"
+    },
+    {
+      "id": "m2_video2",
+      "module": 2,
+      "title": "HearthCards: plataforma para crear cartas de gamificación",
+      "description": "Video propio sobre diseño de cartas y recompensas visuales.",
+      "url": "https://youtu.be/NZ_2dnZVJGc",
+      "embed": "https://www.youtube.com/embed/NZ_2dnZVJGc",
+      "type": "video",
+      "source_repo": "modulo-2-gami"
+    },
+    {
+      "id": "m2_video3",
+      "module": 2,
+      "title": "Navaja Suiza de Gamificación — GamiAula",
+      "description": "Video propio sobre herramientas rápidas para gamificar.",
+      "url": "https://youtu.be/9TQC7dehMVY",
+      "embed": "https://www.youtube.com/embed/9TQC7dehMVY",
+      "type": "video",
+      "source_repo": "modulo-2-gami"
+    },
+    {
+      "id": "m2_video4",
+      "module": 2,
+      "title": "Plataformas para gamificar",
+      "description": "Video externo para ampliar el panorama de herramientas disponibles.",
+      "url": "https://www.youtube.com/watch?v=C-wSJBo6TGU",
+      "embed": "https://www.youtube.com/embed/C-wSJBo6TGU",
+      "type": "video",
+      "source_repo": "modulo-2-gami"
+    },
+    {
+      "id": "m2_doc1",
+      "module": 2,
+      "title": "Guía 2 — Gamificación de 0 a 100",
+      "description": "Guía visual sobre herramientas, ecosistemas y tendencias.",
+      "url": "https://drive.google.com/file/d/1aVXGrxj8AUkDfUJWG_7XkLuil11v0523/view?usp=sharing",
+      "embed": "https://drive.google.com/file/d/1aVXGrxj8AUkDfUJWG_7XkLuil11v0523/preview",
+      "type": "documento",
+      "source_repo": "modulo-2-gami"
+    },
+    {
+      "id": "m2_doc2",
+      "module": 2,
+      "title": "Manual práctico de IA y gamificación",
+      "description": "Manual con foco en narrativas, retos, recompensas y uso de IA.",
+      "url": "https://drive.google.com/file/d/15AMn2EK0pcfBKMXzZMuMYMpB-4qetxdH/view?usp=sharing",
+      "embed": "https://drive.google.com/file/d/15AMn2EK0pcfBKMXzZMuMYMpB-4qetxdH/preview",
+      "type": "documento",
+      "source_repo": "modulo-2-gami"
+    },
+    {
+      "id": "m3_video5",
+      "module": 3,
+      "title": "Tipos de jugador y Flow",
+      "description": "Video propio sobre perfiles de jugador, motivaciones y equilibrio del flow.",
+      "url": "https://www.youtube.com/watch?v=HjEJuNEl4vo",
+      "embed": "https://www.youtube.com/embed/HjEJuNEl4vo",
+      "type": "video",
+      "source_repo": "modulo-3-gami"
+    },
+    {
+      "id": "m3_video6",
+      "module": 3,
+      "title": "CapCut para crear videos",
+      "description": "Video propio sobre creación de recursos audiovisuales para experiencias gamificadas.",
+      "url": "https://www.youtube.com/watch?v=_OMVcd1AMMU",
+      "embed": "https://www.youtube.com/embed/_OMVcd1AMMU",
+      "type": "video",
+      "source_repo": "modulo-3-gami"
+    },
+    {
+      "id": "m3_video7",
+      "module": 3,
+      "title": "Claude para gamificar",
+      "description": "Video propio sobre uso de IA para apoyar diseño, narrativas y prototipos.",
+      "url": "https://youtu.be/b4FH10KbDrg",
+      "embed": "https://www.youtube.com/embed/b4FH10KbDrg",
+      "type": "video",
+      "source_repo": "modulo-3-gami"
+    },
+    {
+      "id": "m3_doc1",
+      "module": 3,
+      "title": "Perfiles de jugador y motivación neurocognitiva",
+      "description": "Guía práctica sobre Bartle, Lazzaro, HEXAD, Octalysis y actividades según perfil.",
+      "url": "https://drive.google.com/file/d/1U4V4BHM8Ovn6purLJmnfiw0F4OH7ffjj/view?usp=sharing",
+      "embed": "https://drive.google.com/file/d/1U4V4BHM8Ovn6purLJmnfiw0F4OH7ffjj/preview",
+      "type": "documento",
+      "source_repo": "modulo-3-gami"
+    },
+    {
+      "id": "m3_doc2",
+      "module": 3,
+      "title": "Guía 3 — Gamificación de 0 a 100",
+      "description": "Guía visual para comprender flow, arquitectura del diseño y elementos clave del sistema.",
+      "url": "https://drive.google.com/file/d/1mHjxe_BK79UMEoF8mN3C5THN3vhzFVr3/view?usp=sharing",
+      "embed": "https://drive.google.com/file/d/1mHjxe_BK79UMEoF8mN3C5THN3vhzFVr3/preview",
+      "type": "documento",
+      "source_repo": "modulo-3-gami"
+    },
+    {
+      "id": "programa",
+      "module": 0,
+      "title": "Programa oficial Gamificación de 0 a 100",
+      "description": "Programa del curso alojado en campus GamiAula",
+      "url": "https://campus.gamiaula.com/pluginfile.php/142/mod_resource/content/0/Programa%20Curso%20Gamificaci%C3%B3n%20de%200%20a%20100.pdf",
+      "type": "documento",
+      "source_repo": "bienvenida-curso-Gami"
+    }
+  ]
+}

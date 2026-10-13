@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-13T19:57:43.077Z",
+  "checks": [
+    {
+      "name": "Cinco clases: creación, bonificación y persistencia",
+      "passed": true
+    },
+    {
+      "name": "Retrato independiente, persistente y visible en el HUD",
+      "passed": true
+    },
+    {
+      "name": "Continuar aventura y recuperar un fragmento descubierto",
+      "passed": true
+    },
+    {
+      "name": "Partida anterior: conserva XP y normaliza alias sin doble crédito",
+      "passed": true
+    },
+    {
+      "name": "Códigos equivalentes: nueve recompensas sin duplicados",
+      "passed": true
+    },
+    {
+      "name": "Atributos: coste, talentos y registro del cambio",
+      "passed": true
+    },
+    {
+      "name": "Cinco NPC: diálogos que avanzan y foco dentro del modal",
+      "passed": true
+    },
+    {
+      "name": "Biblioteca: 16 recursos originales y dos lecturas verificadas",
+      "passed": true
+    },
+    {
+      "name": "Módulo 1: evaluación, secundarias, bitácora y ventajas",
+      "passed": true
+    },
+    {
+      "name": "Módulo 2: evaluación, secundarias, bitácora y ventajas",
+      "passed": true
+    },
+    {
+      "name": "Módulo 3: evaluación, secundarias, bitácora y ventajas",
+      "passed": true
+    },
+    {
+      "name": "Estrategia: descarte incorrecto con límite por módulo",
+      "passed": true
+    },
+    {
+      "name": "Exportación y recuperación de personaje, módulos y bitácora",
+      "passed": true
+    },
+    {
+      "name": "Modo temporal: personaje y módulos siguen funcionando con almacenamiento bloqueado",
+      "passed": true
+    },
+    {
+      "name": "Iframe: personaje persistente y navegación entre vistas",
+      "passed": true
+    },
+    {
+      "name": "Cuatro guardianes: combate completo, apoyos y logro final sin XP repetida",
+      "passed": true
+    },
+    {
+      "name": "Cinco vistas a seis anchos: sin desbordamiento ni recursos gráficos ausentes",
+      "passed": true
+    }
+  ],
+  "screens": [
+    "battle-390.png",
+    "battle-1366.png",
+    "view-hub-390.png",
+    "view-1-390.png",
+    "view-2-390.png",
+    "view-3-390.png",
+    "view-4-390.png",
+    "view-hub-1366.png",
+    "view-1-1366.png",
+    "view-2-1366.png",
+    "view-3-1366.png",
+    "view-4-1366.png"
+  ],
+  "limitations": [
+    "Navegador Chromium local; no certifica Safari, Firefox ni una matrícula real de Moodle.",
+    "Sin escrituras autenticadas en Google Sheets."
+  ]
+}

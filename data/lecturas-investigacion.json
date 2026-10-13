@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-13",
+  "resources": [
+    {
+      "id": "investigacion_motivacion_2024",
+      "module": "investigacion",
+      "title": "Gamificación y motivación intrínseca · Li, Hew y Du (2024)",
+      "description": "Meta-análisis: la motivación intrínseca presenta un efecto positivo pequeño; autonomía y vínculo requieren atención en el diseño. Pregunta para tu aula: ¿qué decisiones y apoyos ofrecerás a tu grupo?",
+      "url": "https://link.springer.com/article/10.1007/s11423-023-10337-7",
+      "type": "investigacion"
+    },
+    {
+      "id": "investigacion_matematicas_2026",
+      "module": "investigacion",
+      "title": "Motivación y participación en matemáticas · Ratinho y colegas (2026)",
+      "description": "Revisión en secundaria y educación superior: resultados favorables sobre motivación, con límites para medir participación. Los autores proponen priorizar progreso y cooperación. Su alcance es matemáticas; contrasta estas ideas con tu contexto.",
+      "url": "https://link.springer.com/article/10.1007/s10648-025-10108-1",
+      "type": "investigacion"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "engine": "built-in imagegen",
+  "date": "2026-10-13",
+  "count": 6,
+  "assets": [
+    {
+      "path": "assets/illustrations/academy-landscape.webp",
+      "bytes": 248774,
+      "role": "landscape"
+    },
+    {
+      "path": "assets/illustrations/kael.webp",
+      "bytes": 228086,
+      "role": "character"
+    },
+    {
+      "path": "assets/illustrations/lira.webp",
+      "bytes": 232968,
+      "role": "character"
+    },
+    {
+      "path": "assets/illustrations/nexo.webp",
+      "bytes": 210812,
+      "role": "character"
+    },
+    {
+      "path": "assets/illustrations/orion.webp",
+      "bytes": 292070,
+      "role": "character"
+    },
+    {
+      "path": "assets/illustrations/valen.webp",
+      "bytes": 203914,
+      "role": "character"
+    }
+  ]
+}

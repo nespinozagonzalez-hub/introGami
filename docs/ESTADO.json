@@ -1,0 +1,45 @@
+{
+  "project": "Academia del Orbe",
+  "course": "Gamificación de 0 a 100",
+  "version": "2.0.2",
+  "repository": "nespinozagonzalez-hub/introGami",
+  "source_branch": "main",
+  "entry": "index.html",
+  "phase": "validated-awaiting-publication",
+  "updated_at": "2026-10-13",
+  "main_updated": false,
+  "github_pages_live": false,
+  "google_sheets_connected": false,
+  "primary_url": "https://nespinozagonzalez-hub.github.io/introGami/",
+  "active_missions": 9,
+  "final_guardians": 4,
+  "illustrations": 6,
+  "original_resources": {
+    "videos": 9,
+    "documents": 6,
+    "syllabus": 1
+  },
+  "additional_research_readings": 2,
+  "qa": {
+    "groups_passed": 17,
+    "javascript_errors": 0,
+    "scripts_checked": 20,
+    "local_references_checked": 62,
+    "widths": [
+      390,
+      480,
+      768,
+      1024,
+      1366,
+      1920
+    ],
+    "battle_widths_checked": true,
+    "iframe": "local-verified"
+  },
+  "pending": [
+    "Publicar main y verificar HTTP de curso, módulos e ilustraciones",
+    "Registro y escrituras autenticadas con Sheets desde el origen publicado",
+    "Permisos de recursos desde una cuenta estudiante",
+    "Moodle real, Safari y Firefox"
+  ]
+}
