@@ -1,0 +1,175 @@
+{
+  "schema_version": "2.0.0-beta.1",
+  "course": "Gamificación de 0 a 100",
+  "status": "DESARROLLO_NO_PUBLICADO",
+  "hub": {
+    "repo": "nespinozagonzalez-hub/introGami",
+    "path": "index.html",
+    "storage_key": "g0100_v8"
+  },
+  "skill_thresholds": {
+    "novice": 3,
+    "expert": 5,
+    "master": 8
+  },
+  "skills": [
+    "narrativa",
+    "diseno",
+    "creatividad",
+    "motivacion",
+    "estrategia"
+  ],
+  "modules": [
+    {
+      "id": 1,
+      "name": "Valle del Primer Despertar",
+      "repo": "nespinozagonzalez-hub/modulo-1-GamiV2",
+      "path": "index.html"
+    },
+    {
+      "id": 2,
+      "name": "Forja de Herramientas y Estrategias",
+      "repo": "nespinozagonzalez-hub/modulo-2-gami",
+      "path": "index.html"
+    },
+    {
+      "id": 3,
+      "name": "Arquitectura del Juego y Diseño del Flow",
+      "repo": "nespinozagonzalez-hub/modulo-3-gami",
+      "path": "index.html"
+    },
+    {
+      "id": 4,
+      "name": "La Consagración del Orbe",
+      "repo": "nespinozagonzalez-hub/introGami",
+      "path": "modulo-4/index.html",
+      "legacy_codes_unlinked": true,
+      "master_code": "ORBE2026"
+    }
+  ],
+  "missions": [
+    {
+      "canonical": "AXR314",
+      "alias": "VAL214",
+      "name": "La llamada del viajero",
+      "type": "principal",
+      "module": 1,
+      "points": 5,
+      "xp": 60
+    },
+    {
+      "canonical": "LUM582",
+      "alias": "VIN582",
+      "name": "Ecos del camino olvidado",
+      "type": "secundaria",
+      "module": 1,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "VYR207",
+      "alias": "RES307",
+      "name": "La primera bifurcación",
+      "type": "secundaria",
+      "module": 1,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "NEX451",
+      "alias": "FOR214",
+      "name": "El pulso de los sistemas",
+      "type": "principal",
+      "module": 2,
+      "points": 5,
+      "xp": 60
+    },
+    {
+      "canonical": "ORB126",
+      "alias": "ARC582",
+      "name": "Fragmentos del Orbe",
+      "type": "secundaria",
+      "module": 2,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "KRN693",
+      "alias": "RIT307",
+      "name": "Guardianes del equilibrio",
+      "type": "secundaria",
+      "module": 2,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "ZEN248",
+      "alias": "FLW214",
+      "name": "El mapa de lo posible",
+      "type": "principal",
+      "module": 3,
+      "points": 5,
+      "xp": 60
+    },
+    {
+      "canonical": "ELD570",
+      "alias": "ARC583",
+      "name": "Ruinas de lo convencional",
+      "type": "secundaria",
+      "module": 3,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "MIR831",
+      "alias": "MEM307",
+      "name": "El espejo del jugador",
+      "type": "secundaria",
+      "module": 3,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "ARC419",
+      "alias": null,
+      "name": "Ascenso a la montaña sagrada",
+      "type": "principal",
+      "module": 4,
+      "points": 5,
+      "xp": 60
+    },
+    {
+      "canonical": "NEB264",
+      "alias": null,
+      "name": "Niebla antes del umbral",
+      "type": "secundaria",
+      "module": 4,
+      "points": 2,
+      "xp": 25
+    },
+    {
+      "canonical": "CYR905",
+      "alias": null,
+      "name": "El nacimiento de lo lúdico",
+      "type": "secundaria",
+      "module": 4,
+      "points": 2,
+      "xp": 25
+    }
+  ],
+  "telemetry": {
+    "local_key": "gamiaula_v2_events",
+    "player_id_key": "gamiaula_v2_player_id",
+    "storage": "browser-only",
+    "sync_status": "not-configured",
+    "events": [
+      "character_created",
+      "code_activated",
+      "skill_upgrade",
+      "advantage_consulted",
+      "advantage_activated",
+      "guardian_defeated",
+      "progress_export"
+    ]
+  }
+}
