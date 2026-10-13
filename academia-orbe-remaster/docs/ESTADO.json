@@ -1,6 +1,6 @@
 {
   "project": "Academia del Orbe",
-  "phase": "remaster-beta",
+  "phase": "remaster-local-validated-awaiting-repository",
   "created_at": "2026-10-13",
   "staging_repo": "nespinozagonzalez-hub/introGami",
   "staging_branch": "remaster-gamiaula-2-2026",
@@ -26,10 +26,33 @@
     "syllabus": 1
   },
   "blockers": [
-    "Crear repositorio independiente por usuario",
-    "Copiar estructura en raíz",
-    "Activar GitHub Pages",
-    "Probar app Moodle y dispositivos",
-    "Validar backend y consentimientos"
-  ]
+    "Crear repositorio independiente: requiere sesión en interfaz GitHub",
+    "Activar Pages y verificar URL publicada",
+    "Validar escritura y lectura autenticadas con Sheets desde el origen publicado",
+    "Verificar Moodle real, permisos de recursos, Safari y Firefox"
+  ],
+  "version": "2.0.1",
+  "updated_at": "2026-10-13",
+  "source_branch": "remaster-gamiaula-2-2026",
+  "active_missions": 9,
+  "final_guardians": 4,
+  "backend_health": {
+    "get": "ok:true",
+    "post_ping": "ok:true",
+    "authenticated_writes_tested": false
+  },
+  "local_browser_qa": {
+    "groups_passed": 15,
+    "javascript_errors": 0,
+    "view_widths": [
+      390,
+      480,
+      768,
+      1024,
+      1366,
+      1920
+    ],
+    "battle_widths_checked": true
+  },
+  "supplemental_research_readings": 2
 }

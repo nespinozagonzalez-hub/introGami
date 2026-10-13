@@ -1,4 +1,7 @@
 <!doctype html><html lang="es"><head>
+<script src="shared/storage.js"></script>
+<script src="shared/pedagogy.js" defer></script>
+<script src="shared/accessibility.js" defer></script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a1626">
 <title>Academia del Orbe — GamiAula Remaster</title>
@@ -20,7 +23,7 @@
  <h1>La Academia<br><em>del Orbe</em></h1>
  <p>Una travesía para transformar ideas en experiencias educativas que merezcan ser vividas. Descubre territorios, supera misiones y fortalece tu forma de diseñar el aprendizaje.</p>
  <div class="hero-actions"><button class="button primary" data-panel="personaje">✦ Forjar mi aventurero</button><a class="button outline" href="#mapa">Explorar territorios ↓</a></div>
- <div class="hero-info"><span>4 territorios</span><span>12 misiones</span><span>5 atributos</span><span>1 batalla final</span></div>
+ <div class="hero-info"><span>4 territorios</span><span>9 misiones y 4 guardianes</span><span>5 atributos</span><span>1 batalla final</span></div>
  </div><div class="hero-watermark" aria-hidden="true">✧</div>
 </section>
 <div class="page-container">
@@ -31,17 +34,17 @@
   <div class="hud-stats"><span>✦ <b id="stat-codes">0</b> códigos</span><span>✧ <b id="stat-points">0</b> puntos libres</span></div>
  </section>
  <section class="section world-section" id="mapa">
- <div class="section-head"><div><span class="overline">EL CAMINO DEL AVENTURERO</span><h2>Mapa de los cuatro territorios</h2><p>Las mismas actividades pedagógicas del curso, ahora en un recorrido conectado.</p></div><button class="quiet-btn" data-panel="codigos">Canjear recompensas ↗</button></div>
+ <div class="section-head"><div><span class="overline">EL CAMINO DEL AVENTURERO</span><h2>Mapa de los cuatro territorios</h2><p>Fundamentos, herramientas y diseño: cada territorio te acerca a una propuesta para tu aula.</p></div><button class="quiet-btn" data-panel="codigos">Canjear recompensas ↗</button></div>
  <div class="world-map">
   <div class="map-glow"></div><div class="map-road" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <div class="portals">
    <article class="portal portal-green"><div class="portal-num">I</div><div class="portal-scene"><span aria-hidden="true">❈</span></div><div class="portal-bottom"><span class="mission-tag">MÓDULO 01</span><h3>El Primer<br>Despertar</h3><p>Fundamentos de la gamificación y la experiencia lúdica.</p><div class="portal-status" id="status-1">0 / 3 misiones</div><a class="button portal-cta" href="modulos/1/index.html">Entrar al Valle <span>↗</span></a></div></article>
    <article class="portal portal-amber"><div class="portal-num">II</div><div class="portal-scene"><span aria-hidden="true">⚒</span></div><div class="portal-bottom"><span class="mission-tag">MÓDULO 02</span><h3>La Forja de<br>Herramientas</h3><p>Diseño de actividades, herramientas e IA aplicada.</p><div class="portal-status" id="status-2">0 / 3 misiones</div><a class="button portal-cta" href="modulos/2/index.html">Entrar a la Forja <span>↗</span></a></div></article>
    <article class="portal portal-blue"><div class="portal-num">III</div><div class="portal-scene"><span aria-hidden="true">◇</span></div><div class="portal-bottom"><span class="mission-tag">MÓDULO 03</span><h3>Arquitectura<br>y Flow</h3><p>Perfiles, motivación y equilibrio del desafío.</p><div class="portal-status" id="status-3">0 / 3 misiones</div><a class="button portal-cta" href="modulos/3/index.html">Cruzar el Umbral <span>↗</span></a></div></article>
-   <article class="portal portal-purple"><div class="portal-num">IV</div><div class="portal-scene"><span aria-hidden="true">✦</span></div><div class="portal-bottom"><span class="mission-tag">MÓDULO FINAL</span><h3>La Consagración<br>del Orbe</h3><p>Enfrenta cuatro guardianes en el desenlace RPG.</p><div class="portal-status">4 guardianes</div><a class="button portal-cta" href="modulos/4/index.html">Iniciar la Batalla <span>↗</span></a></div></article>
+   <article class="portal portal-purple"><div class="portal-num">IV</div><div class="portal-scene"><span aria-hidden="true">✦</span></div><div class="portal-bottom"><span class="mission-tag">MÓDULO FINAL</span><h3>La Consagración<br>del Orbe</h3><p>Enfrenta cuatro guardianes en el desenlace RPG.</p><div class="portal-status" id="status-4">0 / 4 guardianes</div><a class="button portal-cta" href="modulos/4/index.html">Iniciar la Batalla <span>↗</span></a></div></article>
   </div>
  </div>
- <p class="map-hint">Las misiones conservan sus evaluaciones y recursos originales. Los códigos se validan en tu Centro de Comando y el guardado es local mientras finalizamos la sincronización.</p>
+ <p class="map-hint">Recupera los fragmentos de cada misión y registra sus códigos con Nexo. Tu aventura se guarda en este navegador; puedes descargarla desde tu personaje.</p>
  </section>
  <section class="section npc-section" id="guardianes">
   <div class="section-head"><div><span class="overline">LOS HABITANTES DE LA ACADEMIA</span><h2>No recorrerás este mundo en soledad</h2><p>Conoce a quienes resguardan los secretos de la travesía y te acompañarán en tus decisiones.</p></div></div>
@@ -56,7 +59,7 @@
  <section class="section footer-cta"><div><span class="overline">TU HISTORIA NO TERMINA AQUÍ</span><h2>El conocimiento se convierte en aventura cuando decides jugar.</h2><p>Accede a los videos, guías y materiales originales desde la biblioteca.</p></div><button class="button primary" data-panel="recursos">Abrir la Biblioteca ↗</button></section>
 </div>
 </main>
-<footer><span>GamiAula · Aprender es jugar</span><span>Remaster · beta visual · Moodle / escritorio / móvil</span></footer>
+<footer><span>GamiAula · Aprender es jugar</span><span>Gamificación de 0 a 100 · GamiAula 2.0</span></footer>
 <div class="dialog-backdrop" id="dialog-backdrop" hidden>
  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><header class="dialog-head"><div><span class="overline" id="dialog-eyebrow">ACADEMIA DEL ORBE</span><h2 id="dialog-title">Centro de Comando</h2></div><button class="close" id="dialog-close" aria-label="Cerrar ventana">×</button></header><div id="dialog-content" class="dialog-content"></div></section>
 </div><div class="toast" id="toast" role="status" aria-live="polite" hidden></div>

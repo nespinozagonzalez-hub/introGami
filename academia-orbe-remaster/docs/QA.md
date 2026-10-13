@@ -1,25 +1,31 @@
-# Auditoría y tareas de prueba
+# Pruebas de Academia del Orbe 2.0.1
 
-**Auditoría estática:** 18 archivos principales y dependencias recuperadas; sintaxis JS válida; recursos listados desde repositorios originales. No equivale a una prueba funcional en navegador.
+Resultado: **15 grupos aprobados y cero errores de JavaScript** en Chromium local. Fecha: 13 de octubre de 2026. Detalle automático: `QA_RESULT.json`.
 
-## Pruebas funcionales pendientes
-- [ ] Crear personaje nuevo y guardar.
-- [ ] Crear personaje con las cinco clases, consultar sus bonificaciones y cambiar entre módulos.
-- [ ] Recuperar personaje guardado como g0100_v8 y confirmar que no se altera.
-- [ ] Canjear VAL214, comprobar asignación una vez, intentar AXR314 como duplicado.
-- [ ] Canjear los códigos del módulo 2 y 3, probar movilidad de la recompensa.
-- [ ] Canjear ORBE2026 y verificar logro sin otorgar XP.
-- [ ] Ejecutar cada evaluación del módulo 1, 2 y 3 con respuestas correctas e incorrectas.
-- [ ] Verificar enlaces de YouTube, Drive y programa oficial y permisos de acceso para estudiantes.
-- [ ] Probar los cuatro guardianes RPG, barra de vida, recuperación y ayudas por habilidad.
-- [ ] Verificar cinco NPCs, enlaces de retorno, mapa y biblioteca.
-- [ ] Pantallas: 390, 480, 768, 1024, 1366 y 1920 px; teclado y foco del modal.
-- [ ] Moodle: insertar como Página, distinguir iframe de enlace directo, comprobar si localStorage funciona.
-- [ ] Backend: GET, POST, seguridad, consentimiento y migración antes de sincronización real.
-- [ ] Inspeccionar carga de retratos e iconos SVG en Chrome, Safari y Firefox.
+## Comprobado
 
-## Observaciones importantes
-- Los códigos son de recuperación lúdica, no credenciales secretas.
-- El diseño de pantalla de los módulos originales es complejo; su responsividad se ha reforzado por CSS, pero requiere pruebas visuales reales.
-- Los enlaces históricos se han copiado literalmente, no se garantiza accesibilidad externa sin revisarlos desde cuenta estudiante.
-- La estética incluye recursos SVG propios; la ilustración conceptual generada fuera de GitHub no está incorporada aún al repositorio.
+- Creación y persistencia de las cinco clases, con su bonificación correcta.
+- Recuperación de una partida anterior: XP y atributos conservados; alias de misión normalizados sin crédito duplicado.
+- Nueve recompensas: 330 XP y 27 puntos; rechazo de duplicados, códigos desconocidos y nuevas recompensas heredadas del módulo 4.
+- Coste de mejoras de atributo, talentos desbloqueados y registro de valor anterior/nuevo.
+- Cinco NPCs con diálogo que avanza, Escape y foco de teclado dentro del modal.
+- Biblioteca: 16 enlaces originales y dos lecturas complementarias.
+- Módulos 1–3: quizzes con respuestas incorrectas y correctas; pareados, aplicación, verdadero/falso, crucigrama y dos memorices completados mediante sus controles.
+- En el memorice fallido se ven las dos cartas antes de ocultarse.
+- Bitácoras guardadas, ayudas de Narrativa diferenciadas hasta nivel 8 y límite de descartes de Estrategia.
+- Exportación y recuperación conjunta de personaje, progreso de módulos y bitácoras.
+- Personaje y módulos siguen cargando cuando se bloquea localStorage; el aviso distingue la partida temporal.
+- Iframe de ensayo: perfil compartido y navegación de ida/vuelta.
+- Cuatro guardianes vencidos respondiendo sus preguntas y usando los comandos de combate. La prueba acelera los temporizadores de animación; no modifica las respuestas ni fuerza la victoria.
+- ORBE2026 requiere cuatro guardianes y registra un logro sin XP repetida.
+- Cinco vistas y pantalla de combate a 390, 480, 768, 1024, 1366 y 1920 px: sin desbordamiento horizontal. Las imágenes visibles de las vistas cargaron correctamente.
+- Revisión estática: sintaxis de 15 scripts y 16 enlaces locales; catálogo original intacto.
+- Endpoint Apps Script: GET de salud y POST `ping` por HTTP devolvieron `ok:true`.
+
+## Alcance y pendientes
+
+Las capturas del ensayo se inspeccionaron durante la implementación. El iframe local no sustituye una prueba real de Moodle. Falta publicar el repositorio independiente y verificar su URL, permisos de Drive/YouTube con cuenta estudiante, Safari y Firefox.
+
+La prueba de navegador hacia Apps Script no logró completar la comunicación desde este entorno. No se atribuye la causa exclusivamente a CORS. Los resultados HTTP de salud no prueban operaciones autenticadas, persistencia de alumnos ni sincronización entre dispositivos. La sincronización automática permanece desactivada hasta realizar estas pruebas con una invitación ficticia autorizada y desde el origen publicado.
+
+Los códigos y la victoria se validan localmente; no constituyen autenticación institucional ni evidencia segura de aprendizaje. La dificultad y el equilibrio de los apoyos deben observarse en un pilotaje con el grupo real.

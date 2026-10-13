@@ -36,12 +36,13 @@
       motivacion:'Compara dificultad y habilidad. Si surge ansiedad, añade apoyo; si surge aburrimiento, incorpora profundidad o elección.'
     }
   };
-  function getJSON(key, fallback) { try { var raw=localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e) { return fallback; } }
-  function putJSON(key, value) { try { localStorage.setItem(key,JSON.stringify(value)); return true; } catch(e) { return false; } }
+  function getJSON(key, fallback) { try { var raw=GamiStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e) { return fallback; } }
+  function putJSON(key, value) { try { GamiStorage.setItem(key,JSON.stringify(value)); return true; } catch(e) { return false; } }
+  function guide(skill,lv){return GamiPedagogy.extend(MOD,skill,lv,GUIDES[MOD][skill]||'');}
   function getPlayer() { var p=getJSON(HUB_KEY,null); return p && p.skills && p.class ? p : null; }
   function getId() {
-    var id=localStorage.getItem(ID_KEY);
-    if (!id) { id='gami_'+(window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+'_'+Math.random().toString(36).slice(2)); localStorage.setItem(ID_KEY,id); }
+    var id=GamiStorage.getItem(ID_KEY);
+    if (!id) { id='gami_'+(window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+'_'+Math.random().toString(36).slice(2)); GamiStorage.setItem(ID_KEY,id); }
     return id;
   }
   function station() { try { return typeof state !== 'undefined' ? String(state.currentStation||'portal') : 'portal'; } catch(e) { return 'portal'; } }
@@ -106,24 +107,24 @@
       '.gami-v2-card button[disabled]{opacity:.45;cursor:not-allowed}' +
       '#gami-v2-message{padding:11px 13px;border-left:3px solid #eec36f;background:#253952;color:#fff;border-radius:7px;white-space:pre-wrap}' +
       '.gami-v2-eliminated{opacity:.33!important;text-decoration:line-through!important;pointer-events:none!important}' +
-      '#gami-v2-dialog a{color:#a6e4f9}';
+      '#gami-v2-dialog a{color:#a6e4f9}.gami-v2-card p{white-space:pre-line}@media(max-width:620px){#gami-v2-trigger{bottom:76px;right:9px;font-size:11px;padding:10px 12px}}';
     document.head.appendChild(el);
   }
   var backdrop=null;
   function render(){
     if(!backdrop)return;
     var p=getPlayer(), grid=document.getElementById('gami-v2-grid');
-    if(!p){grid.innerHTML='<p>Primero crea tu personaje en el Centro de Comando. Si ya lo hiciste, ábrelo y este módulo desde el mismo dominio de GitHub Pages; en Genially la sincronización puede estar limitada por el navegador.</p><a target="_blank" rel="noopener noreferrer" href="../../index.html">Abrir Centro de Comando</a>';return;}
+    if(!p){grid.innerHTML='<p>Primero crea tu personaje en el Centro de Comando. Después podrás regresar al módulo y utilizar los talentos que hayas desarrollado.</p><a target="_blank" rel="noopener noreferrer" href="../../index.html">Abrir Centro de Comando</a>';return;}
     var html='<p>Personaje: <strong>'+escapeHTML(p.name)+'</strong> · Clase: '+escapeHTML(p.class)+'. Las ventajas se desbloquean desde nivel 3 de cada atributo; mejoran en los niveles 5 y 8.</p>';
     ABILITIES.forEach(function(a){
-      var lv=levelFor(p,a.key), t=tier(lv), text=a.key==='estrategia' ? 'Elimina una opción incorrecta de una pregunta pendiente en la misión principal. Usos disponibles: '+Math.max(0,strategyLimit(lv)-strategyUsed().length)+'.' : GUIDES[MOD][a.key];
+      var lv=levelFor(p,a.key), t=tier(lv), text=a.key==='estrategia' ? 'Elimina una opción incorrecta de una pregunta pendiente en la misión principal. Usos disponibles: '+Math.max(0,strategyLimit(lv)-strategyUsed().length)+'.' : guide(a.key,lv);
       html+='<section class="gami-v2-card"><h3>'+a.icon+' '+a.label+' · nivel '+lv+'</h3><small>'+a.title+' · '+(t?'Dominio '+t:'Bloqueado (requiere 3)')+'</small><p>'+escapeHTML(text)+'</p><button type="button" data-gami-skill="'+a.key+'" '+(t?'':'disabled')+'>'+(a.key==='estrategia'?'Usar descarte':'Consultar ventaja')+'</button></section>';
     });
     grid.innerHTML=html;
     grid.querySelectorAll('[data-gami-skill]').forEach(function(btn){
       btn.addEventListener('click',function(){
         var skill=btn.getAttribute('data-gami-skill');
-        var msg=skill==='estrategia'?removeWrong():GUIDES[MOD][skill];
+        var msg=skill==='estrategia'?removeWrong():guide(skill,levelFor(p,skill));
         if(skill!=='estrategia')event('advantage_consulted',skill,'tier_'+tier(levelFor(p,skill)));
         document.getElementById('gami-v2-message').textContent=msg;
         render();

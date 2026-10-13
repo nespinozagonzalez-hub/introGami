@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<script src="../../shared/storage.js"></script>
+<script src="../../shared/pedagogy.js" defer></script>
+<script src="../../shared/accessibility.js" defer></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>La Consagración del Orbe — V3 épica unificada</title>
@@ -1841,7 +1844,7 @@ input{outline:none}
 
       <div class="intro-form">
         <label for="playerName">Nombre del aspirante</label>
-        <input type="text" id="playerName" class="input" placeholder="Escribe tu nombre completo" maxlength="40" autocomplete="off">
+        <input type="text" id="playerName" class="input" placeholder="Escribe tu alias de aventurero" maxlength="40" autocomplete="off">
       </div>
 
       <div class="intro-cta">
@@ -2108,7 +2111,7 @@ const BATTLE_RULES = {
   skillCooldown:1,
 };
 
-const PLAYER_SPRITE_PATH = 'assets/player_knight.png';
+const PLAYER_SPRITE_PATH = '../../assets/npc/kael.svg';
 
 // Configuración de los 4 guardianes
 const GUARDIANS = [
@@ -2127,7 +2130,7 @@ const GUARDIANS = [
     spriteLabel:'Retrato del Guardián del Valle',
     silhouetteSvg:silhouetteValle(),
     intro:'Una figura encapuchada emerge entre la niebla. <b>El Guardián del Valle</b> alza su báculo. Primero deberás ganar la iniciativa para decidir quién abre el duelo.',
-    analysis:'<b>El Guardián del Valle</b> custodia los fundamentos. Reemplaza luego sus 25 preguntas por contenido del primer bloque; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+    analysis:'<b>El Guardián del Valle</b> custodia los fundamentos. Distingue el sentido pedagógico de la historia, las reglas y los componentes visibles.',
   },
   {
     id:'g2',
@@ -2144,7 +2147,7 @@ const GUARDIANS = [
     spriteLabel:'Retrato del Maestro de la Forja',
     silhouetteSvg:silhouetteForja(),
     intro:'El calor del horno te envuelve. <b>El Maestro de la Forja</b> golpea su martillo: solo avanzan quienes ya superaron al guardián anterior.',
-    analysis:'<b>El Maestro de la Forja</b> castiga la duda y premia la precisión. Reemplaza luego sus 25 preguntas por las del segundo módulo; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+    analysis:'<b>El Maestro de la Forja</b> castiga la duda y premia la precisión. Elige recursos que ayuden a alcanzar el objetivo y explica qué harán los participantes.',
   },
   {
     id:'g3',
@@ -2161,7 +2164,7 @@ const GUARDIANS = [
     spriteLabel:'Retrato del Arquitecto del Flow',
     silhouetteSvg:silhouetteFlow(),
     intro:'Líneas geométricas giran a tu alrededor. <b>El Arquitecto del Flow</b> transforma cada intercambio en una prueba de diseño.',
-    analysis:'<b>El Arquitecto del Flow</b> observa la estructura de cada decisión. Reemplaza luego sus 25 preguntas por las del tercer bloque; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+    analysis:'<b>El Arquitecto del Flow</b> observa la estructura de cada decisión. Observa las necesidades de tus jugadores y equilibra el desafío con sus habilidades.',
   },
   {
     id:'g4',
@@ -2178,29 +2181,11 @@ const GUARDIANS = [
     spriteLabel:'Retrato del Custodio del Caos',
     silhouetteSvg:silhouetteCaos(),
     intro:'Un torbellino oscuro desgarra la cámara. <b>El Custodio del Caos</b> abre la prueba final: ya no hay espacio para errores innecesarios.',
-    analysis:'<b>El Custodio del Caos</b> domina el simulador final. Reemplaza luego sus 25 preguntas por el bloque definitivo; si hay menos, el sistema entra en modo repaso y las reutiliza.',
+    analysis:'<b>El Custodio del Caos</b> domina el simulador final. Integra narrativa, mecánicas, apoyos y evaluación en una experiencia coherente.',
   },
 ];
 
-// Banco de 25 preguntas por guardián. Luego puedes reemplazar directamente estas listas.
-function buildPlaceholderQuestions(label){
-  return Array.from({length:25}, (_, i) => {
-    const answer = i % 4;
-    const options = [
-      `Alternativa A de reemplazo ${i+1}`,
-      `Alternativa B de reemplazo ${i+1}`,
-      `Alternativa C de reemplazo ${i+1}`,
-      `Alternativa D de reemplazo ${i+1}`,
-    ];
-    options[answer] = `Respuesta correcta de reemplazo ${i+1}`;
-    return {
-      stem:`[${i+1}/25] ${label}. Reemplaza este enunciado por tu pregunta real del guardián correspondiente.`,
-      options,
-      answer,
-    };
-  });
-}
-
+// Banco de preguntas por guardián; mantener alineación con los contenidos del curso.
 const QUESTION_BANKS = {
   g1: [
     {
@@ -2214,8 +2199,8 @@ const QUESTION_BANKS = {
       answer: 2,
     },
     {
-      stem: "En una experiencia gamificada, los puntos, insignias, niveles o recompensas son ejemplos de:",
-      options: ["Mecánicas de juego.", "Objetivos curriculares.", "Contenidos mínimos obligatorios.", "Evaluaciones sumativas tradicionales."],
+      stem: "En el modelo de dinámicas, mecánicas y componentes, los puntos e insignias visibles se clasifican como:",
+      options: ["Componentes del sistema.", "Objetivos curriculares.", "Contenidos mínimos obligatorios.", "Evaluaciones sumativas tradicionales."],
       answer: 0,
     },
     {
@@ -3126,7 +3111,7 @@ function escapeHtml(s){
 function saveState(silent){
   try{
     state.savedAt = new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    GamiStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     if(!silent) toast('Avance guardado · ' + state.savedAt, 'success');
     return true;
   }catch(e){
@@ -3136,7 +3121,7 @@ function saveState(silent){
 }
 function loadState(){
   try{
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = GamiStorage.getItem(STORAGE_KEY);
     if(!raw) return null;
     const data = JSON.parse(raw);
     if(!data || typeof data !== 'object') return null;
@@ -3147,7 +3132,7 @@ function loadState(){
   }catch(e){ return null; }
 }
 function resetAllProgress(){
-  localStorage.removeItem(STORAGE_KEY);
+  GamiStorage.removeItem(STORAGE_KEY);
   state = initialState();
   $('#playerName').value = '';
   navigateTo('intro');
