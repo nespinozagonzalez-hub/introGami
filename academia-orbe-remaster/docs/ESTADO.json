@@ -1,0 +1,35 @@
+{
+  "project": "Academia del Orbe",
+  "phase": "remaster-beta",
+  "created_at": "2026-10-13",
+  "staging_repo": "nespinozagonzalez-hub/introGami",
+  "staging_branch": "remaster-gamiaula-2-2026",
+  "staging_subfolder": "academia-orbe-remaster",
+  "desired_repo": "nespinozagonzalez-hub/gamiaula-academia-del-orbe",
+  "repo_created": false,
+  "github_pages_live": false,
+  "google_sheets_connected": false,
+  "views": [
+    "Centro de Comando",
+    "Módulo 1",
+    "Módulo 2",
+    "Módulo 3",
+    "RPG final"
+  ],
+  "assets": [
+    "5 NPC SVG",
+    "paisaje academia SVG"
+  ],
+  "original_resources": {
+    "videos": 9,
+    "documents": 6,
+    "syllabus": 1
+  },
+  "blockers": [
+    "Crear repositorio independiente por usuario",
+    "Copiar estructura en raíz",
+    "Activar GitHub Pages",
+    "Probar app Moodle y dispositivos",
+    "Validar backend y consentimientos"
+  ]
+}
