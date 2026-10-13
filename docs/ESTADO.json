@@ -1,14 +1,16 @@
 {
   "project": "Academia del Orbe",
   "course": "Gamificación de 0 a 100",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "repository": "nespinozagonzalez-hub/introGami",
   "source_branch": "main",
   "entry": "index.html",
-  "phase": "validated-awaiting-publication",
+  "phase": "validated-awaiting-module-publication",
   "updated_at": "2026-10-13",
-  "main_updated": false,
-  "github_pages_live": false,
+  "main_updated": true,
+  "github_pages_live": true,
+  "published_app_commit": "b5982208ecf650f17c5e46fc2ffc4f046f095210",
+  "publication_evidence": "PUBLICACION_VERIFICADA.json",
   "google_sheets_connected": false,
   "primary_url": "https://nespinozagonzalez-hub.github.io/introGami/",
   "active_missions": 9,
@@ -21,10 +23,10 @@
   },
   "additional_research_readings": 2,
   "qa": {
-    "groups_passed": 17,
+    "groups_passed": 18,
     "javascript_errors": 0,
-    "scripts_checked": 20,
-    "local_references_checked": 62,
+    "scripts_checked": 21,
+    "local_references_checked": 72,
     "widths": [
       390,
       480,
@@ -34,12 +36,14 @@
       1920
     ],
     "battle_widths_checked": true,
-    "iframe": "local-verified"
+    "iframe": "local-verified",
+    "final_module_entries_checked": 24
   },
   "pending": [
-    "Publicar main y verificar HTTP de curso, módulos e ilustraciones",
+    "Publicar y verificar las mejoras de módulos de la versión 2.0.3",
     "Registro y escrituras autenticadas con Sheets desde el origen publicado",
     "Permisos de recursos desde una cuenta estudiante",
     "Moodle real, Safari y Firefox"
-  ]
+  ],
+  "live_version": "2.0.2"
 }

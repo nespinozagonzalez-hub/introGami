@@ -241,4 +241,6 @@ if(P){updateAchievements();save();}
 window.addEventListener('pageshow',()=>{P=normalizePlayer(getJSON(KEY,null));refresh();});
 window.addEventListener('storage',e=>{if(e.key===KEY||GamiStorage.moduleKeys.includes(e.key)){P=normalizePlayer(getJSON(KEY,null));refresh();}});
 refresh();
+if(location.hash==='#codigos')codes();
+window.addEventListener('hashchange',()=>{if(location.hash==='#codigos')codes();});
 })();

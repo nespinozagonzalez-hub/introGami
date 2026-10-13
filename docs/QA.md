@@ -1,6 +1,6 @@
-# Pruebas de Academia del Orbe 2.0.2
+# Pruebas de Academia del Orbe 2.0.3
 
-Resultado: **17 grupos aprobados y cero errores de JavaScript** en Chromium local. Fecha: 13 de octubre de 2026. Detalle automático: `QA_RESULT.json`.
+Resultado: **18 grupos aprobados y cero errores de JavaScript** en Chromium local. Fecha: 13 de octubre de 2026. Detalle automático: `QA_RESULT.json`.
 
 ## Comprobado
 
@@ -19,12 +19,12 @@ Resultado: **17 grupos aprobados y cero errores de JavaScript** en Chromium loca
 - Cuatro guardianes vencidos respondiendo sus preguntas y usando los comandos de combate. La prueba acelera los temporizadores de animación; no modifica las respuestas ni fuerza la victoria.
 - ORBE2026 requiere cuatro guardianes y registra un logro sin XP repetida.
 - Cinco vistas y pantalla de combate a 390, 480, 768, 1024, 1366 y 1920 px: sin desbordamiento horizontal. Las imágenes visibles de las vistas cargaron correctamente.
-- Revisión estática: sintaxis de 20 scripts y 62 referencias locales; catálogo original intacto.
+- Revisión estática: sintaxis de 21 scripts y 72 referencias locales; catálogo original intacto.
 - Endpoint Apps Script: GET de salud y POST `ping` por HTTP devolvieron `ok:true`.
 
 ## Alcance y pendientes
 
-Las capturas del ensayo se inspeccionaron durante la implementación. El iframe local no sustituye una prueba real de Moodle. Falta comprobar la publicación de main y su URL, permisos de Drive/YouTube con cuenta estudiante, Safari y Firefox.
+Las capturas del ensayo se inspeccionaron durante la implementación. El iframe local no sustituye una prueba real de Moodle. Faltan permisos de Drive/YouTube con cuenta estudiante, Moodle real, Safari y Firefox.
 
 La prueba de navegador hacia Apps Script no logró completar la comunicación desde este entorno. No se atribuye la causa exclusivamente a CORS. Los resultados HTTP de salud no prueban operaciones autenticadas, persistencia de alumnos ni sincronización entre dispositivos. La sincronización automática permanece desactivada hasta realizar estas pruebas con una invitación ficticia autorizada y desde el origen publicado.
 
@@ -37,3 +37,20 @@ Los códigos y la victoria se validan localmente; no constituyen autenticación 
 - Seis ilustraciones integradas; transparencia de los cinco personajes conservada en WebP.
 - Imágenes de guías, tarjetas de territorios y sprites de combate inspeccionadas en escritorio y móvil.
 - Iconos vectoriales para las estaciones, sin depender de fuentes emoji.
+
+## Publicación anterior comprobada (2.0.2)
+
+GitHub Pages publicó correctamente el commit b5982208ecf650f17c5e46fc2ffc4f046f095210. La portada respondió HTTP 200, mostró la versión 2.0.2 y se inspeccionó visualmente en la web pública. Los cuatro módulos, las seis ilustraciones y los tres archivos compartidos seleccionados respondieron HTTP 200; sus bytes coincidieron con la copia probada mediante comparación SHA-256. El manifiesto público también indicó la versión 2.0.2. Evidencia: PUBLICACION_VERIFICADA.json.
+
+## Mejoras de los cuatro módulos (2.0.3)
+
+- Entradas ilustradas con guía, propósito, progreso y acceso a los cuatro territorios.
+- Texto inicial más breve y acceso de inicio antes de la descripción de la ruta.
+- Navegación anterior/siguiente por las seis estaciones y foco en el título de destino.
+- Continuación de la estación guardada; cierre con acceso al módulo siguiente tras superar las tres misiones.
+- Copia de fragmentos con alternativa manual si el portapapeles está bloqueado.
+- Enlace directo a la bóveda de Nexo mediante #codigos.
+- Etiquetas para palabras y asociaciones; estación actual identificada para tecnologías de asistencia.
+- Bienvenida ilustrada del RPG y cierre final visible solo tras vencer a los cuatro guardianes.
+
+La batería de 18 grupos incluye el nuevo recorrido, copia manual, enlaces entre módulos y cierre del RPG. Las entradas finales se revisan en seis anchos; los cambios finales de texto y posición del botón de inicio no cambian las actividades.

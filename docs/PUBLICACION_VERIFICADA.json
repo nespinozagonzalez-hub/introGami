@@ -1,0 +1,112 @@
+{
+  "verified_on": "2026-10-13",
+  "version": "2.0.2",
+  "url": "https://nespinozagonzalez-hub.github.io/introGami/",
+  "application_commit": "b5982208ecf650f17c5e46fc2ffc4f046f095210",
+  "deployment": {
+    "workflow": "pages build and deployment",
+    "run_id": 38461076038,
+    "conclusion": "success",
+    "url": "https://github.com/nespinozagonzalez-hub/introGami/actions/runs/38461076038"
+  },
+  "comparison": "SHA-256 of public bytes versus locally tested files",
+  "public_portal_visual_check": true,
+  "checks": [
+    {
+      "path": "modulos/1/",
+      "status": 200,
+      "bytes": 39275,
+      "matches_local": true
+    },
+    {
+      "path": "modulos/2/",
+      "status": 200,
+      "bytes": 38920,
+      "matches_local": true
+    },
+    {
+      "path": "modulos/3/",
+      "status": 200,
+      "bytes": 40879,
+      "matches_local": true
+    },
+    {
+      "path": "modulos/4/",
+      "status": 200,
+      "bytes": 180377,
+      "matches_local": true
+    },
+    {
+      "path": "shared/core.js",
+      "status": 200,
+      "bytes": 26833,
+      "matches_local": true
+    },
+    {
+      "path": "shared/icons.js",
+      "status": 200,
+      "bytes": 2042,
+      "matches_local": true
+    },
+    {
+      "path": "shared/visual-upgrade.css",
+      "status": 200,
+      "bytes": 7605,
+      "matches_local": true
+    },
+    {
+      "path": "assets/illustrations/academy-landscape.webp",
+      "status": 200,
+      "bytes": 248774,
+      "matches_local": true
+    },
+    {
+      "path": "assets/illustrations/kael.webp",
+      "status": 200,
+      "bytes": 228086,
+      "matches_local": true
+    },
+    {
+      "path": "assets/illustrations/lira.webp",
+      "status": 200,
+      "bytes": 232968,
+      "matches_local": true
+    },
+    {
+      "path": "assets/illustrations/nexo.webp",
+      "status": 200,
+      "bytes": 210812,
+      "matches_local": true
+    },
+    {
+      "path": "assets/illustrations/orion.webp",
+      "status": 200,
+      "bytes": 292070,
+      "matches_local": true
+    },
+    {
+      "path": "assets/illustrations/valen.webp",
+      "status": 200,
+      "bytes": 203914,
+      "matches_local": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 9797,
+      "matches_local": true
+    },
+    {
+      "path": "data/release.json",
+      "status": 200,
+      "bytes": 231,
+      "matches_local": true
+    }
+  ],
+  "limits": [
+    "Actual Moodle embedding not verified",
+    "Safari and Firefox not verified",
+    "Authenticated Google Sheets operations not verified",
+    "Student account resource permissions not verified"
+  ]
+}

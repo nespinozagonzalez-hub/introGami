@@ -3213,6 +3213,7 @@ function renderBattlePlayerSprite(){
    RENDER: HUB
    ========================================================= */
 function renderHub(){
+  if(window.GamiJourney)GamiJourney.refresh();
   $('#brandPlayerName').textContent = state.playerName || 'Aspirante anónimo';
   $('#statGuardians').textContent = countDone();
   $('#statFragments').textContent = countFragments();
@@ -4344,5 +4345,7 @@ boot();
 <link rel="stylesheet" href="../../shared/remaster.css">
 <script src="../../shared/module-ui.js" defer></script>
 <script src="../../shared/battle-bridge.js" defer></script>
+<link rel="stylesheet" href="../../shared/module-journey.css">
+<script src="../../shared/module-journey.js" defer></script>
 </body>
 </html>

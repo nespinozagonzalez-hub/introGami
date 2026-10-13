@@ -1,6 +1,6 @@
 # GamiAula · Academia del Orbe
 
-**Gamificación de 0 a 100 · versión 2.0.2**. La experiencia unificada utiliza la entrada principal de introGami.
+**Gamificación de 0 a 100 · versión 2.0.3**. La experiencia unificada utiliza la entrada principal de introGami.
 
 Curso: https://nespinozagonzalez-hub.github.io/introGami/.
 

@@ -1,30 +1,78 @@
-# GamiAula Remaster — Nuevos iframes para Moodle
+# Enlaces e iframes para Moodle · GamiAula
 
-> **La entrada principal conserva su dirección; verificar las rutas publicadas antes de actualizar páginas de módulos.** No usar como enlace activo todavía.
+La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar el remaster el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
 
-Repositorio vigente: `nespinozagonzalez-hub/introGami`.
+Copia cada bloque en la vista HTML del editor de Moodle. La altura de 900 px evita un marco demasiado pequeño; puede ajustarse según el espacio de tu aula. El enlace que acompaña cada iframe permite abrir el curso en una pestaña independiente.
 
-## URLs previstas (pendientes de comprobar tras esta actualización)
+## Centro de Comando
 
-- Centro de Comando: `https://nespinozagonzalez-hub.github.io/introGami/`
-- Módulo 1: `https://nespinozagonzalez-hub.github.io/introGami/modulos/1/`
-- Módulo 2: `https://nespinozagonzalez-hub.github.io/introGami/modulos/2/`
-- Módulo 3: `https://nespinozagonzalez-hub.github.io/introGami/modulos/3/`
-- RPG final: `https://nespinozagonzalez-hub.github.io/introGami/modulos/4/`
-
-## Código modelo
+[ Abrir Centro de Comando ](https://nespinozagonzalez-hub.github.io/introGami/)
 
 ```html
-<iframe
-  src="https://nespinozagonzalez-hub.github.io/introGami/"
-  title="Academia del Orbe — Centro de Comando"
-  style="width:100%;height:min(86vh,900px);min-height:660px;border:0;border-radius:14px;"
-  loading="lazy"
-  allow="fullscreen"
-  allowfullscreen>
+<iframe src="https://nespinozagonzalez-hub.github.io/introGami/"
+  title="Academia del Orbe · Centro de Comando"
+  style="width:100%;height:900px;border:0;border-radius:16px;"
+  loading="lazy" allow="fullscreen; clipboard-write" allowfullscreen>
 </iframe>
+<p><a href="https://nespinozagonzalez-hub.github.io/introGami/" target="_blank" rel="noopener noreferrer">Abrir Centro de Comando en una nueva pestaña</a></p>
 ```
 
-Para módulos, sustituir el `src` por la URL del módulo y actualizar el título. Evitar un iframe sin altura explícita, particularmente en Moodle móvil. Ofrecer además el enlace para abrir la actividad en nueva pestaña.
+## Módulo 1 · El Primer Despertar
 
-Las URL son **rutas previstas, no enlaces verificados**. GitHub Pages debe estar habilitado. Las políticas de iframe, bloqueo de cookies y separación de almacenamiento pueden variar en Moodle y Safari: probar con un estudiante de prueba antes de publicarlo.
+[ Abrir Módulo 1 · El Primer Despertar ](https://nespinozagonzalez-hub.github.io/introGami/modulos/1/)
+
+```html
+<iframe src="https://nespinozagonzalez-hub.github.io/introGami/modulos/1/"
+  title="Academia del Orbe · Módulo 1"
+  style="width:100%;height:900px;border:0;border-radius:16px;"
+  loading="lazy" allow="fullscreen; clipboard-write" allowfullscreen>
+</iframe>
+<p><a href="https://nespinozagonzalez-hub.github.io/introGami/modulos/1/" target="_blank" rel="noopener noreferrer">Abrir Módulo 1 · El Primer Despertar en una nueva pestaña</a></p>
+```
+
+## Módulo 2 · La Forja de Herramientas
+
+[ Abrir Módulo 2 · La Forja de Herramientas ](https://nespinozagonzalez-hub.github.io/introGami/modulos/2/)
+
+```html
+<iframe src="https://nespinozagonzalez-hub.github.io/introGami/modulos/2/"
+  title="Academia del Orbe · Módulo 2"
+  style="width:100%;height:900px;border:0;border-radius:16px;"
+  loading="lazy" allow="fullscreen; clipboard-write" allowfullscreen>
+</iframe>
+<p><a href="https://nespinozagonzalez-hub.github.io/introGami/modulos/2/" target="_blank" rel="noopener noreferrer">Abrir Módulo 2 · La Forja de Herramientas en una nueva pestaña</a></p>
+```
+
+## Módulo 3 · Arquitectura y Flow
+
+[ Abrir Módulo 3 · Arquitectura y Flow ](https://nespinozagonzalez-hub.github.io/introGami/modulos/3/)
+
+```html
+<iframe src="https://nespinozagonzalez-hub.github.io/introGami/modulos/3/"
+  title="Academia del Orbe · Módulo 3"
+  style="width:100%;height:900px;border:0;border-radius:16px;"
+  loading="lazy" allow="fullscreen; clipboard-write" allowfullscreen>
+</iframe>
+<p><a href="https://nespinozagonzalez-hub.github.io/introGami/modulos/3/" target="_blank" rel="noopener noreferrer">Abrir Módulo 3 · Arquitectura y Flow en una nueva pestaña</a></p>
+```
+
+## Módulo 4 · La Consagración del Orbe
+
+[ Abrir Módulo 4 · La Consagración del Orbe ](https://nespinozagonzalez-hub.github.io/introGami/modulos/4/)
+
+```html
+<iframe src="https://nespinozagonzalez-hub.github.io/introGami/modulos/4/"
+  title="Academia del Orbe · Módulo 4"
+  style="width:100%;height:900px;border:0;border-radius:16px;"
+  loading="lazy" allow="fullscreen; clipboard-write" allowfullscreen>
+</iframe>
+<p><a href="https://nespinozagonzalez-hub.github.io/introGami/modulos/4/" target="_blank" rel="noopener noreferrer">Abrir Módulo 4 · La Consagración del Orbe en una nueva pestaña</a></p>
+```
+
+## Comprobación en tu aula
+
+- Verificar con una cuenta de estudiante que el iframe aparece y se pueden recorrer las estaciones.
+- Si Moodle elimina etiquetas iframe o permisos del editor, usar el enlace directo mientras se ajusta el recurso con administración.
+- El avance reside en el almacenamiento de ese navegador. Algunos navegadores separan el almacenamiento dentro de un iframe del de una pestaña independiente: comprobar ese recorrido y descargar una copia antes de cambiar de entorno.
+- La copia de fragmentos tiene una alternativa manual si Moodle o el navegador bloquean el portapapeles.
+- La sincronización autenticada con Google Sheets continúa desactivada; estos iframes no activan una conexión con la matrícula de Moodle.
