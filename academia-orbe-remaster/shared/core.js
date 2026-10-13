@@ -83,6 +83,11 @@ function codes(){
 function redeem(){
  if(!hasChar()){notify("Primero crea tu personaje.");return;}
  const s=String($("#code-value")?.value||"").trim().toUpperCase();
+ if(s==="ORBE2026"){
+  if(!Array.isArray(P.achs))P.achs=[];
+  if(P.achs.includes("orbe_consagrado")){notify("Ya registraste la Consagración del Orbe.");return;}
+  P.achs.push("orbe_consagrado");save();log("orbe_final_registered","ORBE2026");refresh();notify("¡Consagración del Orbe registrada en tu inventario!");inventory();return;
+ }
  const md=MISSIONS.find(m=>m.id===s||m.alias===s);
  if(!md){notify("Código no reconocido. Comprueba la clave.");return;}
  if(P.codes.includes(md.id)){notify("Este fragmento ya está registrado.");return;}
