@@ -5,11 +5,11 @@
   "repository": "nespinozagonzalez-hub/introGami",
   "source_branch": "main",
   "entry": "index.html",
-  "phase": "validated-awaiting-publication",
+  "phase": "published-verified",
   "updated_at": "2026-10-13",
   "main_updated": true,
   "github_pages_live": true,
-  "published_app_commit": "3c17c546d8761a9926c2ac3e07335347d052c6b4",
+  "published_app_commit": "6ab1231c7fea6232f14c56eba78fb69727055780",
   "publication_evidence": "PUBLICACION_VERIFICADA.json",
   "google_sheets_connected": false,
   "primary_url": "https://nespinozagonzalez-hub.github.io/introGami/",
@@ -42,12 +42,11 @@
     "navigation_scope": "centre-and-modules-verified"
   },
   "pending": [
-    "Publicar y verificar la navegación delimitada y pantalla completa 2.0.4",
     "Registro y escrituras autenticadas con Sheets desde el origen publicado",
     "Permisos de recursos desde una cuenta estudiante",
     "Moodle real, Safari y Firefox"
   ],
-  "live_version": "2.0.3",
+  "live_version": "2.0.4",
   "navigation": "moodle-controls-module-progression",
   "command_centre": "character-management-only",
   "module_navigation": "internal-stations-only",

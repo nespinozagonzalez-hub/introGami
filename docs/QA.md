@@ -29,3 +29,7 @@ El ensayo de iframe no sustituye la prueba en el Moodle real, Safari y Firefox. 
 La sincronización con Google Sheets permanece desactivada. Las comprobaciones HTTP de salud anteriores no prueban registro ni escrituras autenticadas. También faltan permisos de recursos con cuenta estudiante. Los códigos y el estado de victoria son progreso lúdico local; no prueban identidad institucional ni aprendizaje.
 
 Referencia técnica: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen.
+
+## Publicación verificada
+
+GitHub Pages completó correctamente el commit 6ab1231c7fea6232f14c56eba78fb69727055780. Las cinco páginas, el manifiesto y los siete archivos compartidos seleccionados devolvieron HTTP 200 y coincidieron con los bytes probados mediante SHA-256. La inspección DOM de la web pública encontró cero accesos del Centro a módulos, cero enlaces entre actividades desde los cuatro módulos y botones de pantalla completa en las cinco vistas (tres en el RPG). Ver PUBLICACION_VERIFICADA.json.

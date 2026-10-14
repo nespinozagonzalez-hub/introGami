@@ -52,10 +52,10 @@ El objetivo vigente es actualizar **introGami**, conservando su dirección princ
 
 ## 5. Publicación 2.0.4
 
-- [ ] Guardar la versión en main con una actualización que preserve los cambios ajenos.
-- [ ] Comprobar la publicación en https://nespinozagonzalez-hub.github.io/introGami/.
-- [ ] Comprobar los cuatro módulos y las seis imágenes publicadas.
-- [ ] Verificar que el enlace principal carga la nueva versión.
+- [x] Guardar la versión en main con una actualización que preserve los cambios ajenos.
+- [x] Comprobar la publicación en https://nespinozagonzalez-hub.github.io/introGami/.
+- [x] Comprobar los cuatro módulos y las seis imágenes publicadas.
+- [x] Verificar que el enlace principal carga la nueva versión.
 
 Publicación anterior (2.0.3): GitHub Pages completó correctamente el commit 3c17c546d8761a9926c2ac3e07335347d052c6b4. La portada se inspeccionó en la web pública; los módulos, imágenes, estilos y scripts seleccionados devolvieron HTTP 200 y coincidieron con los archivos probados. Evidencia: PUBLICACION_VERIFICADA.json.
 
@@ -76,4 +76,6 @@ Consultar QA.md y ESTADO.json para la evidencia y las limitaciones. El estado lo
 - [x] Conservar navegación anterior/siguiente dentro del mismo módulo.
 - [x] Incorporar pantalla completa en Centro, cuatro módulos y combate.
 - [x] Comprobar entrada/salida y rechazo por permisos en un iframe de ensayo.
-- [ ] Publicar y comprobar las cinco rutas de la versión 2.0.4.
+- [x] Publicar y comprobar las cinco rutas de la versión 2.0.4.
+
+La versión 2.0.4 se publicó correctamente en el commit 6ab1231c7fea6232f14c56eba78fb69727055780. Las cinco vistas y los archivos compartidos modificados respondieron HTTP 200 y coincidieron con los archivos probados. La inspección de la web pública confirmó botones de pantalla completa y ausencia de enlaces entre actividades. Evidencia: PUBLICACION_VERIFICADA.json.

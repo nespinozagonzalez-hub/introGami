@@ -1,90 +1,144 @@
 {
   "verified_on": "2026-10-13",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "url": "https://nespinozagonzalez-hub.github.io/introGami/",
-  "application_commit": "3c17c546d8761a9926c2ac3e07335347d052c6b4",
+  "application_commit": "6ab1231c7fea6232f14c56eba78fb69727055780",
   "deployment": {
     "workflow": "pages build and deployment",
-    "run_id": 38464232077,
+    "run_id": 38495995724,
     "conclusion": "success",
-    "url": "https://github.com/nespinozagonzalez-hub/introGami/actions/runs/38464232077"
+    "url": "https://github.com/nespinozagonzalez-hub/introGami/actions/runs/38495995724"
   },
   "comparison": "SHA-256 of public bytes versus locally tested files",
-  "public_module_1_visual_check": true,
   "checks": [
     {
       "path": "/",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/",
       "status": 200,
-      "bytes": 9797,
-      "sha256": "b161d22224d6a3c8cf1ac2e84d5534383a1ffbf02ecd30f98589b059f22ba305",
+      "bytes": 6656,
+      "sha256": "1e746ce6cc93aee29c930c17bef2ece0a47d9aa1b6778ef9e91f05f2fd50d3ea",
       "matches_local": true
     },
     {
       "path": "data/release.json",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/data/release.json",
       "status": 200,
-      "bytes": 302,
-      "sha256": "5f2f2e6a5e83ab9b50e6ab069b5d0bc8fb1541d01c9f7c7d6e3bc74f47376354",
+      "bytes": 378,
+      "sha256": "16e530a7038c8e4ae21faa08444eb9c33a40a7b2772b6452d87e43d82f2f07a0",
       "matches_local": true
     },
     {
       "path": "modulos/1/",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/1/",
       "status": 200,
-      "bytes": 39443,
-      "sha256": "a0f518820dc5455fd14cbe4e8c6eabd6858386df07c47061f1f633de7123516f",
+      "bytes": 40110,
+      "sha256": "e18707380244348c15b3ecb1305b630943edff56a73b8900c7f8acc7080b45a2",
       "matches_local": true
     },
     {
       "path": "modulos/2/",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/2/",
       "status": 200,
-      "bytes": 39088,
-      "sha256": "2685221dc4d49d7b476d272719ac2a5263ba68d8288a165dcb8ae351589fb52a",
+      "bytes": 39225,
+      "sha256": "f244156da09314b0ac79cde0b80e81c710bb394ffcf8de6435110bd4e94845a8",
       "matches_local": true
     },
     {
       "path": "modulos/3/",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/3/",
       "status": 200,
-      "bytes": 41047,
-      "sha256": "b778ac39dbf86cbbe3861616e62b8184c2a76b9bc4a91149b531f8e5061cee2d",
+      "bytes": 42322,
+      "sha256": "b8c012ff47802e1fa8692d08357ee95d74323b24bc3615761edf10c98ef02d31",
       "matches_local": true
     },
     {
       "path": "modulos/4/",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/modulos/4/",
       "status": 200,
-      "bytes": 180548,
-      "sha256": "9a0cd6592bc6d5051af95142ea0dc4a4e1b1b4f6cbbbe97a1d26ee72f0718f86",
+      "bytes": 179763,
+      "sha256": "7e911e632c8444d5b165cb4f03b39916efb21d47a24afe338ba8d3afe41cf3d0",
       "matches_local": true
     },
     {
-      "path": "shared/module-journey.js",
-      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-journey.js",
+      "path": "shared/fullscreen.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/fullscreen.js",
       "status": 200,
-      "bytes": 9275,
-      "sha256": "5adf43cd8ee6e0c2abfb0283c59b98b35f4ca4d743e6c04c9ccb9e72b561b430",
-      "matches_local": true
-    },
-    {
-      "path": "shared/module-journey.css",
-      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-journey.css",
-      "status": 200,
-      "bytes": 6049,
-      "sha256": "d34f0c2eb32affbca8a9622902b96b0c9d934d0c13136429a8cf9c75a8a09096",
+      "bytes": 2117,
+      "sha256": "c4c453bd656d9a538912ef1154a87878b4d063344443c5b4a86dc625e89eb183",
       "matches_local": true
     },
     {
       "path": "shared/core.js",
       "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/core.js",
       "status": 200,
-      "bytes": 26956,
-      "sha256": "a71e082fcadf5410757c2a27fadc5f3964dedcca86529190edae77a3dbbb8a4a",
+      "bytes": 24788,
+      "sha256": "f0560f5385552d5f50c2992d13378a3d9fafaf0e028b11f744a795b2f2de95ad",
+      "matches_local": true
+    },
+    {
+      "path": "shared/module-ui.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-ui.js",
+      "status": 200,
+      "bytes": 6069,
+      "sha256": "8b8439639aaa5fbe18b793d94d55865e2fee13d3a635ff5d2b9bc60222ec1561",
+      "matches_local": true
+    },
+    {
+      "path": "shared/module-journey.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-journey.js",
+      "status": 200,
+      "bytes": 9066,
+      "sha256": "790eeb589dcde8cbd7f2fe4e285a8275a32d94a8c3c04fc0e840d48000904f0e",
+      "matches_local": true
+    },
+    {
+      "path": "shared/module-journey.css",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/module-journey.css",
+      "status": 200,
+      "bytes": 6473,
+      "sha256": "b4ccd46d2c015c307928fafde89471a2ef412e27061c4ef852fe244f48fc2ac2",
+      "matches_local": true
+    },
+    {
+      "path": "shared/ability-bridge.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/ability-bridge.js",
+      "status": 200,
+      "bytes": 11781,
+      "sha256": "e3ec5bbf674dfd76102c91adf3859aa966b9be7ea24d29c02b59455e82dddf13",
+      "matches_local": true
+    },
+    {
+      "path": "shared/battle-bridge.js",
+      "url": "https://nespinozagonzalez-hub.github.io/introGami/shared/battle-bridge.js",
+      "status": 200,
+      "bytes": 9931,
+      "sha256": "84ff11323997760c4b37b5fa778316e216cce5b5592af557875caf04e7773876",
       "matches_local": true
     }
   ],
+  "public_dom": {
+    "command_centre_module_links": 0,
+    "module_cross_activity_links": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "fullscreen_buttons": [
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  },
+  "local_qa": {
+    "groups_passed": 20,
+    "javascript_errors": 0,
+    "native_fullscreen_enter_exit": true,
+    "iframe_fullscreen_allowed_and_denied": true,
+    "four_complete_battles": true
+  },
   "unchanged_illustrations": {
     "verified_at_version": "2.0.2",
     "checks": [

@@ -8,7 +8,7 @@ El 13 de octubre de 2026 el usuario decidió **actualizar el repositorio introGa
 - Base de main revisada antes de esta actualización: d8935a9c8b79fdc6c95f042121c4437768078247.
 - Destino vigente: raíz de introGami, rama main.
 - Entrada principal: https://nespinozagonzalez-hub.github.io/introGami/.
-- Nueva versión: 2.0.4, con pantalla completa y navegación limitada al ámbito de cada actividad.
+- Versión publicada: 2.0.4, con pantalla completa y navegación limitada al ámbito de cada actividad.
 - Commit de la aplicación anterior publicada (2.0.3): 3c17c546d8761a9926c2ac3e07335347d052c6b4. GitHub Pages completó el despliegue; portada, módulos e ilustraciones se comprobaron en la web pública.
 
 Los archivos históricos adicionales del repositorio se conservan. El historial de Git permite recuperar la entrada anterior. El iframe que apunta a la entrada principal de introGami conserva su dirección; las páginas nuevas de módulos se encuentran dentro de este mismo repositorio.
@@ -40,3 +40,5 @@ El 13 de octubre de 2026 a las 22:11 (Chile), el usuario pidió pantalla complet
 El programa oficial permanece en el archivo del módulo 1; las dos lecturas complementarias están en el archivo del módulo 3. Se conserva la partida y no se modifica la lógica de las recompensas.
 
 La versión 2.0.4 pasó 20 grupos de pruebas en Chromium local, incluida pantalla completa real, iframe con permiso y con rechazo, navegación delimitada y cuatro combates completos.
+
+Commit de la aplicación 2.0.4 publicada y verificada: 6ab1231c7fea6232f14c56eba78fb69727055780. El registro de HTTP, archivos y comprobación pública está en PUBLICACION_VERIFICADA.json.
