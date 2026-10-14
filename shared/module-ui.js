@@ -7,7 +7,6 @@ var config={
  "4":{name:"Consagración del Orbe",npc:"kael",guide:"Soy Kael. En esta batalla necesitarás precisión, calma y decisiones bien pensadas. Los combates pueden repetirse."}
 };
 var m=location.pathname.match(/\/modulos\/([1-4])\//),n=m?m[1]:"1",o=config[n];
-var goHome="../../index.html";
 var prompts={
  "1":["¿Qué aprendizaje de tu aula quieres transformar y por qué?","¿Cómo conectarías una narrativa, una regla y un componente con ese aprendizaje?","¿Qué evidencia te permitiría saber si tu propuesta ayudó a aprender?"],
  "2":["¿Qué harán los participantes antes de escoger una herramienta?","¿Cómo funcionaría la misma misión con y sin conexión?","¿Qué retroalimentación y evidencia acompañarán la actividad?"],
@@ -20,7 +19,7 @@ function setup(){
  document.body.classList.add('orbe-module','orbe-module-'+n);
  var sigil=document.querySelector('#landing .sigil');if(sigil)sigil.innerHTML='<img src="../../assets/illustrations/'+o.npc+'.webp" alt="Tu guía del territorio">';
 
- var float=document.createElement("div");float.className="g-rm-float";float.innerHTML='<a class="g-rm-button g-rm-home" href="'+goHome+'" aria-label="Volver a la Academia del Orbe">← Mapa del Orbe</a><button type="button" id="g-rm-talk" class="g-rm-button"><img src="../../assets/illustrations/'+o.npc+'.webp" alt=""> Hablar con guía</button>';
+ var float=document.createElement("div");float.className="g-rm-float";float.innerHTML='<button type="button" class="g-rm-button" data-gami-fullscreen aria-pressed="false">Pantalla completa</button><button type="button" id="g-rm-talk" class="g-rm-button"><img src="../../assets/illustrations/'+o.npc+'.webp" alt=""> Hablar con guía</button>';
  var modal=document.createElement("div");modal.className="g-rm-modal";modal.id="g-rm-modal";
  modal.innerHTML='<section class="g-rm-dialog" role="dialog" aria-modal="true" aria-labelledby="g-rm-title"><header><div><small style="color:#ebc480;letter-spacing:.18em">GUÍA DEL TERRITORIO</small><h2 id="g-rm-title">'+o.name+'</h2></div><button type="button" id="g-rm-close">Cerrar</button></header><div id="g-rm-content"><div class="g-rm-body"><img class="g-rm-portrait" src="../../assets/illustrations/'+o.npc+'.webp" alt=""><div><p>'+o.guide+'</p><p>Regresa a los archivos cuando necesites reforzar una idea. Lleva a tu aula lo que descubras en este territorio.</p><button type="button" id="g-rm-notebook">Abrir mi bitácora</button></div></div></div></section>';
  document.body.appendChild(float);document.body.appendChild(modal);
@@ -40,5 +39,6 @@ function setup(){
  document.addEventListener("keydown",function(e){if(e.key==="Escape")modal.classList.remove("open");});
 }
 document.addEventListener('click',function(e){if(e.target.closest('#startRouteBtn'))window.scrollTo({top:0,behavior:'instant'});});
+if(window.GamiFullscreen)GamiFullscreen.sync();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setup);else setup();
 })();

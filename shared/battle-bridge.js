@@ -99,7 +99,7 @@ function setup(){
 }
 function render(){
  var person=p(),grid=document.getElementById('gami-final-v2-grid'),header=document.getElementById('gami-final-v2-player');
- if(!person){header.textContent='Abre el Centro de Comando y crea tu personaje antes de usar talentos.';grid.innerHTML='';return;}
+ if(!person){header.textContent='Abre la actividad Centro de Comando desde Moodle y crea tu personaje antes de usar talentos.';grid.innerHTML='';return;}
  header.textContent=(person.name||'Aventurero')+' · '+person.class+' · Guardián: '+(guardian()||'sin combate');
  grid.innerHTML=AB.map(function(a){var n=lv(a[0]),limit=max(a[0]),left=Math.max(0,limit-uses(a[0])),help=a[0]==='narrativa'?'Una orientación contextual sobre el guardián.':a[0]==='diseno'?'Activa una defensa estructural adicional.':a[0]==='creatividad'?'Anula el enfriamiento de la habilidad especial.':a[0]==='motivacion'?'Recupera vida sin saltarte preguntas.':'Descarta una respuesta incorrecta de la pregunta actual.';
  return '<div class="gami-final-v2-tile"><strong>'+a[2]+' '+a[1]+' · nivel '+n+'</strong><p>'+help+'</p><p>'+(n<3?'Requiere nivel 3':a[0]==='narrativa'?'Consulta libre':left+' usos disponibles contra este guardián')+'</p><button data-gami-final="'+a[0]+'" '+(n<3?'disabled':'')+'>Activar ventaja</button></div>';

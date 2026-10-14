@@ -1,11 +1,11 @@
 {
   "project": "Academia del Orbe",
   "course": "Gamificación de 0 a 100",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "repository": "nespinozagonzalez-hub/introGami",
   "source_branch": "main",
   "entry": "index.html",
-  "phase": "published-verified",
+  "phase": "validated-awaiting-publication",
   "updated_at": "2026-10-13",
   "main_updated": true,
   "github_pages_live": true,
@@ -23,10 +23,10 @@
   },
   "additional_research_readings": 2,
   "qa": {
-    "groups_passed": 18,
+    "groups_passed": 20,
     "javascript_errors": 0,
-    "scripts_checked": 21,
-    "local_references_checked": 72,
+    "scripts_checked": 22,
+    "local_references_checked": 69,
     "widths": [
       390,
       480,
@@ -37,12 +37,19 @@
     ],
     "battle_widths_checked": true,
     "iframe": "local-verified",
-    "final_module_entries_checked": 24
+    "final_module_entries_checked": 24,
+    "fullscreen": "native-enter-exit-and-iframe-permissions-verified",
+    "navigation_scope": "centre-and-modules-verified"
   },
   "pending": [
+    "Publicar y verificar la navegación delimitada y pantalla completa 2.0.4",
     "Registro y escrituras autenticadas con Sheets desde el origen publicado",
     "Permisos de recursos desde una cuenta estudiante",
     "Moodle real, Safari y Firefox"
   ],
-  "live_version": "2.0.3"
+  "live_version": "2.0.3",
+  "navigation": "moodle-controls-module-progression",
+  "command_centre": "character-management-only",
+  "module_navigation": "internal-stations-only",
+  "fullscreen": true
 }

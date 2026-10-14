@@ -1,17 +1,18 @@
 # GamiAula · Academia del Orbe
 
-**Gamificación de 0 a 100 · versión 2.0.3**. La experiencia unificada utiliza la entrada principal de introGami.
+**Gamificación de 0 a 100 · versión 2.0.4**. La entrada principal de introGami gestiona personajes; Moodle organiza el avance entre módulos.
 
 Curso: https://nespinozagonzalez-hub.github.io/introGami/.
 
 ## Incluye
 
-- Centro de Comando, mapa de cuatro territorios y seis ilustraciones originales generadas para el curso.
+- Centro de Comando para personajes y cuatro módulos con navegación interna; seis ilustraciones originales.
 - Cinco clases y retratos seleccionables, atributos, XP, inventario, códigos y progreso global.
 - Nueve misiones en módulos 1–3, ayudas por atributo y bitácoras de aplicación al aula.
 - Cuatro guardianes finales con 25 preguntas cada uno; Consagración del Orbe sin XP duplicada.
 - Nueve videos, seis documentos y programa oficial, conservando sus enlaces; dos lecturas complementarias de investigación.
 - Recuperación del progreso anterior, copia de partida y modo temporal si se bloquea el almacenamiento.
+- Pantalla completa en el Centro y en los cuatro módulos, con manejo de permisos del iframe.
 - Backend de Sheets preparado; sincronización automática pendiente de prueba autenticada.
 
 ## Estado y continuidad

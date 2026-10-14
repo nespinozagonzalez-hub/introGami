@@ -1,6 +1,6 @@
 # Enlaces e iframes para Moodle · GamiAula
 
-La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar la versión 2.0.3 el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
+La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar la versión 2.0.4 el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
 
 Copia cada bloque en la vista HTML del editor de Moodle. La altura de 900 px evita un marco demasiado pequeño; puede ajustarse según el espacio de tu aula. El enlace que acompaña cada iframe permite abrir el curso en una pestaña independiente.
 
@@ -76,3 +76,11 @@ Copia cada bloque en la vista HTML del editor de Moodle. La altura de 900 px evi
 - El avance reside en el almacenamiento de ese navegador. Algunos navegadores separan el almacenamiento dentro de un iframe del de una pestaña independiente: comprobar ese recorrido y descargar una copia antes de cambiar de entorno.
 - La copia de fragmentos tiene una alternativa manual si Moodle o el navegador bloquean el portapapeles.
 - La sincronización autenticada con Google Sheets continúa desactivada; estos iframes no activan una conexión con la matrícula de Moodle.
+
+## Navegación y pantalla completa (2.0.4)
+
+El Centro de Comando solo permite gestionar personaje, atributos, inventario, códigos y copia de partida. No contiene accesos a módulos. Cada módulo conserva sus estaciones y no permite salir al Centro o a otro módulo. El docente organiza estos cinco iframes como actividades de Moodle; los códigos se copian en el módulo y se registran en el Centro desde Moodle.
+
+Todos los marcos incluyen el botón Pantalla completa; el RPG lo conserva también durante el combate. Mantener los atributos allowfullscreen y allow="fullscreen; clipboard-write" de estos bloques. El botón informa si el navegador o la configuración de Moodle rechaza la petición; no navega fuera del iframe como alternativa.
+
+Referencia técnica: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen. La pantalla completa requiere una pulsación del usuario y autorización del iframe.

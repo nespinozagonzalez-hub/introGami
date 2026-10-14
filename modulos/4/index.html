@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script src="../../shared/storage.js"></script>
-<script src="../../shared/icons.js" defer></script><script src="../../shared/pedagogy.js" defer></script>
-<script src="../../shared/accessibility.js" defer></script>
+<script src="../../shared/storage.js?v=2.0.4"></script>
+<script src="../../shared/icons.js?v=2.0.4" defer></script><script src="../../shared/pedagogy.js?v=2.0.4" defer></script>
+<script src="../../shared/accessibility.js?v=2.0.4" defer></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>La Consagración del Orbe — V3 épica unificada</title>
@@ -1801,6 +1801,7 @@ input{outline:none}
 }
 
 </style>
+<script src="../../shared/fullscreen.js?v=2.0.4" defer></script>
 </head>
 <body>
 
@@ -1852,7 +1853,7 @@ input{outline:none}
       </div>
 
       <p class="intro-notice">
-        Tu progreso se guarda en este navegador. Puedes descargar una copia de tu partida desde el mapa de la Academia.
+        Tu progreso se guarda en este navegador. Puedes descargar una copia de tu partida desde la actividad Centro de Comando en Moodle.
       </p>
     </div>
   </div>
@@ -1891,7 +1892,7 @@ input{outline:none}
       </div>
 
       <div class="hub-actions">
-        <button class="btn ghost small" id="btnFullscreenHub" type="button">⛶ Pantalla completa</button>
+        <button class="btn ghost small" id="btnFullscreenHub" type="button" data-gami-fullscreen aria-pressed="false">⛶ Pantalla completa</button>
         <button class="btn ghost small" id="btnSave" type="button">Guardar avance</button>
         <button class="btn danger small" id="btnReset" type="button">Reiniciar</button>
       </div>
@@ -1935,7 +1936,7 @@ input{outline:none}
         <span class="turn-counter" id="questionCounter">Preguntas 0 / 25</span>
         <span class="turn-chip" id="turnChip"><span class="turn-chip-dot"></span><span>Iniciativa</span></span>
         <button class="btn ghost small" id="btnBattleGuide" type="button">? Tutorial</button>
-        <button class="btn ghost small" id="btnFullscreenBattle" type="button">⛶ Pantalla completa</button>
+        <button class="btn ghost small" id="btnFullscreenBattle" type="button" data-gami-fullscreen aria-pressed="false">⛶ Pantalla completa</button>
       </div>
     </header>
 
@@ -4213,33 +4214,7 @@ function toast(msg, type){
 /* =========================================================
    BOOT
    ========================================================= */
-function syncFullscreenButtons(){
-  const active = !!document.fullscreenElement;
-  ['#btnFullscreenHub','#btnFullscreenBattle'].forEach(sel => {
-    const btn = $(sel);
-    if(btn) btn.textContent = active ? '⤫ Salir de pantalla completa' : '⛶ Pantalla completa';
-  });
-}
-async function toggleFullscreen(){
-  try{
-    if(!document.fullscreenElement){
-      const el = document.documentElement;
-      if(el.requestFullscreen) await el.requestFullscreen();
-      if(screen.orientation && screen.orientation.lock){
-        try{ await screen.orientation.lock('landscape'); }catch(e){}
-      }
-    } else {
-      if(document.exitFullscreen) await document.exitFullscreen();
-      if(screen.orientation && screen.orientation.unlock){
-        try{ screen.orientation.unlock(); }catch(e){}
-      }
-    }
-  }catch(e){
-    toast('No fue posible activar el modo de pantalla completa en este dispositivo.', 'info');
-  }
-  syncFullscreenButtons();
-  updateRotateHint();
-}
+function syncFullscreenButtons(){if(window.GamiFullscreen)GamiFullscreen.sync();}
 function updateRotateHint(){
   const hint = $('#rotateHint');
   if(!hint) return;
@@ -4278,8 +4253,6 @@ function boot(){
 
   $('#btnSave').addEventListener('click', () => saveState());
   $('#btnReset').addEventListener('click', openResetConfirm);
-  $('#btnFullscreenHub').addEventListener('click', toggleFullscreen);
-  $('#btnFullscreenBattle').addEventListener('click', toggleFullscreen);
   $('#btnBattleGuide').addEventListener('click', () => openBattleTutorialModal(false));
   document.addEventListener('fullscreenchange', syncFullscreenButtons);
   window.addEventListener('resize', updateRotateHint);
@@ -4342,10 +4315,10 @@ function boot(){
 boot();
 </script>
 
-<link rel="stylesheet" href="../../shared/remaster.css">
-<script src="../../shared/module-ui.js" defer></script>
-<script src="../../shared/battle-bridge.js" defer></script>
-<link rel="stylesheet" href="../../shared/module-journey.css">
-<script src="../../shared/module-journey.js" defer></script>
+<link rel="stylesheet" href="../../shared/remaster.css?v=2.0.4">
+<script src="../../shared/module-ui.js?v=2.0.4" defer></script>
+<script src="../../shared/battle-bridge.js?v=2.0.4" defer></script>
+<link rel="stylesheet" href="../../shared/module-journey.css?v=2.0.4">
+<script src="../../shared/module-journey.js?v=2.0.4" defer></script>
 </body>
 </html>

@@ -114,7 +114,7 @@
   function render(){
     if(!backdrop)return;
     var p=getPlayer(), grid=document.getElementById('gami-v2-grid');
-    if(!p){grid.innerHTML='<p>Primero crea tu personaje en el Centro de Comando. Después podrás regresar al módulo y utilizar los talentos que hayas desarrollado.</p><a target="_blank" rel="noopener noreferrer" href="../../index.html">Abrir Centro de Comando</a>';return;}
+    if(!p){grid.innerHTML='<p>Para crear o mejorar tu personaje, abre la actividad Centro de Comando desde Moodle. Después vuelve a este módulo para utilizar tus talentos.</p>';return;}
     var html='<p>Personaje: <strong>'+escapeHTML(p.name)+'</strong> · Clase: '+escapeHTML(p.class)+'. Las ventajas se desbloquean desde nivel 3 de cada atributo; mejoran en los niveles 5 y 8.</p>';
     ABILITIES.forEach(function(a){
       var lv=levelFor(p,a.key), t=tier(lv), text=a.key==='estrategia' ? 'Elimina una opción incorrecta de una pregunta pendiente en la misión principal. Usos disponibles: '+Math.max(0,strategyLimit(lv)-strategyUsed().length)+'.' : guide(a.key,lv);

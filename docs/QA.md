@@ -1,56 +1,31 @@
-# Pruebas de Academia del Orbe 2.0.3
+# Pruebas de Academia del Orbe 2.0.4
 
-Resultado: **18 grupos aprobados y cero errores de JavaScript** en Chromium local. Fecha: 13 de octubre de 2026. Detalle automático: `QA_RESULT.json`.
+Resultado: **20 grupos aprobados y cero errores de JavaScript**. Revisión estática: 22 scripts, 69 referencias locales y 16 recursos originales.
 
-## Comprobado
+La batería de navegador se ejecuta con perfiles ficticios en Chromium local. El resultado automático actual está en QA_RESULT.json. La versión 2.0.4 modifica pantalla completa y navegación, conservando actividades, recompensas y almacenamiento.
 
-- Creación y persistencia de las cinco clases, con su bonificación correcta.
-- Recuperación de una partida anterior: XP y atributos conservados; alias de misión normalizados sin crédito duplicado.
-- Nueve recompensas: 330 XP y 27 puntos; rechazo de duplicados, códigos desconocidos y nuevas recompensas heredadas del módulo 4.
-- Coste de mejoras de atributo, talentos desbloqueados y registro de valor anterior/nuevo.
-- Cinco NPCs con diálogo que avanza, Escape y foco de teclado dentro del modal.
-- Biblioteca: 16 enlaces originales y dos lecturas complementarias.
-- Módulos 1–3: quizzes con respuestas incorrectas y correctas; pareados, aplicación, verdadero/falso, crucigrama y dos memorices completados mediante sus controles.
-- En el memorice fallido se ven las dos cartas antes de ocultarse.
-- Bitácoras guardadas, ayudas de Narrativa diferenciadas hasta nivel 8 y límite de descartes de Estrategia.
-- Exportación y recuperación conjunta de personaje, progreso de módulos y bitácoras.
-- Personaje y módulos siguen cargando cuando se bloquea localStorage; el aviso distingue la partida temporal.
-- Iframe de ensayo: perfil compartido y navegación de ida/vuelta.
-- Cuatro guardianes vencidos respondiendo sus preguntas y usando los comandos de combate. La prueba acelera los temporizadores de animación; no modifica las respuestas ni fuerza la victoria.
-- ORBE2026 requiere cuatro guardianes y registra un logro sin XP repetida.
-- Cinco vistas y pantalla de combate a 390, 480, 768, 1024, 1366 y 1920 px: sin desbordamiento horizontal. Las imágenes visibles de las vistas cargaron correctamente.
-- Revisión estática: sintaxis de 21 scripts y 72 referencias locales; catálogo original intacto.
-- Endpoint Apps Script: GET de salud y POST `ping` por HTTP devolvieron `ok:true`.
+## Verificación funcional
 
-## Alcance y pendientes
+- Cinco clases y bonificaciones; retrato independiente y guardado.
+- Centro dedicado al personaje, inventario, atributos y códigos, sin accesos a módulos.
+- Recuperación de fragmentos desde la actividad Centro y ausencia de crédito duplicado.
+- Partidas anteriores, alias de códigos, atributos, XP, talentos y auditoría de decisiones.
+- Cinco NPC y modales accesibles mediante teclado.
+- Catálogo completo: nueve videos, seis documentos y programa oficial; dos lecturas complementarias. El programa se encuentra en el archivo del módulo 1 y las lecturas en el archivo del módulo 3.
+- Módulos 1–3: evaluaciones, actividades secundarias, bitácoras, ayudas por atributo y límite de descartes.
+- Navegación anterior/siguiente dentro del módulo; ausencia de enlaces al Centro o al módulo siguiente, incluso después de completar las tres misiones.
+- Copia de fragmentos con alternativa manual cuando el portapapeles está bloqueado.
+- Exportación y recuperación de personaje, módulos y bitácoras; modo temporal si el almacenamiento está bloqueado.
+- Iframe de ensayo: el contenedor que representa Moodle cambia la actividad, conservando el perfil.
+- Pantalla completa: entrada y salida reales en Centro y cuatro módulos; permiso concedido y rechazo controlado por Permissions Policy en un iframe.
+- Pantalla completa disponible durante el combate; cuatro guardianes vencidos respondiendo preguntas mediante controles. Se aceleran animaciones, sin forzar victoria ni modificar respuestas.
+- ORBE2026 requiere los cuatro guardianes y no duplica XP.
+- Cinco vistas a seis anchos: 390, 480, 768, 1024, 1366 y 1920 px; ausencia de desbordamiento horizontal y de imágenes ausentes.
 
-Las capturas del ensayo se inspeccionaron durante la implementación. El iframe local no sustituye una prueba real de Moodle. Faltan permisos de Drive/YouTube con cuenta estudiante, Moodle real, Safari y Firefox.
+## Límites externos
 
-La prueba de navegador hacia Apps Script no logró completar la comunicación desde este entorno. No se atribuye la causa exclusivamente a CORS. Los resultados HTTP de salud no prueban operaciones autenticadas, persistencia de alumnos ni sincronización entre dispositivos. La sincronización automática permanece desactivada hasta realizar estas pruebas con una invitación ficticia autorizada y desde el origen publicado.
+El ensayo de iframe no sustituye la prueba en el Moodle real, Safari y Firefox. Moodle debe conservar allowfullscreen y allow="fullscreen; clipboard-write" en los marcos. El botón de pantalla completa muestra un aviso cuando el navegador o Moodle rechaza la solicitud y no cambia la ruta de la actividad como alternativa.
 
-Los códigos y la victoria se validan localmente; no constituyen autenticación institucional ni evidencia segura de aprendizaje. La dificultad y el equilibrio de los apoyos deben observarse en un pilotaje con el grupo real.
+La sincronización con Google Sheets permanece desactivada. Las comprobaciones HTTP de salud anteriores no prueban registro ni escrituras autenticadas. También faltan permisos de recursos con cuenta estudiante. Los códigos y el estado de victoria son progreso lúdico local; no prueban identidad institucional ni aprendizaje.
 
-## Comprobaciones nuevas de esta versión
-
-- Retrato independiente de la clase, guardado y visible en el HUD.
-- Botón de continuación y recuperación explícita de un fragmento descubierto, sin doble crédito.
-- Seis ilustraciones integradas; transparencia de los cinco personajes conservada en WebP.
-- Imágenes de guías, tarjetas de territorios y sprites de combate inspeccionadas en escritorio y móvil.
-- Iconos vectoriales para las estaciones, sin depender de fuentes emoji.
-
-## Publicación comprobada (2.0.3)
-
-GitHub Pages publicó correctamente el commit 3c17c546d8761a9926c2ac3e07335347d052c6b4. La portada, los cuatro módulos, el manifiesto y los archivos de navegación respondieron HTTP 200; sus bytes coincidieron con la copia probada mediante comparación SHA-256. El manifiesto público indicó la versión 2.0.3. La portada del módulo 1 se inspeccionó visualmente en la web pública. El ajuste final de encuadre mantiene visible el rostro de los guías. Evidencia: PUBLICACION_VERIFICADA.json.
-
-## Mejoras de los cuatro módulos (2.0.3)
-
-- Entradas ilustradas con guía, propósito, progreso y acceso a los cuatro territorios.
-- Texto inicial más breve y acceso de inicio antes de la descripción de la ruta.
-- Navegación anterior/siguiente por las seis estaciones y foco en el título de destino.
-- Continuación de la estación guardada; cierre con acceso al módulo siguiente tras superar las tres misiones.
-- Copia de fragmentos con alternativa manual si el portapapeles está bloqueado.
-- Enlace directo a la bóveda de Nexo mediante #codigos.
-- Etiquetas para palabras y asociaciones; estación actual identificada para tecnologías de asistencia.
-- Bienvenida ilustrada del RPG y cierre final visible solo tras vencer a los cuatro guardianes.
-
-La batería de 18 grupos incluye el nuevo recorrido, copia manual, enlaces entre módulos y cierre del RPG. Las 24 entradas finales se comprobaron en seis anchos; los cambios finales de texto y posición del botón de inicio no cambian las actividades.
+Referencia técnica: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen.

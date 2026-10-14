@@ -1,4 +1,4 @@
-# Checklist · introGami / Academia del Orbe 2.0.3
+# Checklist · introGami / Academia del Orbe 2.0.4
 
 El objetivo vigente es actualizar **introGami**, conservando su dirección principal y el progreso existente. Esta checklist registra implementación y comprobación por separado.
 
@@ -16,10 +16,10 @@ El objetivo vigente es actualizar **introGami**, conservando su dirección princ
 - [x] Crear retratos de Orión, Lira, Kael, Nexo y Valen con transparencia real.
 - [x] Optimizar las seis imágenes como WebP, conservando la transparencia de los personajes.
 - [x] Incorporar imágenes a portada, mapa, tarjetas, diálogos, entradas de módulos y combate.
-- [x] Crear un mapa con accesos a los cuatro territorios y mantener tarjetas legibles en móvil.
+- [x] Conservar la identidad ilustrada de la Academia; navegación entre territorios a cargo de Moodle.
 - [x] Incorporar elección de retrato independiente de la clase.
 - [x] Mostrar progreso global de nueve misiones y cuatro guardianes.
-- [x] Mostrar un botón que permite continuar la aventura o registrar fragmentos descubiertos.
+- [x] Mostrar acciones para gestionar el personaje y registrar fragmentos sin abrir módulos.
 - [x] Mostrar dónde se guarda la partida y distinguir el modo temporal.
 - [x] Mantener foco de teclado, Escape, texto alternativo y reducción de movimiento.
 
@@ -42,22 +42,22 @@ El objetivo vigente es actualizar **introGami**, conservando su dirección princ
 ## Mejoras de cada módulo
 
 - [x] Incorporar una entrada ilustrada y un propósito de aprendizaje en los cuatro territorios.
-- [x] Mostrar acceso directo a los otros territorios y la continuación de ruta.
+- [x] Mostrar identidad del territorio y continuar la estación guardada sin enlaces a otros módulos.
 - [x] Añadir botones de estación anterior y siguiente, con foco de teclado.
-- [x] Añadir cierre de los módulos 1–3 y acceso al siguiente módulo.
+- [x] Añadir cierre de los módulos 1–3 con indicación de continuar desde Moodle.
 - [x] Incorporar copia de fragmentos y alternativa manual.
-- [x] Abrir la bóveda de Nexo desde los enlaces de cierre.
+- [x] Indicar que los fragmentos se registran en el Centro de Comando de Moodle.
 - [x] Incorporar el cierre del RPG únicamente tras vencer a los cuatro guardianes.
 - [x] Preparar cinco bloques iframe completos para Moodle.
 
-## 5. Publicación 2.0.3
+## 5. Publicación 2.0.4
 
-- [x] Guardar la versión en main con una actualización que preserve los cambios ajenos.
-- [x] Comprobar la publicación en https://nespinozagonzalez-hub.github.io/introGami/.
-- [x] Comprobar los cuatro módulos y las seis imágenes publicadas.
-- [x] Verificar que el enlace principal carga la nueva versión.
+- [ ] Guardar la versión en main con una actualización que preserve los cambios ajenos.
+- [ ] Comprobar la publicación en https://nespinozagonzalez-hub.github.io/introGami/.
+- [ ] Comprobar los cuatro módulos y las seis imágenes publicadas.
+- [ ] Verificar que el enlace principal carga la nueva versión.
 
-GitHub Pages completó correctamente la publicación del commit 3c17c546d8761a9926c2ac3e07335347d052c6b4. La portada se inspeccionó en la web pública; los módulos, imágenes, estilos y scripts seleccionados devolvieron HTTP 200 y coincidieron con los archivos probados. Evidencia: PUBLICACION_VERIFICADA.json.
+Publicación anterior (2.0.3): GitHub Pages completó correctamente el commit 3c17c546d8761a9926c2ac3e07335347d052c6b4. La portada se inspeccionó en la web pública; los módulos, imágenes, estilos y scripts seleccionados devolvieron HTTP 200 y coincidieron con los archivos probados. Evidencia: PUBLICACION_VERIFICADA.json.
 
 ## Pendientes externos que no deben confundirse con tareas terminadas
 
@@ -67,3 +67,13 @@ GitHub Pages completó correctamente la publicación del commit 3c17c546d8761a99
 - [ ] Completar prueba en el Moodle real, Safari y Firefox.
 
 Consultar QA.md y ESTADO.json para la evidencia y las limitaciones. El estado local de las misiones y los códigos es progreso lúdico; no certifica aprendizaje ni identidad institucional.
+
+## Navegación delimitada y pantalla completa
+
+- [x] Centro de Comando dedicado a personajes, atributos, inventario y códigos.
+- [x] Eliminar el mapa y los botones que abren misiones desde el Centro.
+- [x] Eliminar accesos al Centro y a otros módulos desde las actividades.
+- [x] Conservar navegación anterior/siguiente dentro del mismo módulo.
+- [x] Incorporar pantalla completa en Centro, cuatro módulos y combate.
+- [x] Comprobar entrada/salida y rechazo por permisos en un iframe de ensayo.
+- [ ] Publicar y comprobar las cinco rutas de la versión 2.0.4.

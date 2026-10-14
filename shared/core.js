@@ -65,20 +65,14 @@ function refresh(){
  $("#level-next").textContent=next?"Nivel "+lvl+" · Próximo nivel a "+next+" XP":"Nivel "+lvl+" · Máximo actual";
  $("#stat-codes").textContent=n?(P.codes||[]).length:0;
  $("#stat-points").textContent=n?(P.points||0):0;
- [1,2,3].forEach(m=>{const v=n?MISSIONS.filter(x=>x.module===m && P.codes.includes(x.id)).length:0;$("#status-"+m).textContent=v+" / 3 misiones";});
  const final=getJSON(GamiStorage.moduleKeys[3],{});
  const guardianCount=['g1','g2','g3','g4'].filter(g=>final[g]?.done).length;
- $("#status-4").textContent=guardianCount+" / 4 guardianes";
  const finished=(n?P.codes.filter(c=>MISSIONS.some(m=>m.id===c&&m.module<4)).length:0)+guardianCount;
  $("#journey-text").textContent=finished+' de 13 retos completados';$("#journey-fill").style.width=(finished/13*100)+'%';
  $("#profile-picture").src='assets/illustrations/'+(n?P.avatar||'kael':'kael')+'.webp';
- $("#hero-start").textContent=!n?'Comenzar mi aventura':discovered().length?'Registrar mis fragmentos':'Continuar mi aventura';
+ $("#hero-start").textContent=n?'Gestionar mi personaje':'Crear mi personaje';
  $("#save-location").textContent=GamiStorage.isPersistent()?'Partida guardada en este navegador':'Partida temporal: descarga una copia antes de salir';
 
- document.querySelectorAll('.portal').forEach((card,i)=>{
-   const total=i===3?guardianCount:n?MISSIONS.filter(m=>m.module===i+1&&P.codes.includes(m.id)).length:0;
-   card.classList.toggle('territory-complete',total===(i===3?4:3));
- });
 }
 function open(name,head,html){if(back.hidden)lastFocus=document.activeElement;eyebrow.textContent=name||"ACADEMIA DEL ORBE";title.textContent=head||"Centro de Comando";content.innerHTML=html;back.hidden=false;document.body.style.overflow="hidden";$("#dialog-close").focus();}
 function close(){back.hidden=true;document.body.style.overflow="";content.innerHTML="";if(lastFocus&&lastFocus.focus)lastFocus.focus();}
@@ -95,12 +89,6 @@ function character(){
 function discovered(){
  const flags=[['principal','pairs','memory'],['principal','sec1','sec2'],['principal','cross','memory']];
  return MISSIONS.filter(m=>m.module<4&&!P?.codes.includes(m.id)&&getJSON(GamiStorage.moduleKeys[m.module-1],{})?.revealedCodes?.[flags[m.module-1][MISSIONS.filter(x=>x.module===m.module).indexOf(m)]]);
-}
-function journey(){
- if(!hasChar()){character();return;}
- if(discovered().length){codes();return;}
- const next=[1,2,3].find(n=>MISSIONS.some(m=>m.module===n&&!P.codes.includes(m.id)))||4;
- log('module_opened',next);location.href='modulos/'+next+'/index.html';
 }
 function codes(){
  const found=discovered();
@@ -137,19 +125,7 @@ function npc(id,advance){
  if(npcTurns[id]===undefined)npcTurns[id]=!hasChar()?0:(P.codes.length>=5?2:P.codes.length>=1?1:0);
  if(advance)npcTurns[id]=(npcTurns[id]+1)%n.lines.length;
  const idx=npcTurns[id];
- open(n.role,n.name,'<div class="npc-dialog"><img style="width:100%;max-height:220px;object-fit:contain" src="assets/illustrations/'+n.image+'.webp" alt="Retrato ilustrado de '+n.name+'"><div><p style="font-size:17px;line-height:1.8;color:#e3edf8">'+esc(n.lines[idx])+'</p><span class="overline">UN CONSEJO PARA TU VIAJE</span></div></div><div class="modal-actions"><button class="button primary" id="npc-next" data-npc="'+id+'">Escuchar otro consejo</button><button class="button outline" data-panel="'+(id==="lira"?"recursos":id==="nexo"?"codigos":"personaje")+'">'+(id==="lira"?"Abrir la biblioteca":id==="nexo"?"Ir a la bóveda":"Ver mi personaje")+'</button></div>');
-}
-async function resources(){
- open("ARCHIVO DE LA ACADEMIA","Biblioteca del Orbe",'<p>Los enlaces originales se conservan sin cambios. Aquí encontrarás materiales del curso, videos y documentos de apoyo.</p><div id="library-list"><p>Cargando recursos…</p></div>');
- try{
-  const r=await fetch("data/recursos-originales.json",{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const d=await r.json();
-  try{const extra=await fetch("data/lecturas-investigacion.json");if(extra.ok)d.resources.push(...(await extra.json()).resources);}catch(e){}
-  const sections=[0,1,2,3,"investigacion"].map(m=>{
-   const items=d.resources.filter(x=>x.module===m);if(!items.length)return "";
-   return '<section class="resource-group"><h3>'+(m==="investigacion"?"Investigar para diseñar mejor":m?"Módulo "+m:"Programa oficial")+'</h3>'+items.map(x=>'<div class="resource-card"><div><strong>'+esc(x.title)+'</strong><p>'+esc(x.description)+'</p></div><a target="_blank" rel="noopener noreferrer" href="'+esc(x.url)+'">Abrir recurso ↗</a></div>').join("")+'</section>';
-  }).join("");
-  const el=$("#library-list");if(el)el.innerHTML=sections;
- }catch(e){const el=$("#library-list");if(el)el.textContent="No pudimos cargar el catálogo. Abre el recurso desde su módulo original.";}
+ open(n.role,n.name,'<div class="npc-dialog"><img style="width:100%;max-height:220px;object-fit:contain" src="assets/illustrations/'+n.image+'.webp" alt="Retrato ilustrado de '+n.name+'"><div><p style="font-size:17px;line-height:1.8;color:#e3edf8">'+esc(n.lines[idx])+'</p><span class="overline">UN CONSEJO PARA TU VIAJE</span></div></div><div class="modal-actions"><button class="button primary" id="npc-next" data-npc="'+id+'">Escuchar otro consejo</button><button class="button outline" data-panel="'+(id==="nexo"?"codigos":"personaje")+'">'+(id==="nexo"?"Ir a la bóveda":"Ver mi personaje")+'</button></div>');
 }
 function exportSave(){
  if(!hasChar()){notify("Primero crea un personaje.");return;}
@@ -221,10 +197,9 @@ function importSave(){
 }
 document.addEventListener("click",e=>{
  const b=e.target.closest("button");if(!b)return;
- if(b.hasAttribute("data-journey")){journey();return;}
  if(b.dataset.recoveredCode){$("#code-value").value=b.dataset.recoveredCode;redeem();return;}
  if(b.dataset.avatar){activeAvatar=b.dataset.avatar;document.querySelectorAll("[data-avatar]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.avatar===activeAvatar));return;}
- if(b.dataset.panel){({personaje:character,inventario:inventory,codigos:codes,recursos:resources}[b.dataset.panel]||(()=>{}))();return;}
+ if(b.dataset.panel){({personaje:character,inventario:inventory,codigos:codes}[b.dataset.panel]||(()=>{}))();return;}
  if(b.dataset.npc){npc(b.dataset.npc,b.id==='npc-next');return;}
  if(b.dataset.class){activeCls=b.dataset.class;document.querySelectorAll("[data-class]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.class===activeCls));return;}
  if(b.id==="create-char"){const name=$("#char-name")?.value.trim();if(!name||name.length<2){notify("Escribe un nombre de al menos dos caracteres.");return;}P=create(name,activeCls);if(save()){log("character_created",activeCls);close();refresh();notify("Tu aventura en la Academia del Orbe ha comenzado.");}return;}

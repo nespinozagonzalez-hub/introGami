@@ -1,6 +1,6 @@
 {
   "name": "intro-gami",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": true,
   "description": "Gamificación de 0 a 100 · curso estático de GamiAula",
   "scripts": {

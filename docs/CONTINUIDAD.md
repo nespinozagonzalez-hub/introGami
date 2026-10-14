@@ -8,8 +8,8 @@ El 13 de octubre de 2026 el usuario decidió **actualizar el repositorio introGa
 - Base de main revisada antes de esta actualización: d8935a9c8b79fdc6c95f042121c4437768078247.
 - Destino vigente: raíz de introGami, rama main.
 - Entrada principal: https://nespinozagonzalez-hub.github.io/introGami/.
-- Versión publicada: 2.0.3, con seis ilustraciones nuevas, mapa navegable, retratos seleccionables y continuación de partida.
-- Commit de la aplicación publicada (2.0.3): 3c17c546d8761a9926c2ac3e07335347d052c6b4. GitHub Pages completó el despliegue; portada, módulos e ilustraciones se comprobaron en la web pública.
+- Nueva versión: 2.0.4, con pantalla completa y navegación limitada al ámbito de cada actividad.
+- Commit de la aplicación anterior publicada (2.0.3): 3c17c546d8761a9926c2ac3e07335347d052c6b4. GitHub Pages completó el despliegue; portada, módulos e ilustraciones se comprobaron en la web pública.
 
 Los archivos históricos adicionales del repositorio se conservan. El historial de Git permite recuperar la entrada anterior. El iframe que apunta a la entrada principal de introGami conserva su dirección; las páginas nuevas de módulos se encuentran dentro de este mismo repositorio.
 
@@ -31,4 +31,12 @@ La configuración de Apps Script ya está en integration/google-sheets/connectio
 
 Faltan pruebas externas con una invitación ficticia autorizada, permisos de los materiales desde una cuenta estudiante, Moodle real, Safari y Firefox. Los códigos y el estado local de victoria documentan el recorrido lúdico; no prueban identidad ni aprendizaje.
 
-La versión 2.0.3 añade presentación propia por territorio, navegación de estaciones y cierre con enlaces e iframes completos. Las pruebas funcionales actuales constan de 18 grupos, sin errores de JavaScript.
+La versión 2.0.3 añade presentación propia por territorio, navegación de estaciones y cierre con enlaces e iframes completos. Las pruebas de esa versión constaban de 18 grupos, sin errores de JavaScript.
+
+## Decisión vigente: Moodle controla el recorrido
+
+El 13 de octubre de 2026 a las 22:11 (Chile), el usuario pidió pantalla completa y separar la navegación. El Centro de Comando queda dedicado al personaje, atributos, inventario y canje. No abre módulos. Los módulos solo permiten moverse por sus propias estaciones: no enlazan al Centro ni a otros módulos. La navegación entre las cinco actividades se realiza en Moodle mediante los iframes existentes. Los códigos se pueden copiar y luego registrar desde la actividad Centro de Comando de Moodle.
+
+El programa oficial permanece en el archivo del módulo 1; las dos lecturas complementarias están en el archivo del módulo 3. Se conserva la partida y no se modifica la lógica de las recompensas.
+
+La versión 2.0.4 pasó 20 grupos de pruebas en Chromium local, incluida pantalla completa real, iframe con permiso y con rechazo, navegación delimitada y cuatro combates completos.

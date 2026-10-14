@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script src="../../shared/storage.js"></script>
-<script src="../../shared/icons.js" defer></script><script src="../../shared/pedagogy.js" defer></script>
-<script src="../../shared/accessibility.js" defer></script>
+<script src="../../shared/storage.js?v=2.0.4"></script>
+<script src="../../shared/icons.js?v=2.0.4" defer></script><script src="../../shared/pedagogy.js?v=2.0.4" defer></script>
+<script src="../../shared/accessibility.js?v=2.0.4" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Módulo 3 — Arquitectura del Juego y Diseño del Flow</title>
@@ -37,11 +37,12 @@ button,input,textarea,select{font:inherit}.hidden{display:none!important}
 @media (max-width:1240px){.app{grid-template-columns:250px 1fr 270px}.resource-groups,.split,.resource-view,.crossword-layout{grid-template-columns:1fr}}
 @media (max-width:980px){html,body{overflow:auto}.landing-grid{grid-template-columns:1fr}.app{display:block;height:auto;overflow:auto}.panel{margin-bottom:14px}.kpi-grid{grid-template-columns:1fr}.memory-grid{grid-template-columns:repeat(2,minmax(110px,1fr))}}
 </style>
-<link rel="stylesheet" href="../../shared/remaster.css">
-<script src="../../shared/module-ui.js" defer></script>
-<script src="../../shared/ability-bridge.js" defer></script>
-<link rel="stylesheet" href="../../shared/module-journey.css">
-<script src="../../shared/module-journey.js" defer></script>
+<link rel="stylesheet" href="../../shared/remaster.css?v=2.0.4">
+<script src="../../shared/module-ui.js?v=2.0.4" defer></script>
+<script src="../../shared/ability-bridge.js?v=2.0.4" defer></script>
+<link rel="stylesheet" href="../../shared/module-journey.css?v=2.0.4">
+<script src="../../shared/module-journey.js?v=2.0.4" defer></script>
+<script src="../../shared/fullscreen.js?v=2.0.4" defer></script>
 </head>
 <body>
 <section id="landing" class="landing"><div class="particles" id="particles"></div><div class="landing-card"><div class="sigil">🧩</div><div class="eyebrow">GAMIFICACIÓN · DE 0 A 100</div><h1>Arquitectura del Juego y Diseño del Flow</h1><p class="subtitle">Has dejado atrás la Forja. Ahora entras al Tablero del Arquitecto, el lugar donde se decide cómo una experiencia realmente atrapa: a quién está dirigida, cómo se calibra el flow y qué piezas hacen que el juego cobre vida. Aquí aprenderás a comprender a los jugadores, ensamblar la arquitectura lúdica y prepararte para el umbral final.</p><div class="landing-grid"><div class="glass"><div class="tag">¿Qué encontrarás en esta ruta?</div><div class="lead-list"><div class="lead-item"><span class="orb-dot"></span><div><b>Archivo del Diseño Lúdico</b><div style="font-size:12px;color:var(--muted)">3 videos de GamiAula y 2 documentos agrupados en bloques claros.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>Misiones con claves ocultas</b><div style="font-size:12px;color:var(--muted)">Un quiz central, un crucigrama y un memorice para fijar conceptos del diseño gamificado.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>Umbral final</b><div style="font-size:12px;color:var(--muted)">Cuando completes las tres pruebas, el altar anunciará que se acerca el desafío final.</div></div></div></div></div><div class="glass"><div class="tag">Ruta sugerida</div><div class="lead-list"><div class="lead-item"><span class="orb-dot"></span><div><b>1. Portal del Arquitecto</b><div style="font-size:12px;color:var(--muted)">Contexto y objetivo del módulo.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>2. Archivo del Diseño Lúdico</b><div style="font-size:12px;color:var(--muted)">Revisa primero perfiles, flow y herramientas de creación.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>3. Misiones y altar</b><div style="font-size:12px;color:var(--muted)">Supera las pruebas y prepárate para el desafío final.</div></div></div></div></div></div><div class="btns"><button class="btn btn-primary" id="startRouteBtn">Iniciar ruta</button></div></div></section>
@@ -60,6 +61,7 @@ const QUIZ=[['Según el enfoque del módulo, la gamificación educativa consiste
 const CROSSWORDS={answers:['FLOW','BARTLE','HEXAD','WERBACH','PUNTOS','EMBLEMAS','TABLAS','AUTONOMIA'],clues:['Estado óptimo donde el reto y la habilidad se equilibran.','Apellido del autor de la taxonomía clásica con killers, triunfadores, socializadores y exploradores.','Modelo de seis perfiles de usuario adaptado a gamificación.','Apellido asociado a la pirámide de dinámicas, mecánicas y componentes.','Moneda simbólica del sistema de juego.','Badges en español; marcan logros visuales.','Clasificaciones o leaderboards que comparan progreso.','Necesidad motivacional asociada a libertad de elección y exploración.']};
 const MEMORY_PAIRS=[['Bartle','Tipos de jugador'],['Flow','Equilibrio reto-habilidad'],['Werbach','Pirámide de diseño'],['PET','Puntos, emblemas y tablas'],['HEXAD','Seis perfiles'],['Octalysis','Motores de la motivación']];
 const CODES={principal:'FLW214',cross:'ARC583',memory:'MEM307'};
+GROUPS.push({"title": "Lecturas complementarias", "desc": "Material para acompañar el recorrido en Moodle.", "items": [{"id": "investigacion_motivacion_2024", "title": "Gamificación y motivación intrínseca · Li, Hew y Du (2024)", "desc": "Meta-análisis: la motivación intrínseca presenta un efecto positivo pequeño; autonomía y vínculo requieren atención en el diseño. Pregunta para tu aula: ¿qué decisiones y apoyos ofrecerás a tu grupo?", "url": "https://link.springer.com/article/10.1007/s11423-023-10337-7", "embed": "https://link.springer.com/article/10.1007/s11423-023-10337-7"}, {"id": "investigacion_matematicas_2026", "title": "Motivación y participación en matemáticas · Ratinho y colegas (2026)", "desc": "Revisión en secundaria y educación superior: resultados favorables sobre motivación, con límites para medir participación. Los autores proponen priorizar progreso y cooperación. Su alcance es matemáticas; contrasta estas ideas con tu contexto.", "url": "https://link.springer.com/article/10.1007/s10648-025-10108-1", "embed": "https://link.springer.com/article/10.1007/s10648-025-10108-1"}]});
 let state=loadState()||{currentStation:'portal',visitedResources:[],missionQuizDone:false,missionCrossDone:false,missionMemoryDone:false,quizAnswers:{},quizScore:null,crosswordInputs:{},crosswordScore:null,memoryMatched:[],memoryMoves:0,revealedCodes:{principal:false,cross:false,memory:false}};
 let memoryDeck=buildMemoryDeck(),firstCard=null,secondCard=null,lockBoard=false;
 

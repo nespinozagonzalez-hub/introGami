@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-13T20:26:11.765Z",
+  "date": "2026-10-14T01:19:20.973Z",
   "checks": [
     {
       "name": "Cinco clases: creación, bonificación y persistencia",
@@ -10,7 +10,7 @@
       "passed": true
     },
     {
-      "name": "Continuar aventura y recuperar un fragmento descubierto",
+      "name": "Centro: gestiona personaje y fragmentos sin abrir módulos",
       "passed": true
     },
     {
@@ -30,7 +30,7 @@
       "passed": true
     },
     {
-      "name": "Biblioteca: 16 recursos originales y dos lecturas verificadas",
+      "name": "Recursos: 16 originales y dos lecturas conservados dentro de los módulos",
       "passed": true
     },
     {
@@ -46,7 +46,7 @@
       "passed": true
     },
     {
-      "name": "Territorios: navegación, continuación, cierre y copia accesible de fragmentos",
+      "name": "Módulos: navegación interna, cierre en Moodle y copia accesible de fragmentos",
       "passed": true
     },
     {
@@ -62,7 +62,15 @@
       "passed": true
     },
     {
-      "name": "Iframe: personaje persistente y navegación entre vistas",
+      "name": "Iframe: Moodle cambia de actividad y conserva el personaje",
+      "passed": true
+    },
+    {
+      "name": "Pantalla completa: entrada y salida reales en las cinco vistas",
+      "passed": true
+    },
+    {
+      "name": "Pantalla completa en iframe: permiso concedido y rechazo controlado",
       "passed": true
     },
     {

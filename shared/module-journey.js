@@ -24,7 +24,7 @@ function codeActions(box,code){
  if(!code||box.querySelector('.fragment-actions'))return;
  var actions=element('div','fragment-actions');
  var copy=element('button','journey-button','Copiar fragmento');copy.type='button';copy.dataset.copyFragment=code;
- var register=element('a','journey-button journey-secondary','Registrar con Nexo');register.href='../../index.html#codigos';
+ var register=element('span','fragment-moodle-note','Registra este fragmento con Nexo en la actividad Centro de Comando de Moodle.');
  var status=element('span','fragment-copy-status');status.setAttribute('role','status');
  actions.append(copy,register,status);box.appendChild(actions);
 }
@@ -53,8 +53,8 @@ function refresh(){
   if(i>0){var previous=element('button','journey-button journey-secondary','← Estación anterior');previous.type='button';previous.dataset.journeyStation=STATIONS[i-1].id;flow.appendChild(previous);}
   if(i<STATIONS.length-1){var next=element('button','journey-button','Siguiente estación →');next.type='button';next.dataset.journeyStation=STATIONS[i+1].id;flow.appendChild(next);}
   else{
-   var register=element('a','journey-button journey-secondary','Registrar mis fragmentos');register.href='../../index.html#codigos';flow.appendChild(register);
-   if(done===3){var onward=element('a','journey-button','Continuar al módulo '+(number+1)+' →');onward.href='../'+(number+1)+'/index.html';flow.appendChild(onward);}
+   flow.appendChild(element('p','fragment-moodle-note','Registra tus fragmentos en el Centro de Comando de Moodle.'));
+   if(done===3){flow.appendChild(element('p','module-completion-note','Has superado las tres misiones. Continúa al siguiente módulo desde el recorrido de Moodle.'));}
    else{var pending=STATIONS.find(function(s){return s.key&&!saved[s.key];});if(pending){var finish=element('button','journey-button','Volver a una misión pendiente');finish.type='button';finish.dataset.journeyStation=pending.id;flow.appendChild(finish);}}
   }
   view.appendChild(flow);
@@ -68,9 +68,7 @@ function setup(){
  document.body.classList.add('orbe-journey','orbe-territory-'+number);
  var card=document.querySelector(number===4?'.intro-card':'.landing-card');
  if(!card)return;
- var compass=element('nav','module-compass');compass.setAttribute('aria-label','Territorios del curso');
- var home=element('a','compass-home','← Academia');home.href='../../index.html';compass.appendChild(home);
- territories.forEach(function(t,i){var link=element('a','compass-territory',String(i+1).padStart(2,'0'));link.href='../'+(i+1)+'/index.html';link.setAttribute('aria-label','Módulo '+(i+1)+': '+t.name);if(i+1===number)link.setAttribute('aria-current','page');compass.appendChild(link);});
+ var compass=element('div','module-compass');compass.setAttribute('aria-label','Identidad del módulo');compass.append(element('span','module-identity','GamiAula · Módulo '+number),element('span','module-moodle-note','Avanza por el curso desde Moodle'));
  var scene=element('div','territory-scene');
  var img=element('img','territory-guide');img.src='../../assets/illustrations/'+territory.guide+'.webp';img.alt=territory.guideName+', guía de este territorio';img.width=220;img.height=220;img.decoding='async';
  var caption=element('div','territory-caption');caption.append(element('small','','TERRITORIO '+String(number).padStart(2,'0')),element('strong','',territory.guideName+' te acompaña'),element('span','',territory.gift));scene.append(img,caption);
@@ -80,9 +78,9 @@ function setup(){
  var subtitle=card.querySelector(number===4?'.intro-lore':'.subtitle');if(territory.lore)subtitle.textContent=territory.lore;subtitle.after(goal);
  var startActions=card.querySelector('.btns');if(startActions)goal.after(startActions);
  var originalNotice=card.querySelector('.intro-notice');if(originalNotice)originalNotice.remove();
- var note=element('p','territory-save-note',GamiStorage.isPersistent()?'Tu avance se guarda en este navegador. Puedes descargar una copia desde la Academia.':'Partida temporal: descarga una copia desde la Academia antes de salir.');
+ var note=element('p','territory-save-note',GamiStorage.isPersistent()?'Tu avance se guarda en este navegador. Puedes descargar una copia desde el Centro de Comando en Moodle.':'Partida temporal: descarga una copia desde el Centro de Comando de Moodle antes de salir.');
  card.appendChild(note);
- if(number===4){var final=element('section','journey-final');final.id='journey-final';final.hidden=true;final.append(element('h3','','El Orbe está completo'),element('p','','Regresa con Nexo para registrar tu consagración. Este logro no entrega experiencia adicional.'));document.querySelector('#screen-hub .screen-pad').appendChild(final);}
+ if(number===4){var final=element('section','journey-final');final.id='journey-final';final.hidden=true;final.append(element('h3','','El Orbe está completo'),element('p','','Abre el Centro de Comando desde Moodle para registrar tu consagración con Nexo. Este logro no entrega experiencia adicional.'));document.querySelector('#screen-hub .screen-pad').appendChild(final);}
  refresh();
 }
 document.addEventListener('click',async function(e){

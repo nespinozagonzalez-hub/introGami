@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script src="../../shared/storage.js"></script>
-<script src="../../shared/icons.js" defer></script><script src="../../shared/pedagogy.js" defer></script>
-<script src="../../shared/accessibility.js" defer></script>
+<script src="../../shared/storage.js?v=2.0.4"></script>
+<script src="../../shared/icons.js?v=2.0.4" defer></script><script src="../../shared/pedagogy.js?v=2.0.4" defer></script>
+<script src="../../shared/accessibility.js?v=2.0.4" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Módulo 1 — Valle del Primer Despertar</title>
@@ -36,11 +36,12 @@ button,input,textarea,select{font:inherit}.hidden{display:none!important}
 @media (max-width:1240px){.app{grid-template-columns:250px 1fr 270px}.resource-groups,.split,.resource-view,.pair-grid{grid-template-columns:1fr}}
 @media (max-width:980px){html,body{overflow:auto}.landing-grid{grid-template-columns:1fr}.app{display:block;height:auto;overflow:auto}.panel{margin-bottom:14px}.kpi-grid{grid-template-columns:1fr}.memory-grid{grid-template-columns:repeat(2,minmax(110px,1fr))}}
 </style>
-<link rel="stylesheet" href="../../shared/remaster.css">
-<script src="../../shared/module-ui.js" defer></script>
-<script src="../../shared/ability-bridge.js" defer></script>
-<link rel="stylesheet" href="../../shared/module-journey.css">
-<script src="../../shared/module-journey.js" defer></script>
+<link rel="stylesheet" href="../../shared/remaster.css?v=2.0.4">
+<script src="../../shared/module-ui.js?v=2.0.4" defer></script>
+<script src="../../shared/ability-bridge.js?v=2.0.4" defer></script>
+<link rel="stylesheet" href="../../shared/module-journey.css?v=2.0.4">
+<script src="../../shared/module-journey.js?v=2.0.4" defer></script>
+<script src="../../shared/fullscreen.js?v=2.0.4" defer></script>
 </head>
 <body>
 <section id="landing" class="landing"><div class="particles" id="particles"></div><div class="landing-card"><div class="sigil">🌄</div><div class="eyebrow">GAMIFICACIÓN · DE 0 A 100</div><h1>Valle del Primer Despertar</h1><p class="subtitle">Has llegado al primer territorio de la travesía. Aquí comenzarás a ver que la enseñanza tradicional no es necesariamente el problema, pero sí que existe la posibilidad de hacer mucho más. En este valle se revelan los fundamentos del juego, sus componentes y el potencial de la gamificación para transformar una experiencia de aprendizaje.</p><div class="landing-grid"><div class="glass"><div class="tag">¿Qué encontrarás en esta ruta?</div><div class="lead-list"><div class="lead-item"><span class="orb-dot"></span><div><b>Archivo de los fundamentos</b><div style="font-size:12px;color:var(--muted)">2 videos y 2 documentos organizados por bloques claros.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>Misiones iniciales</b><div style="font-size:12px;color:var(--muted)">Un quiz, términos pareados y un memorice para activar los primeros conceptos.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>Altar del orbe</b><div style="font-size:12px;color:var(--muted)">Tu progreso quedará registrado y recuperarás los primeros fragmentos del curso.</div></div></div></div></div><div class="glass"><div class="tag">Ruta sugerida</div><div class="lead-list"><div class="lead-item"><span class="orb-dot"></span><div><b>1. Portal del valle</b><div style="font-size:12px;color:var(--muted)">Contexto y objetivo del módulo.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>2. Archivo de los fundamentos</b><div style="font-size:12px;color:var(--muted)">Revisa primero los recursos base antes de avanzar.</div></div></div><div class="lead-item"><span class="orb-dot"></span><div><b>3. Misiones y cierre</b><div style="font-size:12px;color:var(--muted)">Supera las primeras pruebas y despierta el orbe.</div></div></div></div></div></div><div class="btns"><button class="btn btn-primary" id="startRouteBtn">Iniciar ruta</button></div></div></section>
@@ -59,6 +60,7 @@ const QUIZ=[['¿Qué describe mejor la gamificación en educación?',['Usar vide
 const PAIRS=[['Dinámicas','Vivencia global del sistema'],['Mecánicas','Reglas y formas de interacción'],['Componentes','Elementos visibles del sistema'],['Insignias','Reconocimiento visual de logro'],['Tabla de clasificación','Comparación de avance'],['Progresión','Sensación de camino y mejora']];
 const MEMORY_PAIRS=[['Dinámicas','Experiencia global'],['Mecánicas','Acciones y reglas'],['Componentes','Elementos visibles'],['Insignias','Reconocimiento'],['Progresión','Avance'],['Gamificación','Diseño de experiencia']];
 const CODES={principal:'VAL214',pairs:'VIN582',memory:'RES307'};
+GROUPS.push({"title": "Programa del curso", "desc": "Material para acompañar el recorrido en Moodle.", "items": [{"id": "programa", "title": "Programa oficial Gamificación de 0 a 100", "desc": "Programa del curso alojado en campus GamiAula", "url": "https://campus.gamiaula.com/pluginfile.php/142/mod_resource/content/0/Programa%20Curso%20Gamificaci%C3%B3n%20de%200%20a%20100.pdf", "embed": "https://campus.gamiaula.com/pluginfile.php/142/mod_resource/content/0/Programa%20Curso%20Gamificaci%C3%B3n%20de%200%20a%20100.pdf"}]});
 let state=loadState()||{currentStation:'portal',visitedResources:[],missionQuizDone:false,missionPairsDone:false,missionMemoryDone:false,quizAnswers:{},quizScore:null,pairAnswers:{},memoryMatched:[],memoryMoves:0,revealedCodes:{principal:false,pairs:false,memory:false}};
 let memoryDeck=buildMemoryDeck(),firstCard=null,secondCard=null,lockBoard=false;
 
