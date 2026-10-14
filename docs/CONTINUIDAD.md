@@ -8,7 +8,7 @@ El 13 de octubre de 2026 el usuario decidió **actualizar el repositorio introGa
 - Base de main revisada antes de esta actualización: d8935a9c8b79fdc6c95f042121c4437768078247.
 - Destino vigente: raíz de introGami, rama main.
 - Entrada principal: https://nespinozagonzalez-hub.github.io/introGami/.
-- Versión publicada: 2.0.4, con pantalla completa y navegación limitada al ámbito de cada actividad.
+- Versión publicada: 2.0.5, con pantalla completa cuando está disponible, vista amplia alternativa y navegación limitada al ámbito de cada actividad.
 - Commit de la aplicación anterior publicada (2.0.3): 3c17c546d8761a9926c2ac3e07335347d052c6b4. GitHub Pages completó el despliegue; portada, módulos e ilustraciones se comprobaron en la web pública.
 
 Los archivos históricos adicionales del repositorio se conservan. El historial de Git permite recuperar la entrada anterior. El iframe que apunta a la entrada principal de introGami conserva su dirección; las páginas nuevas de módulos se encuentran dentro de este mismo repositorio.
@@ -48,3 +48,5 @@ Commit de la aplicación 2.0.4 publicada y verificada: 6ab1231c7fea6232f14c56eba
 El usuario aportó capturas desde campus.gamiaula.com en iPhone el 13 de octubre de 2026 a las 22:40 (Chile). El aviso corresponde a ausencia de la API de pantalla completa, no al aviso de una solicitud rechazada. Se incorpora Abrir vista amplia: misma actividad en otra pestaña, transferencia de partida de la misma ruta y origen, devolución de cambios y retorno al curso. Se conserva que Moodle organiza la navegación entre módulos. La vista amplia no elimina las barras de Safari y debe probarse en el dispositivo real. En el RPG se abre antes de comenzar el combate; no traslada un turno ya en curso.
 
 También se revisan marcos de 240–340 px, pues el espacio útil de un iframe dentro de Moodle puede ser menor que el ancho del teléfono. La checklist de funcionamiento completa está en CHECKLIST_FUNCIONAMIENTO.md.
+
+Commit de la aplicación 2.0.5 publicada y verificada: 01fb7e46d3cda5ca2e78e80c6726476da3a95fa9. Pages finalizó correctamente; 12 rutas y archivos públicos respondieron HTTP 200 y coincidieron con la copia que pasó 26 grupos de pruebas. La comprobación en iPhone/Moodle reales sigue pendiente. Evidencia: PUBLICACION_VERIFICADA.json.

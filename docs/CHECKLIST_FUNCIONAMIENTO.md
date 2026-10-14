@@ -61,7 +61,7 @@ La vista amplia abre únicamente la actividad actual en otra pestaña; no es pan
 - [x] Modo temporal si el navegador bloquea el almacenamiento.
 - [x] Sintaxis de JavaScript, rutas locales, catálogos y JSON.
 - [x] Cero errores de JavaScript en la batería final.
-- [ ] Publicación y archivos públicos coinciden con la copia probada.
+- [x] Publicación 2.0.5: 12 archivos públicos responden HTTP 200 y coinciden con la copia probada. Evidencia: PUBLICACION_VERIFICADA.json.
 
 ## Pendientes externos
 

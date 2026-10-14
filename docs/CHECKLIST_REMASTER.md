@@ -86,5 +86,5 @@ La versión 2.0.4 se publicó correctamente en el commit 6ab1231c7fea6232f14c56e
 - [x] Añadir vista amplia de la misma actividad y devolución del progreso.
 - [x] Revisar marcos de 240–340 px dentro del espacio de Moodle.
 - [x] Crear CHECKLIST_FUNCIONAMIENTO.md con pruebas y pendientes separados.
-- [ ] Publicar y comprobar la versión 2.0.5.
+- [x] Publicar y comprobar la versión 2.0.5: commit 01fb7e46d3cda5ca2e78e80c6726476da3a95fa9, Pages correcto y 12 archivos coincidentes.
 - [ ] Validar el retorno en iPhone y campus reales.
