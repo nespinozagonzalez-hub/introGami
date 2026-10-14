@@ -1,5 +1,5 @@
 {
-  "version": "2.0.4",
+  "version": "2.0.5",
   "project": "Academia del Orbe",
   "course": "Gamificación de 0 a 100",
   "repository": "nespinozagonzalez-hub/introGami",
@@ -8,5 +8,12 @@
   "date": "2026-10-13",
   "module_presentation": "illustrated-entries-and-station-navigation",
   "navigation": "moodle-controls-module-progression",
-  "fullscreen": true
+  "fullscreen": true,
+  "mobile_fullscreen_alternative": "same-activity-expanded-view",
+  "narrow_iframe_widths": [
+    240,
+    280,
+    315,
+    340
+  ]
 }

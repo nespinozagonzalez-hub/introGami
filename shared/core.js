@@ -213,6 +213,7 @@ back.addEventListener("click",e=>{if(e.target===back)close();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!back.hidden)close();if(e.key==="Enter"&&e.target?.id==="code-value")redeem();});
 const stored=getJSON(KEY,null);P=normalizePlayer(stored);
 if(P){updateAchievements();save();}
+window.addEventListener('gami-expanded-update',()=>{P=normalizePlayer(getJSON(KEY,null));refresh();});
 window.addEventListener('pageshow',()=>{P=normalizePlayer(getJSON(KEY,null));refresh();});
 window.addEventListener('storage',e=>{if(e.key===KEY||GamiStorage.moduleKeys.includes(e.key)){P=normalizePlayer(getJSON(KEY,null));refresh();}});
 refresh();

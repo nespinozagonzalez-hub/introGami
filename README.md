@@ -1,6 +1,6 @@
 # GamiAula · Academia del Orbe
 
-**Gamificación de 0 a 100 · versión 2.0.4**. La entrada principal de introGami gestiona personajes; Moodle organiza el avance entre módulos.
+**Gamificación de 0 a 100 · versión 2.0.5**. La entrada principal de introGami gestiona personajes; Moodle organiza el avance entre módulos.
 
 Curso: https://nespinozagonzalez-hub.github.io/introGami/.
 
@@ -12,12 +12,12 @@ Curso: https://nespinozagonzalez-hub.github.io/introGami/.
 - Cuatro guardianes finales con 25 preguntas cada uno; Consagración del Orbe sin XP duplicada.
 - Nueve videos, seis documentos y programa oficial, conservando sus enlaces; dos lecturas complementarias de investigación.
 - Recuperación del progreso anterior, copia de partida y modo temporal si se bloquea el almacenamiento.
-- Pantalla completa en el Centro y en los cuatro módulos, con manejo de permisos del iframe.
+- Pantalla completa nativa y vista amplia de la actividad actual cuando el navegador no la ofrece; transferencia y devolución de la partida.
 - Backend de Sheets preparado; sincronización automática pendiente de prueba autenticada.
 
 ## Estado y continuidad
 
-Leer docs/CHECKLIST_REMASTER.md, docs/QA.md y docs/CONTINUIDAD.md. Las pruebas locales y la verificación de publicación se registran en docs/ESTADO.json. La configuración existente de Apps Script está en integration/google-sheets/connection-config.json.
+Leer docs/CHECKLIST_FUNCIONAMIENTO.md, docs/CHECKLIST_REMASTER.md, docs/QA.md y docs/CONTINUIDAD.md. Las pruebas locales y la verificación de publicación se registran en docs/ESTADO.json. La configuración existente de Apps Script está en integration/google-sheets/connection-config.json.
 
 ## Probar y revisar
 

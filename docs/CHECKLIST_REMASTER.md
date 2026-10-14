@@ -1,4 +1,4 @@
-# Checklist · introGami / Academia del Orbe 2.0.4
+# Checklist · introGami / Academia del Orbe 2.0.5
 
 El objetivo vigente es actualizar **introGami**, conservando su dirección principal y el progreso existente. Esta checklist registra implementación y comprobación por separado.
 
@@ -79,3 +79,12 @@ Consultar QA.md y ESTADO.json para la evidencia y las limitaciones. El estado lo
 - [x] Publicar y comprobar las cinco rutas de la versión 2.0.4.
 
 La versión 2.0.4 se publicó correctamente en el commit 6ab1231c7fea6232f14c56eba78fb69727055780. Las cinco vistas y los archivos compartidos modificados respondieron HTTP 200 y coincidieron con los archivos probados. La inspección de la web pública confirmó botones de pantalla completa y ausencia de enlaces entre actividades. Evidencia: PUBLICACION_VERIFICADA.json.
+
+## Revisión completa y alternativa móvil 2.0.5
+
+- [x] Completar 26 grupos de pruebas y revisar capturas finales.
+- [x] Añadir vista amplia de la misma actividad y devolución del progreso.
+- [x] Revisar marcos de 240–340 px dentro del espacio de Moodle.
+- [x] Crear CHECKLIST_FUNCIONAMIENTO.md con pruebas y pendientes separados.
+- [ ] Publicar y comprobar la versión 2.0.5.
+- [ ] Validar el retorno en iPhone y campus reales.

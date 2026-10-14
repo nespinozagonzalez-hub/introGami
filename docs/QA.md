@@ -1,35 +1,33 @@
-# Pruebas de Academia del Orbe 2.0.4
+# Pruebas de Academia del Orbe 2.0.5
 
-Resultado: **20 grupos aprobados y cero errores de JavaScript**. Revisión estática: 22 scripts, 69 referencias locales y 16 recursos originales.
+Resultado local: **26 grupos aprobados y cero errores de JavaScript**. Revisión estática: **23 scripts y 73 referencias locales**, con el catálogo de 16 recursos originales intacto. Detalle automático: QA_RESULT.json. Checklist legible: CHECKLIST_FUNCIONAMIENTO.md.
 
-La batería de navegador se ejecuta con perfiles ficticios en Chromium local. El resultado automático actual está en QA_RESULT.json. La versión 2.0.4 modifica pantalla completa y navegación, conservando actividades, recompensas y almacenamiento.
+## Alcance comprobado
 
-## Verificación funcional
+La batería utiliza perfiles ficticios en Chromium. Comprueba las cinco clases y sus bonificaciones, retratos, atributos, inventario, equivalencias de códigos, crédito único, recuperación de partidas, exportación/importación, modos de almacenamiento, guías y acceso por teclado.
 
-- Cinco clases y bonificaciones; retrato independiente y guardado.
-- Centro dedicado al personaje, inventario, atributos y códigos, sin accesos a módulos.
-- Recuperación de fragmentos desde la actividad Centro y ausencia de crédito duplicado.
-- Partidas anteriores, alias de códigos, atributos, XP, talentos y auditoría de decisiones.
-- Cinco NPC y modales accesibles mediante teclado.
-- Catálogo completo: nueve videos, seis documentos y programa oficial; dos lecturas complementarias. El programa se encuentra en el archivo del módulo 1 y las lecturas en el archivo del módulo 3.
-- Módulos 1–3: evaluaciones, actividades secundarias, bitácoras, ayudas por atributo y límite de descartes.
-- Navegación anterior/siguiente dentro del módulo; ausencia de enlaces al Centro o al módulo siguiente, incluso después de completar las tres misiones.
-- Copia de fragmentos con alternativa manual cuando el portapapeles está bloqueado.
-- Exportación y recuperación de personaje, módulos y bitácoras; modo temporal si el almacenamiento está bloqueado.
-- Iframe de ensayo: el contenedor que representa Moodle cambia la actividad, conservando el perfil.
-- Pantalla completa: entrada y salida reales en Centro y cuatro módulos; permiso concedido y rechazo controlado por Permissions Policy en un iframe.
-- Pantalla completa disponible durante el combate; cuatro guardianes vencidos respondiendo preguntas mediante controles. Se aceleran animaciones, sin forzar victoria ni modificar respuestas.
-- ORBE2026 requiere los cuatro guardianes y no duplica XP.
-- Cinco vistas a seis anchos: 390, 480, 768, 1024, 1366 y 1920 px; ausencia de desbordamiento horizontal y de imágenes ausentes.
+Completa las evaluaciones y actividades secundarias de los módulos 1–3, guarda bitácoras, revisa la navegación interna y la copia manual de fragmentos. Los cinco atributos se prueban en niveles 3, 5 y 8. En un caso aislado del RPG se prepara vida perdida y enfriamiento para comprobar curación, escudo, recarga y límites de uso; ese caso no concede victorias ni recompensas.
 
-## Límites externos
+La pantalla completa nativa entra y sale en las cinco vistas. En un iframe sin permiso se abre la alternativa de la misma actividad. La ausencia de la API se simula explícitamente en Chromium: no se presenta como una prueba en Safari ni en un iPhone físico.
 
-El ensayo de iframe no sustituye la prueba en el Moodle real, Safari y Firefox. Moodle debe conservar allowfullscreen y allow="fullscreen; clipboard-write" en los marcos. El botón de pantalla completa muestra un aviso cuando el navegador o Moodle rechaza la solicitud y no cambia la ruta de la actividad como alternativa.
+La vista amplia se prueba con almacenamiento bloqueado, personaje temporal, respuestas parciales, misión completada, sincronización al iframe y retorno al curso. La transferencia se limita a las claves del juego, no coloca datos de partida en URLs y no sobrescribe otra copia de almacenamiento fuera de Moodle. También se comprueban el bloqueo de ventanas y una apertura sin actividad de origen.
 
-La sincronización con Google Sheets permanece desactivada. Las comprobaciones HTTP de salud anteriores no prueban registro ni escrituras autenticadas. También faltan permisos de recursos con cuenta estudiante. Los códigos y el estado de victoria son progreso lúdico local; no prueban identidad institucional ni aprendizaje.
+Los cuatro guardianes se vencen mediante preguntas y comandos en vista amplia, devolviendo las victorias al módulo original. Se aceleran animaciones; no se modifican respuestas ni se fuerzan victorias. ORBE2026 requiere esas cuatro victorias y no duplica XP.
 
-Referencia técnica: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen.
+La presentación se revisa en cinco vistas a 390, 480, 768, 1024, 1366 y 1920 px, y en entradas estrechas a 240, 280, 315 y 340 px. No se encontró desbordamiento horizontal; las imágenes cargaron correctamente. Las capturas finales de la vista amplia y el Centro estrecho se inspeccionaron durante la implementación.
 
-## Publicación verificada
+## Capturas del usuario y límite de iPhone
 
-GitHub Pages completó correctamente el commit 6ab1231c7fea6232f14c56eba78fb69727055780. Las cinco páginas, el manifiesto y los siete archivos compartidos seleccionados devolvieron HTTP 200 y coincidieron con los bytes probados mediante SHA-256. La inspección DOM de la web pública encontró cero accesos del Centro a módulos, cero enlaces entre actividades desde los cuatro módulos y botones de pantalla completa en las cinco vistas (tres en el RPG). Ver PUBLICACION_VERIFICADA.json.
+Las capturas aportadas muestran Centro y módulo 1 renderizados dentro de campus.gamiaula.com. El mensaje corresponde a la rama que detecta ausencia de la API para pantalla completa de páginas. La limitación está documentada en WebKit: https://bugs.webkit.org/show_bug.cgi?id=310661.
+
+Abrir vista amplia abre únicamente la actividad actual fuera del iframe. No es pantalla completa nativa de iPhone y no oculta las barras de Safari. Mantener abierta la pestaña del curso. En el RPG se abre antes de iniciar el combate: el estado transitorio de un duelo ya en marcha no se traslada a otra ventana.
+
+## Pendientes externos
+
+- Probar vista amplia, transferencia y Volver al curso en el iPhone real y Moodle real; sus políticas pueden restringir ventanas o acceso a la actividad original.
+- Probar Firefox y Safari reales.
+- Confirmar la fecha de apertura de módulo 1 que figura en la captura: 12 de noviembre de 2026, 23:00.
+- Verificar permisos de los 18 recursos con cuenta estudiante.
+- Registro y escrituras autenticadas con Google Sheets. La sincronización automática permanece desactivada.
+
+Las comprobaciones HTTP de salud anteriores no prueban operaciones autenticadas. Los códigos y victorias son progreso lúdico local; no prueban identidad institucional ni aprendizaje. La checklist no declara terminadas estas pruebas externas.

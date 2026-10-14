@@ -1,6 +1,6 @@
 # Enlaces e iframes para Moodle · GamiAula
 
-La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar la versión 2.0.4 el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
+La dirección principal de introGami se conserva. Las cinco rutas respondieron HTTP 200 al publicar la versión 2.0.5 el 13 de octubre de 2026. La prueba de iframe local conservó el perfil durante la navegación; falta comprobar la configuración concreta del Moodle real.
 
 Copia cada bloque en la vista HTML del editor de Moodle. La altura de 900 px evita un marco demasiado pequeño; puede ajustarse según el espacio de tu aula. El enlace que acompaña cada iframe permite abrir el curso en una pestaña independiente.
 
@@ -77,10 +77,18 @@ Copia cada bloque en la vista HTML del editor de Moodle. La altura de 900 px evi
 - La copia de fragmentos tiene una alternativa manual si Moodle o el navegador bloquean el portapapeles.
 - La sincronización autenticada con Google Sheets continúa desactivada; estos iframes no activan una conexión con la matrícula de Moodle.
 
-## Navegación y pantalla completa (2.0.4)
+## Navegación y pantalla completa (2.0.5)
 
 El Centro de Comando solo permite gestionar personaje, atributos, inventario, códigos y copia de partida. No contiene accesos a módulos. Cada módulo conserva sus estaciones y no permite salir al Centro o a otro módulo. El docente organiza estos cinco iframes como actividades de Moodle; los códigos se copian en el módulo y se registran en el Centro desde Moodle.
 
-Todos los marcos incluyen el botón Pantalla completa; el RPG lo conserva también durante el combate. Mantener los atributos allowfullscreen y allow="fullscreen; clipboard-write" de estos bloques. El botón informa si el navegador o la configuración de Moodle rechaza la petición; no navega fuera del iframe como alternativa.
+Todos los marcos incluyen el botón Pantalla completa; el RPG lo conserva también durante el combate. Mantener los atributos allowfullscreen y allow="fullscreen; clipboard-write" de estos bloques. Si la pantalla completa nativa no está disponible, el botón permite abrir la misma actividad en vista amplia, sin accesos a otros módulos.
 
 Referencia técnica: https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen. La pantalla completa requiere una pulsación del usuario y autorización del iframe.
+
+## iPhone y vista amplia
+
+La captura del 13 de octubre de 2026 muestra que el navegador no dispone de la API para pantalla completa de páginas. Es una limitación documentada de WebKit en iPhone; el permiso allowfullscreen por sí solo no añade esa API. Referencia: https://bugs.webkit.org/show_bug.cgi?id=310661.
+
+Abrir vista amplia abre solo esta actividad en otra pestaña y transfiere la partida desde el iframe. Los cambios se devuelven a la actividad original y Volver al curso regresa a ella. Mantener abierta la pestaña original de Moodle. La vista amplia conserva las barras del navegador. No cambia la navegación del curso entre módulos.
+
+En el RPG, abrir la vista amplia antes de empezar el combate. Un combate ya iniciado no se transfiere a otra ventana; se puede continuar en su marco actual. Si la apertura o la transferencia se bloquea, la interfaz lo informa y mantiene la partida original.

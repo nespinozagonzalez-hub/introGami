@@ -42,3 +42,9 @@ El programa oficial permanece en el archivo del módulo 1; las dos lecturas comp
 La versión 2.0.4 pasó 20 grupos de pruebas en Chromium local, incluida pantalla completa real, iframe con permiso y con rechazo, navegación delimitada y cuatro combates completos.
 
 Commit de la aplicación 2.0.4 publicada y verificada: 6ab1231c7fea6232f14c56eba78fb69727055780. El registro de HTTP, archivos y comprobación pública está en PUBLICACION_VERIFICADA.json.
+
+## Limitación de móvil y alternativa (2.0.5)
+
+El usuario aportó capturas desde campus.gamiaula.com en iPhone el 13 de octubre de 2026 a las 22:40 (Chile). El aviso corresponde a ausencia de la API de pantalla completa, no al aviso de una solicitud rechazada. Se incorpora Abrir vista amplia: misma actividad en otra pestaña, transferencia de partida de la misma ruta y origen, devolución de cambios y retorno al curso. Se conserva que Moodle organiza la navegación entre módulos. La vista amplia no elimina las barras de Safari y debe probarse en el dispositivo real. En el RPG se abre antes de comenzar el combate; no traslada un turno ya en curso.
+
+También se revisan marcos de 240–340 px, pues el espacio útil de un iframe dentro de Moodle puede ser menor que el ancho del teléfono. La checklist de funcionamiento completa está en CHECKLIST_FUNCIONAMIENTO.md.

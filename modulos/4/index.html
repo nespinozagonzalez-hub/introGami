@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script src="../../shared/storage.js?v=2.0.4"></script>
-<script src="../../shared/icons.js?v=2.0.4" defer></script><script src="../../shared/pedagogy.js?v=2.0.4" defer></script>
-<script src="../../shared/accessibility.js?v=2.0.4" defer></script>
+<script src="../../shared/storage.js?v=2.0.5"></script>
+<script src="../../shared/expanded-view.js?v=2.0.5"></script>
+<script src="../../shared/icons.js?v=2.0.5" defer></script><script src="../../shared/pedagogy.js?v=2.0.5" defer></script>
+<script src="../../shared/accessibility.js?v=2.0.5" defer></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>La Consagración del Orbe — V3 épica unificada</title>
@@ -1801,7 +1802,7 @@ input{outline:none}
 }
 
 </style>
-<script src="../../shared/fullscreen.js?v=2.0.4" defer></script>
+<script src="../../shared/fullscreen.js?v=2.0.5" defer></script>
 </head>
 <body>
 
@@ -4313,12 +4314,13 @@ function boot(){
 }
 
 boot();
+window.addEventListener('gami-expanded-update',()=>{if(!document.body.classList.contains('in-battle')){state=loadState()||state;renderHub();}});
 </script>
 
-<link rel="stylesheet" href="../../shared/remaster.css?v=2.0.4">
-<script src="../../shared/module-ui.js?v=2.0.4" defer></script>
-<script src="../../shared/battle-bridge.js?v=2.0.4" defer></script>
-<link rel="stylesheet" href="../../shared/module-journey.css?v=2.0.4">
-<script src="../../shared/module-journey.js?v=2.0.4" defer></script>
+<link rel="stylesheet" href="../../shared/remaster.css?v=2.0.5">
+<script src="../../shared/module-ui.js?v=2.0.5" defer></script>
+<script src="../../shared/battle-bridge.js?v=2.0.5" defer></script>
+<link rel="stylesheet" href="../../shared/module-journey.css?v=2.0.5">
+<script src="../../shared/module-journey.js?v=2.0.5" defer></script>
 </body>
 </html>

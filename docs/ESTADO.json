@@ -1,11 +1,11 @@
 {
   "project": "Academia del Orbe",
   "course": "Gamificación de 0 a 100",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "repository": "nespinozagonzalez-hub/introGami",
   "source_branch": "main",
   "entry": "index.html",
-  "phase": "published-verified",
+  "phase": "validated-awaiting-publication",
   "updated_at": "2026-10-13",
   "main_updated": true,
   "github_pages_live": true,
@@ -23,10 +23,10 @@
   },
   "additional_research_readings": 2,
   "qa": {
-    "groups_passed": 20,
+    "groups_passed": 26,
     "javascript_errors": 0,
-    "scripts_checked": 22,
-    "local_references_checked": 69,
+    "scripts_checked": 23,
+    "local_references_checked": 73,
     "widths": [
       390,
       480,
@@ -39,16 +39,34 @@
     "iframe": "local-verified",
     "final_module_entries_checked": 24,
     "fullscreen": "native-enter-exit-and-iframe-permissions-verified",
-    "navigation_scope": "centre-and-modules-verified"
+    "navigation_scope": "centre-and-modules-verified",
+    "mobile_api_unavailable": "simulated-verified",
+    "narrow_widths": [
+      240,
+      280,
+      315,
+      340
+    ],
+    "expanded_save_roundtrip": true,
+    "attribute_levels_checked": [
+      3,
+      5,
+      8
+    ]
   },
   "pending": [
+    "Publicar y verificar la versión 2.0.5",
     "Registro y escrituras autenticadas con Sheets desde el origen publicado",
     "Permisos de recursos desde una cuenta estudiante",
-    "Moodle real, Safari y Firefox"
+    "Moodle real, Safari y Firefox",
+    "Vista amplia y retorno en iPhone real dentro de campus.gamiaula.com",
+    "Confirmar apertura del módulo 1: 12 noviembre 2026, 23:00, según captura de Moodle"
   ],
   "live_version": "2.0.4",
   "navigation": "moodle-controls-module-progression",
   "command_centre": "character-management-only",
   "module_navigation": "internal-stations-only",
-  "fullscreen": true
+  "fullscreen": true,
+  "mobile_alternative": "same-activity-expanded-view",
+  "functionality_checklist": "CHECKLIST_FUNCIONAMIENTO.md"
 }

@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-14T01:19:20.973Z",
+  "date": "2026-10-14T02:03:01.309Z",
   "checks": [
     {
       "name": "Cinco clases: creación, bonificación y persistencia",
@@ -74,6 +74,30 @@
       "passed": true
     },
     {
+      "name": "Vista amplia móvil: personaje temporal, privacidad y devolución al iframe",
+      "passed": true
+    },
+    {
+      "name": "Vista amplia: respuestas parciales y misión completa vuelven al módulo original",
+      "passed": true
+    },
+    {
+      "name": "Ayudas de los cinco atributos: diferenciadas en niveles 3, 5 y 8",
+      "passed": true
+    },
+    {
+      "name": "RPG: escudo, recuperación, creatividad y límites de uso",
+      "passed": true
+    },
+    {
+      "name": "Vista amplia: bloqueo de ventanas y apertura sin origen no borra la partida",
+      "passed": true
+    },
+    {
+      "name": "Marcos estrechos de Moodle: cinco entradas a 240, 280, 315 y 340 px",
+      "passed": true
+    },
+    {
       "name": "Cuatro guardianes: combate completo, apoyos y logro final sin XP repetida",
       "passed": true
     },
@@ -83,6 +107,12 @@
     }
   ],
   "screens": [
+    "mobile-expanded-centre.png",
+    "narrow-centre.png",
+    "narrow-1.png",
+    "narrow-2.png",
+    "narrow-3.png",
+    "narrow-4.png",
     "battle-390.png",
     "battle-1366.png",
     "view-hub-390.png",
